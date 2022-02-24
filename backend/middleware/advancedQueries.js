@@ -69,7 +69,7 @@ export const advancedQueries = (model, populate) => async (req, res, next) => {
       },
     });
   }
-
+  
   //Executimg query
   const results = await query;
 

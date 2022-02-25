@@ -8,7 +8,16 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import NotFound from './pages/NotFound';
 
+import { useDispatch } from 'react-redux';
+import { getProperties } from './features/properties/propertiesSlice';
+import { useEffect } from 'react';
+
 function App() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getProperties());
+  }, [dispatch]);
   return (
     <Router>
       <div className='flex flex-col justify-between min-h-screen'>

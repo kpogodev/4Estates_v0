@@ -40,7 +40,9 @@ function Navbar() {
         </ul>
       </div>
       <div className='navbar-end'>
-        <a className='btn btn-secondary lg:text-xl btn-sm lg:btn-md'>Sign in</a>
+        <Link to='/login' className='btn btn-secondary lg:text-xl btn-sm lg:btn-md'>
+          Sign in
+        </Link>
       </div>
     </div>
   );

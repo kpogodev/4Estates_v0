@@ -27,7 +27,7 @@ function Navbar() {
             </li>
           </ul>
         </div>
-        <Link to='/' className='btn btn-ghost btn-sm normal-case text-xl font-bold text-base-100'>
+        <Link to='/' className='btn btn-ghost btn-sm lg:btn-md normal-case text-xl lg:text-xl font-bold text-base-100'>
           4Estates
         </Link>
       </div>
@@ -71,7 +71,7 @@ function Navbar() {
           </div>
         )}
         {!isAuth && !isLoading && (
-          <Link to='/login' className='btn btn-secondary text-xl btn-sm lg:btn-md'>
+          <Link to='/login' className='btn btn-secondary text-xl btn-sm lg:btn-md lg:text-lg'>
             Sign in
           </Link>
         )}

@@ -26,7 +26,7 @@ function App() {
             <Route path='/notfound' element={<NotFound />} />
             <Route path='/*' element={<NotFound />} />
           </Routes>
-          <ToastContainer position='top-center' />
+          <ToastContainer position='bottom-center' />
         </main>
         <Footer />
       </div>

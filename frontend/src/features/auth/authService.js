@@ -31,10 +31,30 @@ const checkUser = async () => {
   return data;
 };
 
+// Login
+const registerUser = async ({ name, email, password, role }) => {
+  const config = {
+    headers: {
+      ContentType: 'application/json',
+    },
+  };
+
+  const body = {
+    name,
+    email,
+    password,
+    role,
+  };
+
+  const { data } = await axios.post(`${API_URL}/register`, body, config);
+  return data;
+};
+
 const authService = {
   loginUser,
   logoutUser,
   checkUser,
+  registerUser,
 };
 
 export default authService;

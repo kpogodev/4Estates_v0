@@ -9,8 +9,11 @@ import Home from './pages/Home';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import NotFound from './pages/NotFound';
+// Hooks
+import { useCheckAuth } from './hooks/useCheckAuth';
 
 function App() {
+  useCheckAuth();
   return (
     <Router>
       <div className='flex flex-col justify-between min-h-screen'>
@@ -23,7 +26,7 @@ function App() {
             <Route path='/notfound' element={<NotFound />} />
             <Route path='/*' element={<NotFound />} />
           </Routes>
-        <ToastContainer position='top-center' />
+          <ToastContainer position='top-center' />
         </main>
         <Footer />
       </div>

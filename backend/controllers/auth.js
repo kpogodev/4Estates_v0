@@ -84,7 +84,7 @@ export const logoutUser = asyncHandler(async (req, res, next) => {
 });
 
 // @desc      Forgot password
-// @route     POST /api/v1/auth/frogot-password
+// @route     POST /api/v1/auth/recover
 // @access    Public
 export const forgotPassword = asyncHandler(async (req, res, next) => {
   const user = await UserModel.findOne({ email: req.body.email });
@@ -96,7 +96,10 @@ export const forgotPassword = asyncHandler(async (req, res, next) => {
 
   await user.save({ validateBeforeSave: false });
 
-  const resetUrl = `${req.protocol}://${req.get('host')}/api/v1/auth/reset-password/${resetToken}`;
+  const resetUrl =
+    process.env.NODE_ENV === 'production'
+      ? `${req.protocol}://${req.get('host')}/reset-password/${resetToken}`
+      : `${req.protocol}://localhost:3000/reset-password/${resetToken}`;
 
   const message = `You received this email because you (or someone else) has requested the reset of your password. If it wasn't you please ignore this message, otherwise please click on the link below: \n\n ${resetUrl}`;
 
@@ -105,6 +108,7 @@ export const forgotPassword = asyncHandler(async (req, res, next) => {
       email: user.email,
       subject: 'Password reset request',
       message,
+      resetUrl,
     });
 
     res.status(200).json({ success: true, data: 'Email has been sent, please check your inbox' });
@@ -120,7 +124,7 @@ export const forgotPassword = asyncHandler(async (req, res, next) => {
 });
 
 // @desc      Reset Password
-// @route     PUT /api/v1/auth/reset-password/:resettoken
+// @route     PUT /api/v1/auth/recover/:resettoken
 // @access    Public
 export const resetPassword = asyncHandler(async (req, res, next) => {
   // Get hashed token

@@ -33,14 +33,6 @@ function Login() {
     dispatch(reset());
   }, [isError, message, isAuth, isSuccess, navigate, dispatch]);
 
-  const onEmailChange = (e) => {
-    setEmail(e.target.value);
-  };
-
-  const onPasswordChange = (e) => {
-    setPassword(e.target.value);
-  };
-
   const validateEmail = (e) => {
     setEmailFocus(false);
     const isValid = e.target.value
@@ -100,7 +92,7 @@ function Login() {
               className={`input input-bordered w-full ${emailValid && 'input-success'} ${
                 emailValid === false && email !== '' && 'input-error'
               }`}
-              onChange={onEmailChange}
+              onChange={(e) => setEmail(e.target.value)}
               value={email}
               onFocus={() => setEmailFocus(true)}
               onBlur={validateEmail}
@@ -122,7 +114,7 @@ function Login() {
               placeholder='********'
               className={`input input-bordered w-full ${passwordValid && 'input-success'}`}
               value={password}
-              onChange={onPasswordChange}
+              onChange={(e) => setPassword(e.target.value)}
               onFocus={() => setPasswordFocus(true)}
               onBlur={validatePassword}
             />

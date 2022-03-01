@@ -50,11 +50,37 @@ const registerUser = async ({ name, email, password, role }) => {
   return data;
 };
 
+// Recover Password
+const recoverPassword = async (email) => {
+  const config = {
+    headers: {
+      ContentType: 'application/json',
+    },
+  };
+
+  const { data } = await axios.post(`${API_URL}/recover`, { email }, config);
+  return data;
+};
+
+// Reset Password
+const resetPassword = async ({ password, token }) => {
+  const config = {
+    headers: {
+      ContentType: 'application/json',
+    },
+  };
+
+  const { data } = await axios.put(`${API_URL}/reset-password/${token}`, { password }, config);
+  return data;
+};
+
 const authService = {
   loginUser,
   logoutUser,
   checkUser,
   registerUser,
+  recoverPassword,
+  resetPassword,
 };
 
 export default authService;

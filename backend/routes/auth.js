@@ -17,7 +17,7 @@ router.get('/me', protect, getMe);
 router.get('/logout', protect, logoutUser);
 router.post('/register', registerUser);
 router.post('/login', loginUser);
-router.post('/forgot-password', forgotPassword);
+router.post('/recover', forgotPassword);
 router.put('/reset-password/:resettoken', resetPassword);
 
 export default router;

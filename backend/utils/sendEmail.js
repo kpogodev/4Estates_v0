@@ -15,6 +15,7 @@ export const sendEmail = async (options) => {
     to: options.email,
     subject: options.subject,
     text: options.message,
+    html: `Click here to reset your password: <a href="${options.resetUrl}">${options.resetUrl}</a>`,
   };
 
   const info = await transporter.sendMail(message);

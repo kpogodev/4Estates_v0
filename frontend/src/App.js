@@ -9,8 +9,10 @@ import Home from './pages/Home';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import NotFound from './pages/NotFound';
+import Recover from './pages/Recover';
 // Hooks
 import { useCheckAuth } from './hooks/useCheckAuth';
+import ResetPassword from './pages/ResetPassword';
 
 function App() {
   useCheckAuth();
@@ -24,6 +26,8 @@ function App() {
             <Route path='/login' element={<Login />} exact />
             <Route path='/register' element={<Register />} exact />
             <Route path='/notfound' element={<NotFound />} />
+            <Route path='/recover/' element={<Recover />} />
+            <Route path='/reset-password/:token' element={<ResetPassword />} />
             <Route path='/*' element={<NotFound />} />
           </Routes>
           <ToastContainer position='bottom-center' />

@@ -49,6 +49,26 @@ export const registerUser = createAsyncThunk('auth/register', async (payload, th
   }
 });
 
+// Recover Password
+export const recoverPassword = createAsyncThunk('auth/recover_password', async (payload, thunkAPI) => {
+  try {
+    return await authService.recoverPassword(payload);
+  } catch (error) {
+    const message = error?.response?.data?.message ?? error.toString();
+    return thunkAPI.rejectWithValue(message);
+  }
+});
+
+// Reset Password
+export const resetPassword = createAsyncThunk('auth/reset_password', async (payload, thunkAPI) => {
+  try {
+    return await authService.resetPassword(payload);
+  } catch (error) {
+    const message = error?.response?.data?.message ?? error.toString();
+    return thunkAPI.rejectWithValue(message);
+  }
+});
+
 export const authSlice = createSlice({
   name: 'auth',
   initialState,
@@ -115,6 +135,32 @@ export const authSlice = createSlice({
         state.isLoading = false;
       })
       .addCase(logoutUser.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+      })
+      .addCase(recoverPassword.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(recoverPassword.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = action.payload.success;
+        state.message = action.payload.message;
+      })
+      .addCase(recoverPassword.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+      })
+      .addCase(resetPassword.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(resetPassword.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = action.payload.success;
+        state.message = action.payload.message;
+      })
+      .addCase(resetPassword.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;

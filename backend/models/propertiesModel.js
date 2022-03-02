@@ -12,21 +12,27 @@ export const propertiesSchema = mongoose.Schema(
       required: [true, 'Please select property type'],
       enum: ['house', 'flat', 'apartament', 'bungalow', 'land', 'commercial'],
     },
-    description: {
+    offerType: {
       type: String,
-      required: [true, 'Please provide some description'],
+      required: [true, 'Please select offer type'],
+      enum: ['sale', 'rent'],
     },
-    keyFeatures: [String],
-    bedrooms: {
-      type: Number,
-      min: [1, 'Property must have at least 1 bedroom'],
+    description: {
+      text: {
+        type: String,
+        required: [true, 'Please provide some description'],
+      },
+      keyFeatures: [String],
+      bedrooms: {
+        type: Number,
+        min: [1, 'Property must have at least 1 bedroom'],
+      },
+      bathrooms: {
+        type: Number,
+        min: [1, 'Property must have at least 1 bathroom'],
+      },
+      size: Number,
     },
-    bathrooms: {
-      type: Number,
-      min: [1, 'Property must have at least 1 bathroom'],
-    },
-    size: Number,
-    saleHistory: [Date],
     images: [
       {
         cloudinary_id: String,
@@ -54,6 +60,11 @@ export const propertiesSchema = mongoose.Schema(
       country: String,
       neighborhood: String,
     },
+    price: {
+      type: Number,
+      required: true,
+    },
+    saleHistory: [Date],
     publisher: {
       type: mongoose.Schema.ObjectId,
       ref: 'User',

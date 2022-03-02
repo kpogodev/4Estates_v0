@@ -1,5 +1,14 @@
+import HeroSwiper from '../components/homepage/HeroSwiper';
+import Hero from '../components/shared/Hero';
+
 function Home() {
-  return <div>Home</div>;
+  return (
+    <>
+      <Hero>
+        <HeroSwiper />
+      </Hero>
+    </>
+  );
 }
 
 export default Home;

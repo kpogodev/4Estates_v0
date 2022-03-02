@@ -86,6 +86,7 @@ export const authSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
+      //Login
       .addCase(loginUser.pending, (state) => {
         state.isLoading = true;
       })
@@ -100,6 +101,7 @@ export const authSlice = createSlice({
         state.isError = true;
         state.message = action.payload;
       })
+      //Register
       .addCase(registerUser.pending, (state) => {
         state.isLoading = true;
       })
@@ -114,6 +116,7 @@ export const authSlice = createSlice({
         state.isError = true;
         state.message = action.payload;
       })
+      //Check Auth
       .addCase(checkUser.pending, (state) => {
         state.isLoading = true;
       })
@@ -127,6 +130,7 @@ export const authSlice = createSlice({
         state.isSuccess = false;
         state.isLoading = false;
       })
+      //Logout
       .addCase(logoutUser.pending, (state) => {
         state.isLoading = true;
       })
@@ -139,6 +143,7 @@ export const authSlice = createSlice({
         state.isError = true;
         state.message = action.payload;
       })
+      //Recover Password
       .addCase(recoverPassword.pending, (state) => {
         state.isLoading = true;
       })
@@ -152,6 +157,7 @@ export const authSlice = createSlice({
         state.isError = true;
         state.message = action.payload;
       })
+      //Reset Password
       .addCase(resetPassword.pending, (state) => {
         state.isLoading = true;
       })

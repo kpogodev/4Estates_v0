@@ -1,13 +1,27 @@
-import { Swiper, SwiperSlide, useSwiper } from 'swiper/react';
+import { useEffect } from 'react';
+import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, Navigation, Pagination } from 'swiper';
 import 'swiper/css';
 import 'swiper/css/autoplay';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
-
 import { handleSwiperProgress, handleSetTransition } from '../../utils/homeSwiper';
+import { useDispatch, useSelector } from 'react-redux';
+import { getProperties } from '../../features/properties/propertiesSlice';
+import HeroSwiperContent from './HeroSwiperContent';
 
 function HeroSwiper() {
+  const dispatch = useDispatch();
+
+  const { properties, isError, isSuccess, message } = useSelector((state) => state.properties);
+
+  useEffect(() => {
+    const query = {
+      select: 'price,location,images,description',
+    };
+    dispatch(getProperties(query));
+  }, [dispatch]);
+
   return (
     <Swiper
       modules={[Autoplay, Navigation, Pagination]}
@@ -17,35 +31,16 @@ function HeroSwiper() {
       loopedSlides={5}
       slidesPerView='auto'
       centeredSlides={true}
+      autoplay={{ delay: 5000 }}
       onProgress={handleSwiperProgress}
       onSetTransition={handleSetTransition}
-      className={'pb-8'}
+      className={'!pb-8'}
     >
-      <SwiperSlide className={'!w-[520px]'}>
-        <div className='carousel-slider-animate-opacity'>
-          <img src='https://picsum.photos/520/380?random=1' />
-        </div>
-      </SwiperSlide>
-      <SwiperSlide className={'!w-[520px]'}>
-        <div className='carousel-slider-animate-opacity'>
-          <img src='https://picsum.photos/520/380?random=2' />
-        </div>
-      </SwiperSlide>
-      <SwiperSlide className={'!w-[520px]'}>
-        <div className='carousel-slider-animate-opacity'>
-          <img src='https://picsum.photos/520/380?random=3' />
-        </div>
-      </SwiperSlide>
-      <SwiperSlide className={'!w-[520px]'}>
-        <div className='carousel-slider-animate-opacity'>
-          <img src='https://picsum.photos/520/380?random=4' />
-        </div>
-      </SwiperSlide>
-      <SwiperSlide className={'!w-[520px]'}>
-        <div className='carousel-slider-animate-opacity'>
-          <img src='https://picsum.photos/520/380?random=5' />
-        </div>
-      </SwiperSlide>
+      {properties.map((property) => (
+        <SwiperSlide className='!w-[520px] !h-[380px]'>
+          <HeroSwiperContent property={property} />
+        </SwiperSlide>
+      ))}
     </Swiper>
   );
 }

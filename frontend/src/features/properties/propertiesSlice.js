@@ -11,7 +11,7 @@ const initialState = {
 
 export const getProperties = createAsyncThunk('properties/get', async (payload, thunkAPI) => {
   try {
-    return await propertiesService.getProperties();
+    return await propertiesService.getProperties(payload);
   } catch (error) {
     const message = error?.response?.data?.message ?? error.toString();
     return thunkAPI.rejectWithValue(message);
@@ -36,9 +36,9 @@ export const propertiesSlice = createSlice({
         state.isLoading = true;
       })
       .addCase(getProperties.fulfilled, (state, action) => {
+        state.properties = action.payload.data;
         state.isLoading = false;
         state.isSuccess = action.payload.success;
-        state.properties = action.payload.data;
       })
       .addCase(getProperties.rejected, (state, action) => {
         state.properties = [];

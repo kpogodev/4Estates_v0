@@ -8,7 +8,7 @@ export default function HeroSwiperContent({ property: { description, location, p
     <div className='carousel-slider-animate-opacity bg-black'>
       <img
         src={images[0].secure_url}
-        className={`block w-[520px] h-[380px] object-cover ${
+        className={`block w-full h-[340px] object-cover ${
           swiperSlide.isActive ? 'opacity-100' : 'opacity-70'
         } transition-opacity`}
         style={{

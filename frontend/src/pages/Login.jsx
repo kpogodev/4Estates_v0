@@ -15,8 +15,8 @@ function Login() {
   const [passwordValid, setPasswordValid] = useState(null);
 
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const { isAuth, isError, isSuccess, message } = useSelector((state) => state.auth);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (isError) {

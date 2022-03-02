@@ -53,7 +53,7 @@ export const updateProperty = asyncHandler(async (req, res, next) => {
   res.status(200).json({ success: true, data: property });
 });
 
-// @desc      Delete all property
+// @desc      Delete property
 // @route     DELETE /api/v1/properties/:id
 // @access    Private
 export const deleteProperty = asyncHandler(async (req, res, next) => {

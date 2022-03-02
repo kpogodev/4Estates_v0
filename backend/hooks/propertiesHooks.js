@@ -9,7 +9,7 @@ export const useSetLocation = () => {
     this.location = {
       type: 'Point',
       coordinates: [loc[0].latitude, loc[0].longitude],
-      formatedAddres: loc[0].formattedAddress,
+      formatted_address: loc[0].formattedAddress,
       street: loc[0].streetName,
       city: loc[0].city,
       postcode: loc[0].zipcode,

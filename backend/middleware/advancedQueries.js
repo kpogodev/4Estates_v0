@@ -61,15 +61,15 @@ export const advancedQueries = (model, populate) => async (req, res, next) => {
     const loc = await geocoder.geocode(findBy);
 
     const earthRadius = 3963;
-    const formatedRadius = +radius / earthRadius;
+    const formattedRadius = +radius / earthRadius;
 
     query = model.find({
       location: {
-        $geoWithin: { $centerSphere: [[loc[0].latitude, loc[0].longitude], formatedRadius > 1 ? 1 : formatedRadius] },
+        $geoWithin: { $centerSphere: [[loc[0].latitude, loc[0].longitude], formattedRadius > 1 ? 1 : formattedRadius] },
       },
     });
   }
-  
+
   //Executimg query
   const results = await query;
 

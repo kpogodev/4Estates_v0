@@ -12,7 +12,7 @@ export const propertiesSchema = mongoose.Schema(
       required: [true, 'Please select property type'],
       enum: ['house', 'flat', 'apartament', 'bungalow', 'land', 'commercial'],
     },
-    offerType: {
+    offer_type: {
       type: String,
       required: [true, 'Please select offer type'],
       enum: ['sale', 'rent'],
@@ -22,7 +22,7 @@ export const propertiesSchema = mongoose.Schema(
         type: String,
         required: [true, 'Please provide some description'],
       },
-      keyFeatures: [String],
+      key_features: [String],
       bedrooms: {
         type: Number,
         min: [1, 'Property must have at least 1 bedroom'],
@@ -52,7 +52,7 @@ export const propertiesSchema = mongoose.Schema(
 
         index: '2dsphere',
       },
-      formatedAddres: String,
+      formatted_address: String,
       street: String,
       city: String,
       postcode: String,
@@ -64,13 +64,13 @@ export const propertiesSchema = mongoose.Schema(
       type: Number,
       required: true,
     },
-    saleHistory: [Date],
+    sale_history: [Date],
     publisher: {
       type: mongoose.Schema.ObjectId,
       ref: 'User',
       required: true,
     },
-    isPublished: {
+    is_published: {
       type: Boolean,
       default: false,
     },

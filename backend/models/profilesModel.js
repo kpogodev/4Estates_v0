@@ -1,10 +1,11 @@
 import mongoose from 'mongoose';
 
-export const profileSchema = mongoose.Schema(
+export const profilesSchema = mongoose.Schema(
   {
     user: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User',
+      required: true,
     },
     contact: {
       email: {
@@ -29,7 +30,7 @@ export const profileSchema = mongoose.Schema(
           'Please use a valid URL starting with HTTP/HTTPS',
         ],
       },
-      isPublic: Boolean,
+      is_public: Boolean,
     },
     favorites: {
       sales: [
@@ -51,5 +52,5 @@ export const profileSchema = mongoose.Schema(
   { timestamps: true }
 );
 
-const Profile = mongoose.model('Profile', profileSchema);
+const Profile = mongoose.model('Profile', profilesSchema);
 export default Profile;

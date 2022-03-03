@@ -8,13 +8,9 @@ export default function HeroSwiperContent({ property: { description, location, p
     <div className='carousel-slider-animate-opacity bg-black'>
       <img
         src={images[0].secure_url}
-        className={`block w-full h-[340px] object-cover ${
+        className={`block w-full h-[340px] object-cover shadow-lg ${
           swiperSlide.isActive ? 'opacity-100' : 'opacity-70'
         } transition-opacity`}
-        style={{
-          webkitBoxReflect:
-            'below 5px -webkit-linear-gradient(bottom,rgba(255,0,0,0.1) 0%,transparent 32px,transparent 100%)',
-        }}
         alt={location.formatedAddres}
       />
       <div className='absolute left-0 bottom-0 w-full py-6 px-4 flex flex-col items-start bg-gradient-to-t from-[rgba(0,0,0,0.75)] to-transparent'>

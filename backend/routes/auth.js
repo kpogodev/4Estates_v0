@@ -10,6 +10,7 @@ import {
 } from '../controllers/auth.js';
 import { protect } from '../middleware/auth.js';
 
+
 const router = express.Router();
 
 router.get('/check', protect, checkAuth);

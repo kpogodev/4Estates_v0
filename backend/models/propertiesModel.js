@@ -12,11 +12,6 @@ export const propertiesSchema = mongoose.Schema(
       required: [true, 'Please select property type'],
       enum: ['house', 'flat', 'apartament', 'bungalow', 'land', 'commercial'],
     },
-    offer_type: {
-      type: String,
-      required: [true, 'Please select offer type'],
-      enum: ['sale', 'rent'],
-    },
     description: {
       text: {
         type: String,

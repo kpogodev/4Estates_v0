@@ -10,10 +10,11 @@ import hpp from 'hpp';
 import { requestLimiterAuth, requestLimiterProperties } from './config/requestLimiter.js';
 
 //Routes
-import properties from './routes/properties.js';
 import auth from './routes/auth.js';
 import imageUploader from './routes/imageUploader.js';
-import profiles from './routes/profiles.js';
+import properties from './routes/properties.js';
+
+
 import { protect } from './middleware/auth.js';
 
 dotenv.config();
@@ -44,7 +45,6 @@ app.use(hpp());
 app.use('/api/v1/properties', requestLimiterProperties, properties);
 app.use('/api/v1/auth', requestLimiterAuth, auth);
 app.use('/api/v1/image-uploader', requestLimiterAuth, imageUploader);
-app.use('/api/v1/profiles', requestLimiterAuth, profiles);
 
 //Custom Middlewares
 app.use(notFound);

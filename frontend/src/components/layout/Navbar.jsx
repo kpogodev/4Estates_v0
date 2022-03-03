@@ -3,6 +3,7 @@ import { FaBars } from 'react-icons/fa';
 import { useSelector, useDispatch } from 'react-redux';
 import { logoutUser } from '../../features/auth/authSlice';
 import Spinner from '../shared/Spinner';
+import Avatar from '../shared/Avatar';
 
 function Navbar() {
   const dispatch = useDispatch();
@@ -50,9 +51,7 @@ function Navbar() {
         {isAuth && !isLoading && (
           <div className='dropdown dropdown-end'>
             <label tabIndex={0} className='btn btn-ghost btn-circle avatar'>
-              <div className='w-10 rounded-full'>
-                <img src='https://api.lorem.space/image/face?hash=33791' alt='profile' />
-              </div>
+              <Avatar className='w-10 rounded-full' />
             </label>
             <ul
               tabIndex={0}

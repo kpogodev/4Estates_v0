@@ -11,9 +11,9 @@ import { requestLimiterAuth, requestLimiterProperties } from './config/requestLi
 
 //Routes
 import auth from './routes/auth.js';
-import imageUploader from './routes/imageUploader.js';
+import profiles from './routes/profiles.js';
 import properties from './routes/properties.js';
-
+import imageUploader from './routes/imageUploader.js';
 
 import { protect } from './middleware/auth.js';
 
@@ -42,8 +42,9 @@ app.use(xss());
 app.use(hpp());
 
 //Mount Routers
-app.use('/api/v1/properties', requestLimiterProperties, properties);
 app.use('/api/v1/auth', requestLimiterAuth, auth);
+app.use('/api/v1/profiles', requestLimiterAuth, profiles);
+app.use('/api/v1/properties', requestLimiterProperties, properties);
 app.use('/api/v1/image-uploader', requestLimiterAuth, imageUploader);
 
 //Custom Middlewares

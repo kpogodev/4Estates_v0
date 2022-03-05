@@ -4,6 +4,7 @@ import 'react-toastify/dist/ReactToastify.css';
 //Components
 import Navbar from './components/layout/Navbar';
 import Footer from './components/layout/Footer';
+import PrivateRoute from './components/PrivateRoute';
 //Pages
 import Home from './pages/Home';
 import Login from './pages/Login';
@@ -13,6 +14,7 @@ import Recover from './pages/Recover';
 // Hooks
 import { useCheckAuth } from './hooks/useCheckAuth';
 import ResetPassword from './pages/ResetPassword';
+import Profile from './pages/Profile';
 
 function App() {
   useCheckAuth();
@@ -29,6 +31,9 @@ function App() {
             <Route path='/recover/' element={<Recover />} />
             <Route path='/reset-password/:token' element={<ResetPassword />} />
             <Route path='/*' element={<NotFound />} />
+            <Route path='/profile' element={<PrivateRoute />}>
+              <Route path='/profile' element={<Profile />} />
+            </Route>
           </Routes>
           <ToastContainer position='bottom-center' autoClose={7500} />
         </main>

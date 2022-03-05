@@ -31,13 +31,13 @@ function HeroSwiper() {
       loopedSlides={5}
       slidesPerView='auto'
       centeredSlides={true}
-      autoplay={{ delay: 5000 }}
+      autoplay={{ delay: 5000, disableOnInteraction: false, pauseOnMouseEnter: true }}
       onProgress={handleSwiperProgress}
       onSetTransition={handleSetTransition}
       className={'!pb-8'}
     >
       {properties.map((property) => (
-        <SwiperSlide className='!w-[520px] !h-[340px] bg-white'>
+        <SwiperSlide key={property._id} className='!w-[520px] !h-[340px] bg-white'>
           <HeroSwiperContent property={property} />
         </SwiperSlide>
       ))}

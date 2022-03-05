@@ -16,6 +16,7 @@ function Login() {
 
   const dispatch = useDispatch();
   const { isAuth, isError, isSuccess, message } = useSelector((state) => state.auth);
+  
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -59,10 +60,7 @@ function Login() {
     setPassword('');
   };
 
-  const isDisabled = () => {
-    if (email === '' || password === '') return 'btn-disabled';
-    return 'btn-primary';
-  };
+  const isBtnDisabled = () => (email === '' || password === '' ? 'btn-disabled' : 'btn-primary');
 
   return (
     <div className='w-full max-w-md mx-auto'>
@@ -124,7 +122,7 @@ function Login() {
           <Link className='btn btn-link capitalize text-xl' to='/recover'>
             Forgotten your password?
           </Link>
-          <button type='submit' className={`btn ${isDisabled()}`}>
+          <button type='submit' className={`btn ${isBtnDisabled()}`}>
             Sign in
           </button>
         </div>

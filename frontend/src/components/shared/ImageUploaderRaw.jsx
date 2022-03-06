@@ -28,8 +28,8 @@ export default function ImageUploaderRaw() {
   const uploadImage = async (imagesArray) => {
     try {
       const res = await axios.post(
-        '/api/v1/image-uploader',
-        JSON.stringify({ data: imagesArray, id: '621ef5ada41dfa58c3dbd509' }),
+        'http://localhost:5000/api/v1/auth/upload',
+        JSON.stringify({ data: imagesArray[0] }),
         {
           headers: { 'Content-Type': 'application/json' },
         }
@@ -48,19 +48,12 @@ export default function ImageUploaderRaw() {
         <button type='submit'>Upload</button>
       </form>
 
-      <div style={styles}>
-        {fileInputState.length > 0 && fileInputState.map((file, id) => <img key={id} src={file} alt='preview' />)}
+      <div>
+        {fileInputState.length > 0 &&
+          fileInputState.map((file, id) => (
+            <img className='block w-[300px] h-[400px] object-cover' key={id} src={file} alt='preview' />
+          ))}
       </div>
     </div>
   );
 }
-
-const styles = {
-  display: 'grid',
-  gridTemplateColumns: 'repeat(auto-fit, minmax(300px,1fr))',
-  gap: '3rem',
-  width: '100%',
-  maxWidth: '1366px',
-  margin: '0 auto',
-  padding: '2rem',
-};

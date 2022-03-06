@@ -217,28 +217,16 @@ function Register() {
         </div>
         <div>
           <p>Account type:</p>
-          <div className='flex flex-col mt-2'>
+          <div className='flex mt-2 gap-4'>
             <div className='form-control'>
               <label className='cursor-pointer label flex gap-4'>
-                <span className='label-text'>Tenant / Buyer</span>
+                <span className='label-text'>Private</span>
                 <input
                   type='radio'
                   value='user'
                   onChange={(e) => setRole(e.target.value)}
                   className='radio checked:bg-success'
                   checked={role === 'user'}
-                />
-              </label>
-            </div>
-            <div className='form-control'>
-              <label className='cursor-pointer label flex gap-4'>
-                <span className='label-text'>Landlord / Seller</span>
-                <input
-                  type='radio'
-                  value='landlord'
-                  onChange={(e) => setRole(e.target.value)}
-                  className='radio checked:bg-success'
-                  checked={role === 'landlord'}
                 />
               </label>
             </div>

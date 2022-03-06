@@ -25,9 +25,9 @@ const logoutUser = async () => {
   return data;
 };
 
-// Check User
-const checkUser = async () => {
-  const { data } = await axios.get(`${API_URL}/check`);
+// Get User
+const getUser = async () => {
+  const { data } = await axios.get(`${API_URL}/me`);
   return data;
 };
 
@@ -77,7 +77,7 @@ const resetPassword = async ({ password, token }) => {
 const authService = {
   loginUser,
   logoutUser,
-  checkUser,
+  getUser,
   registerUser,
   recoverPassword,
   resetPassword,

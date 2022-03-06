@@ -5,6 +5,7 @@ import {
   createProperty,
   updateProperty,
   deleteProperty,
+  uploadPropertyImages,
 } from '../controllers/properties.js';
 
 import PropertyModel from '../models/propertiesModel.js';
@@ -14,14 +15,8 @@ import { advancedQueries } from '../middleware/advancedQueries.js';
 
 const router = express.Router();
 
-router
-  .route('/')
-  .get(advancedQueries(PropertyModel), getProperties)
-  .post(protect, authorize('agency', 'landlord'), createProperty);
-router
-  .route('/:id')
-  .get(getProperty)
-  .put(protect, authorize('agency', 'landlord'), updateProperty)
-  .delete(protect, authorize('agency', 'landlord'), deleteProperty);
+router.post('/upload', protect, uploadPropertyImages);
+router.route('/').get(advancedQueries(PropertyModel), getProperties).post(protect, createProperty);
+router.route('/:id').get(getProperty).put(protect, updateProperty).delete(protect, deleteProperty);
 
 export default router;

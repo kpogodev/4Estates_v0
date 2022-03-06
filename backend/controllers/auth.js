@@ -4,8 +4,9 @@ import ErrorResponse from '../utils/errorResponse.js';
 import cookie from 'cookie';
 import crypto from 'crypto';
 import { sendEmail } from '../utils/sendEmail.js';
+import { imageSingleUpload } from '../hooks/uploaderHooks.js';
 
-// @desc      Check if user already is authorized
+// @desc      Check if user is already authorized
 // @route     GET /api/v1/auth/check
 // @access    Private
 export const checkAuth = asyncHandler(async (req, res, next) => {
@@ -53,19 +54,7 @@ export const loginUser = asyncHandler(async (req, res, next) => {
 // @access    Private
 export const getMe = asyncHandler(async (req, res, next) => {
   let user = await UserModel.findById(req.user.id);
-
-  const userResponse = { ...user._doc };
-
-  if (userResponse.role === 'user') {
-    delete userResponse.sales;
-    delete userResponse.rents;
-  }
-
-  if (userResponse.role === 'landlord' || userResponse.role === 'agency') {
-    delete userResponse.favorites;
-  }
-
-  res.status(200).json({ success: true, data: userResponse });
+  res.status(200).json({ success: true, data: user });
 });
 
 // @desc      Logout user / clear cookie
@@ -161,3 +150,20 @@ function sendTokenResponse(res, statusCode, user) {
 
   res.status(statusCode).setHeader('Set-Cookie', cookie.serialize('token', token, options)).json({ success: true });
 }
+
+// @desc      Upload Avatar
+// @route     POST /api/v1/auth/upload
+// @access    Private
+export const uploadAvatar = asyncHandler(async (req, res, next) => {
+  const { data } = req.body;
+
+  const user = await UserModel.findById(req.user.id);
+  if (!user) return new ErrorResponse(`User with id: ${id} not found`, 404);
+
+  const newImage = await imageSingleUpload(data);
+  user.avatar = newImage;
+
+  await user.save();
+
+  res.json({ success: true, data: user });
+});

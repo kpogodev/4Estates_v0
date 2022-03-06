@@ -1,6 +1,7 @@
 import ErrorResponse from '../utils/errorResponse.js';
 import asyncHandler from 'express-async-handler';
 import PropertyModel from '../models/propertiesModel.js';
+import { imageMultiUpload } from '../hooks/uploaderHooks.js';
 
 // @desc      Get all properties
 // @route     GET /api/v1/properties
@@ -68,4 +69,21 @@ export const deleteProperty = asyncHandler(async (req, res, next) => {
 
   property.remove();
   res.status(200).json({ success: true, data: {} });
+});
+
+// @desc      Uplaod images
+// @route     POST /api/v1/properties/upload
+// @access    Private
+export const uploadPropertyImages = asyncHandler(async (req, res, next) => {
+  const { data, id } = req.body;
+
+  const property = await PropertyModel.findById(id);
+  if (!property) return new ErrorResponse(`Property with id: ${id} not found`, 404);
+
+  const newImages = await imageMultiUpload(data);
+  property.images = [...property.images, ...newImages];
+
+  await property.save();
+
+  res.json({ success: true, data: property });
 });

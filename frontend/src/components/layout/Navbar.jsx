@@ -7,7 +7,7 @@ import Avatar from '../shared/Avatar';
 
 function Navbar() {
   const dispatch = useDispatch();
-  const { isAuth, isLoading } = useSelector((state) => state.auth);
+  const { user, isAuth, isLoading } = useSelector((state) => state.auth);
 
   return (
     <div className='navbar bg-primary'>
@@ -51,14 +51,14 @@ function Navbar() {
         {isAuth && !isLoading && (
           <div className='dropdown dropdown-end'>
             <label tabIndex={0} className='btn btn-ghost btn-circle avatar'>
-              <Avatar className='w-10 rounded-full' />
+              <Avatar className='w-10 rounded-full' user={user} />
             </label>
             <ul
               tabIndex={0}
               className='mt-3 p-2 shadow menu menu-compact dropdown-content bg-base-100 rounded-box w-52'
             >
               <li>
-                <Link to='/profile'>Profile</Link>
+                <Link to='/dashboard'>Dashboard</Link>
               </li>
               <li>
                 <Link to='/settings'>Settings</Link>

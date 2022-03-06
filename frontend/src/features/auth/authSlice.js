@@ -2,6 +2,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import authService from './authService';
 
 const initialState = {
+  user: {},
   isAuth: false,
   isSuccess: false,
   isLoading: false,
@@ -29,10 +30,10 @@ export const logoutUser = createAsyncThunk('auth/logout', async (payload, thunkA
   }
 });
 
-// Check User
-export const checkUser = createAsyncThunk('auth/check', async (payload, thunkAPI) => {
+// Get User
+export const getUser = createAsyncThunk('auth/get_user', async (payload, thunkAPI) => {
   try {
-    return await authService.checkUser();
+    return await authService.getUser();
   } catch (error) {
     const message = error?.response?.data?.message ?? error.toString();
     return thunkAPI.rejectWithValue(message);
@@ -116,16 +117,18 @@ export const authSlice = createSlice({
         state.isError = true;
         state.message = action.payload;
       })
-      //Check Auth
-      .addCase(checkUser.pending, (state) => {
+      //Get User
+      .addCase(getUser.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(checkUser.fulfilled, (state, action) => {
+      .addCase(getUser.fulfilled, (state, action) => {
+        state.user = action.payload.data;
         state.isAuth = action.payload.success;
         state.isSuccess = action.payload.success;
         state.isLoading = false;
       })
-      .addCase(checkUser.rejected, (state) => {
+      .addCase(getUser.rejected, (state) => {
+        state.user = {};
         state.isAuth = false;
         state.isSuccess = false;
         state.isLoading = false;

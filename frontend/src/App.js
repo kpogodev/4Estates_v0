@@ -14,7 +14,7 @@ import Recover from './pages/Recover';
 // Hooks
 import { useCheckAuth } from './hooks/useCheckAuth';
 import ResetPassword from './pages/ResetPassword';
-import Profile from './pages/Profile';
+import Dashboard from './pages/Dashboard';
 
 function App() {
   useCheckAuth();
@@ -31,8 +31,8 @@ function App() {
             <Route path='/recover/' element={<Recover />} />
             <Route path='/reset-password/:token' element={<ResetPassword />} />
             <Route path='/*' element={<NotFound />} />
-            <Route path='/profile' element={<PrivateRoute />}>
-              <Route path='/profile' element={<Profile />} />
+            <Route path='/dashboard' element={<PrivateRoute />}>
+              <Route path='/dashboard' element={<Dashboard />} />
             </Route>
           </Routes>
           <ToastContainer position='bottom-center' autoClose={7500} />

@@ -1,14 +1,13 @@
 import React from 'react';
 
-function Avatar({ className }) {
-  const img = false;
+function Avatar({ className, user }) {
   return (
     <div className={className}>
-      {img ? (
-        <img src='https://api.lorem.space/image/face?hash=33791' alt='profile' />
+      {user?.avatar?.secure_url ? (
+        <img src={user?.avatar?.secure_url} alt={user?.name} />
       ) : (
         <span className='w-full h-full grid place-items-center bg-white font-bold text-accent text-2xl border-2 border-accent rounded-full'>
-          K
+          {user?.name?.charAt(0)?.toUpperCase()}
         </span>
       )}
     </div>

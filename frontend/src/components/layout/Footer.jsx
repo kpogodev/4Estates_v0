@@ -7,7 +7,7 @@ function Footer() {
   return (
     <footer className='px-2 md:px-4 lg:px-8 xl:px-12 py-6 lg:py-9 footer bg-secondary text-secondary-content footer-center'>
       <div>
-        <Logo fill='#000' firstFill='#185ADB' className='w-32 h-auto mb-4' />
+        <Logo fill='#fff' firstFill='#ddd' className='w-32 h-auto mb-4' />
         <p className='font-bold text-lg'>
           4Estates Ltd.
           <br /> Home and Property Related Services since 2010

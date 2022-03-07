@@ -31,7 +31,7 @@ const getUser = async () => {
   return data;
 };
 
-// Login
+// Register
 const registerUser = async ({ name, email, password, role }) => {
   const config = {
     headers: {
@@ -74,6 +74,18 @@ const resetPassword = async ({ password, token }) => {
   return data;
 };
 
+// Upload Avatar
+const uploadAvatar = async (imageData) => {
+  const config = {
+    headers: {
+      ContentType: 'application/json',
+    },
+  };
+
+  const { data } = await axios.post(`${API_URL}/upload`, { data: imageData }, config);
+  return data;
+};
+
 const authService = {
   loginUser,
   logoutUser,
@@ -81,6 +93,7 @@ const authService = {
   registerUser,
   recoverPassword,
   resetPassword,
+  uploadAvatar,
 };
 
 export default authService;

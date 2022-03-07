@@ -20,7 +20,7 @@ function App() {
   useCheckAuth();
   return (
     <Router>
-      <div className='flex flex-col justify-between min-h-screen'>
+      <div className='flex flex-col justify-between min-h-screen bg-[#fdfdfd]'>
         <Navbar />
         <main className='container flex flex-col mx-auto py-12 px-4'>
           <Routes>

@@ -9,16 +9,16 @@ module.exports = {
       {
         estates: {
           primary: '#185ADB',
-          'primary-focus': '#1145BC',
+          'primary-focus': '#154FC2',
           'primary-content': '#ffffff',
 
-          secondary: '#FFC947',
-          'secondary-focus': '#FFDA75',
-          'secondary-content': '#222222',
+          secondary: '#113F9C',
+          'secondary-focus': '#0A255C',
+          'secondary-content': '#ffffff',
 
-          accent: '#0a1931',
-          'accent-focus': '#345683',
-          'accent-content': '#ffffff',
+          accent: '#FFBA08',
+          'accent-focus': '#FFEB05',
+          'accent-content': '#222',
 
           neutral: '#3b424e',
           'neutral-focus': '#2a2e37',
@@ -29,10 +29,10 @@ module.exports = {
           'base-300': '#efefef',
           'base-content': '#222222',
 
-          info: '#00D0FF',
-          success: '#59C12C',
-          warning: '#FFCC00',
-          error: '#FC571B',
+          info: '#3498db',
+          success: '#07bc0c',
+          warning: '#f1c40f',
+          error: '#e74c3c',
 
           '--rounded-box': '1rem',
           '--rounded-btn': '0.5rem',

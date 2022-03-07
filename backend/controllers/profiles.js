@@ -13,7 +13,7 @@ export const getProfiles = asyncHandler(async (req, res, next) => {
 // @route     GET /api/v1/profiles/:id
 // @access    Public
 export const getProfile = asyncHandler(async (req, res, next) => {
-  const profile = await ProfileModel.find(req.params.id);
+  const profile = await ProfileModel.find(req.params.id).populate('user', ['name', 'avatar']);
 
   if (!profile) return next(new ErrorResponse('Profile not found', 404));
 
@@ -24,7 +24,7 @@ export const getProfile = asyncHandler(async (req, res, next) => {
 // @route     GET /api/v1/profiles/me
 // @access    Private
 export const getUserProfle = asyncHandler(async (req, res, next) => {
-  const profile = await ProfileModel.findOne({ user: req.user.id }).populate('user', ['name','avatar']);
+  const profile = await ProfileModel.findOne({ user: req.user.id });
 
   if (!profile) return next(new ErrorResponse('Profile not found', 404));
 

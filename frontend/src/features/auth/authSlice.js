@@ -70,6 +70,16 @@ export const resetPassword = createAsyncThunk('auth/reset_password', async (payl
   }
 });
 
+// Upload Avatar
+export const uploadAvatar = createAsyncThunk('auth/upload_avatar', async (payload, thunkAPI) => {
+  try {
+    return await authService.uploadAvatar(payload);
+  } catch (error) {
+    const message = error?.response?.data?.message ?? error.toString();
+    return thunkAPI.rejectWithValue(message);
+  }
+});
+
 export const authSlice = createSlice({
   name: 'auth',
   initialState,
@@ -170,6 +180,20 @@ export const authSlice = createSlice({
         state.message = action.payload.message;
       })
       .addCase(resetPassword.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+      })
+      //Upload Avatar
+      .addCase(uploadAvatar.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(uploadAvatar.fulfilled, (state, action) => {
+        state.user = action.payload.data;
+        state.isSuccess = action.payload.success;
+        state.isLoading = false;
+      })
+      .addCase(uploadAvatar.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;

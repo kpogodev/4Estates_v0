@@ -1,4 +1,5 @@
 import { userSchema } from '../models/usersModel.js';
+import ProfileModel from '../models/profilesModel.js';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
 import crypto from 'crypto';
@@ -43,4 +44,11 @@ export const generateForgottenPasswordToken = () => {
 
     return resetToken;
   };
+};
+
+// Initialize User Profile
+export const initUserProfile = () => {
+  userSchema.post('save', async function () {
+    ProfileModel.create({ user: this._id });
+  });
 };

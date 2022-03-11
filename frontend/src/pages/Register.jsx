@@ -4,6 +4,8 @@ import { toast } from 'react-toastify';
 import { useSelector, useDispatch } from 'react-redux';
 import { registerUser, reset } from '../features/auth/authSlice';
 import { MdAlternateEmail, MdPassword, MdAccountCircle } from 'react-icons/md';
+import { motion } from 'framer-motion';
+import { pageTransition } from '../utils/animationVariants';
 
 function Register() {
   const [name, setName] = useState('');
@@ -106,7 +108,13 @@ function Register() {
   };
 
   return (
-    <div className='w-full max-w-md mx-auto'>
+    <motion.div
+      className='w-full max-w-md mx-auto'
+      variants={pageTransition}
+      initial='hidden'
+      animate='visible'
+      exit='exit'
+    >
       <h1 className='text-6xl font-bold'>Sign Up</h1>
       <p className='text-xl mt-2'>
         Already have an account?{' '}
@@ -250,7 +258,7 @@ function Register() {
           </button>
         </div>
       </form>
-    </div>
+    </motion.div>
   );
 }
 

@@ -4,12 +4,14 @@ import { MdAlternateEmail } from 'react-icons/md';
 import { useSelector, useDispatch } from 'react-redux';
 import { recoverPassword, reset } from '../features/auth/authSlice';
 import Spinner from '../components/shared/Spinner';
+import { motion } from 'framer-motion';
+import { pageTransition } from '../utils/animationVariants';
 
 function Recover() {
   const [email, setEmail] = useState('');
   const [emailFocused, setEmailFocus] = useState(false);
   const [emailValid, setEmailValid] = useState(null);
-  const [ wasSent, setWasSent ] = useState(false);
+  const [wasSent, setWasSent] = useState(false);
 
   const dispatch = useDispatch();
   const { isSuccess, isError, isLoading, message } = useSelector((state) => state.auth);
@@ -48,7 +50,13 @@ function Recover() {
   };
 
   return (
-    <div className='w-full max-w-md mx-auto flex flex-col gap-4'>
+    <motion.div
+      className='w-full max-w-md mx-auto flex flex-col gap-4'
+      variants={pageTransition}
+      initial='hidden'
+      animate='visible'
+      exit='exit'
+    >
       <h1 className='text-6xl font-bold'>Recover Account</h1>
       {wasSent ? (
         <p className='text-xl mt-2'>
@@ -89,14 +97,14 @@ function Recover() {
             <button
               type='submit'
               className='btn btn-primary text-lg mt-4 flex gap-2 items-center'
-              disabled={ email === '' || isLoading ? true : false}
+              disabled={email === '' || isLoading ? true : false}
             >
               Send {isLoading && <Spinner className={'w-4 h-h4'} />}
             </button>
           </form>
         </>
       )}
-    </div>
+    </motion.div>
   );
 }
 

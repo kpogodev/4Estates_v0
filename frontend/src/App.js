@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
+import { AnimatePresence } from 'framer-motion';
 import 'react-toastify/dist/ReactToastify.css';
 //Components
 import Navbar from './components/layout/Navbar';
@@ -24,21 +25,23 @@ function App() {
     <Router>
       <div className='flex flex-col justify-between min-h-screen bg-[#fdfdfd]'>
         <Navbar />
-        <main className='container flex flex-col mx-auto py-12 px-4'>
-          <Routes>
-            <Route path='/' element={<Home />} />
-            <Route path='/login' element={<Login />} exact />
-            <Route path='/register' element={<Register />} exact />
-            <Route path='/notfound' element={<NotFound />} />
-            <Route path='/recover/' element={<Recover />} />
-            <Route path='/reset-password/:token' element={<ResetPassword />} />
-            <Route path='/*' element={<NotFound />} />
-            <Route path='/dashboard' element={<PrivateRoute />}>
-              <Route path='/dashboard' element={<Dashboard />} />
-            </Route>
-          </Routes>
-          <ToastContainer position='bottom-center' autoClose={7500} />
-        </main>
+        <AnimatePresence exitBeforeEnter>
+          <main className='container flex flex-col mx-auto py-12 px-4'>
+            <Routes>
+              <Route path='/' element={<Home />} />
+              <Route path='/login' element={<Login />} exact />
+              <Route path='/register' element={<Register />} exact />
+              <Route path='/notfound' element={<NotFound />} />
+              <Route path='/recover/' element={<Recover />} />
+              <Route path='/reset-password/:token' element={<ResetPassword />} />
+              <Route path='/*' element={<NotFound />} />
+              <Route path='/dashboard' element={<PrivateRoute />}>
+                <Route path='/dashboard' element={<Dashboard />} />
+              </Route>
+            </Routes>
+            <ToastContainer position='bottom-center' autoClose={7500} />
+          </main>
+        </AnimatePresence>
         <Footer />
       </div>
     </Router>

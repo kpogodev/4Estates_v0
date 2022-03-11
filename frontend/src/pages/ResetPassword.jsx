@@ -5,6 +5,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { resetPassword, reset } from '../features/auth/authSlice';
 import Spinner from '../components/shared/Spinner';
 import { useParams } from 'react-router-dom';
+import { motion } from 'framer-motion';
+import { pageTransition } from '../utils/animationVariants';
 
 function ResetPassword() {
   const [password, setPassword] = useState('');
@@ -54,7 +56,13 @@ function ResetPassword() {
   };
 
   return (
-    <div className='w-full max-w-md mx-auto'>
+    <motion.div
+      className='w-full max-w-md mx-auto'
+      variants={pageTransition}
+      initial='hidden'
+      animate='visible'
+      exit='exit'
+    >
       <h1 className='text-6xl font-bold'>Rest Password</h1>
       <p className='text-xl my-4'>Please provide a new password.</p>
       <form className='form flex flex-col items-start gap-4 w-full' onSubmit={onSubmit}>
@@ -114,7 +122,7 @@ function ResetPassword() {
           Send {isLoading && <Spinner className={'w-4 h-h4'} />}
         </button>
       </form>
-    </div>
+    </motion.div>
   );
 }
 

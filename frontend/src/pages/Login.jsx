@@ -4,6 +4,8 @@ import { toast } from 'react-toastify';
 import { useSelector, useDispatch } from 'react-redux';
 import { loginUser, reset } from '../features/auth/authSlice';
 import { MdAlternateEmail, MdPassword } from 'react-icons/md';
+import { motion } from 'framer-motion';
+import { pageTransition } from '../utils/animationVariants';
 
 function Login() {
   const [email, setEmail] = useState('');
@@ -16,7 +18,7 @@ function Login() {
 
   const dispatch = useDispatch();
   const { isAuth, isError, isSuccess, message } = useSelector((state) => state.auth);
-  
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -63,7 +65,13 @@ function Login() {
   const isBtnDisabled = () => (email === '' || password === '' ? 'btn-disabled' : 'btn-primary');
 
   return (
-    <div className='w-full max-w-md mx-auto'>
+    <motion.div
+      className='w-full max-w-md mx-auto'
+      variants={pageTransition}
+      initial='hidden'
+      animate='visible'
+      exit='exit'
+    >
       <h1 className='text-6xl font-bold'>Sign In</h1>
       <p className='text-xl mt-2'>
         Don't have an account?{' '}
@@ -127,7 +135,7 @@ function Login() {
           </button>
         </div>
       </form>
-    </div>
+    </motion.div>
   );
 }
 

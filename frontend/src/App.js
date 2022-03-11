@@ -1,25 +1,25 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { ToastContainer } from 'react-toastify';
-import { AnimatePresence } from 'framer-motion';
-import 'react-toastify/dist/ReactToastify.css';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import { ToastContainer } from 'react-toastify'
+import { AnimatePresence } from 'framer-motion'
+import 'react-toastify/dist/ReactToastify.css'
 //Components
-import Navbar from './components/layout/Navbar';
-import Footer from './components/layout/Footer';
-import PrivateRoute from './pages/PrivateRoute';
+import Navbar from './components/layout/Navbar'
+import Footer from './components/layout/Footer'
+import PrivateRoute from './pages/PrivateRoute'
 //Pages
-import Home from './pages/Home';
-import Login from './pages/Login';
-import Register from './pages/Register';
-import NotFound from './pages/NotFound';
-import Recover from './pages/Recover';
-import ResetPassword from './pages/ResetPassword';
-import Dashboard from './pages/Dashboard';
+import Home from './pages/Home'
+import Login from './pages/Login'
+import Register from './pages/Register'
+import NotFound from './pages/NotFound'
+import Recover from './pages/Recover'
+import ResetPassword from './pages/ResetPassword'
+import Dashboard from './pages/Dashboard'
 
 // Hooks
-import { useCheckAuth } from './hooks/useCheckAuth';
+import { useCheckAuth } from './hooks/useCheckAuth'
 
 function App() {
-  useCheckAuth();
+  useCheckAuth()
 
   return (
     <Router>
@@ -39,13 +39,13 @@ function App() {
                 <Route path='/dashboard' element={<Dashboard />} />
               </Route>
             </Routes>
-            <ToastContainer position='bottom-center' autoClose={7500} />
+            <ToastContainer position='bottom-center' autoClose={5000} />
           </main>
         </AnimatePresence>
         <Footer />
       </div>
     </Router>
-  );
+  )
 }
 
-export default App;
+export default App

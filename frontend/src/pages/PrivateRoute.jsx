@@ -1,14 +1,14 @@
-import { Navigate, Outlet } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { Navigate, Outlet } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 
-import Loading from '../components/shared/Loading';
+import Loading from '../components/shared/Loading'
 
 const PrivateRoute = () => {
-  const { isAuth, isLoading } = useSelector((state) => state.auth);
+  const { isAuth, isLoading } = useSelector((state) => state.auth)
 
-  if (isLoading) return <Loading />;
+  if (!isAuth && isLoading) return <Loading />
 
-  return isAuth ? <Outlet /> : <Navigate to='/login' />;
-};
+  return isAuth ? <Outlet /> : <Navigate to='/login' />
+}
 
-export default PrivateRoute;
+export default PrivateRoute

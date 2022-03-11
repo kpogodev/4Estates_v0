@@ -4,8 +4,11 @@ import { getUser } from '../features/auth/authSlice';
 
 export const useCheckAuth = () => {
   const dispatch = useDispatch();
-  const { isAuth } = useSelector((state) => state.auth);
+  const { isAuth, isLoading } = useSelector((state) => state.auth);
+
   useEffect(() => {
     dispatch(getUser());
   }, [dispatch, isAuth]);
+
+  return { isAuth, isLoading };
 };

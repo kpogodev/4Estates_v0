@@ -28,12 +28,13 @@ function HeroSwiper() {
       grabCursor={true}
       watchSlidesProgress={true}
       loop={true}
-      loopedSlides={5}
+      loopedSlides={10}
       slidesPerView='auto'
       centeredSlides={true}
       autoplay={{ delay: 5000, disableOnInteraction: false, pauseOnMouseEnter: true }}
       onProgress={handleSwiperProgress}
       onSetTransition={handleSetTransition}
+      onInit={(swiper) => swiper.slideNext()}
       className={'!pb-8'}
     >
       {properties.map((property) => (

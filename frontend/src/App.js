@@ -4,20 +4,22 @@ import 'react-toastify/dist/ReactToastify.css';
 //Components
 import Navbar from './components/layout/Navbar';
 import Footer from './components/layout/Footer';
-import PrivateRoute from './components/PrivateRoute';
+import PrivateRoute from './pages/PrivateRoute';
 //Pages
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import NotFound from './pages/NotFound';
 import Recover from './pages/Recover';
-// Hooks
-import { useCheckAuth } from './hooks/useCheckAuth';
 import ResetPassword from './pages/ResetPassword';
 import Dashboard from './pages/Dashboard';
 
+// Hooks
+import { useCheckAuth } from './hooks/useCheckAuth';
+
 function App() {
   useCheckAuth();
+
   return (
     <Router>
       <div className='flex flex-col justify-between min-h-screen bg-[#fdfdfd]'>

@@ -26,6 +26,7 @@ function ProfileInput({ label, type, currentValue, editable }) {
 
 ProfileInput.defaultProps = {
   editable: false,
+  currentValue: '',
 };
 
 ProfileInput.propTypes = {

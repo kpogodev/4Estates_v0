@@ -1,11 +1,12 @@
 import { Navigate, Outlet } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import Spinner from './shared/Spinner';
+
+import Loading from '../components/shared/Loading';
 
 const PrivateRoute = () => {
   const { isAuth, isLoading } = useSelector((state) => state.auth);
 
-  if (isLoading) return <Spinner />;
+  if (isLoading) return <Loading />;
 
   return isAuth ? <Outlet /> : <Navigate to='/login' />;
 };

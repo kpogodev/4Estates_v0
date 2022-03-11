@@ -2,10 +2,10 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import authService from './authService';
 
 const initialState = {
-  user: {},
+  user: null,
   isAuth: false,
   isSuccess: false,
-  isLoading: false,
+  isLoading: true,
   isError: false,
   message: '',
 };
@@ -132,13 +132,13 @@ export const authSlice = createSlice({
         state.isLoading = true;
       })
       .addCase(getUser.fulfilled, (state, action) => {
-        state.user = action.payload.data;
         state.isAuth = action.payload.success;
+        state.user = action.payload.data;
         state.isSuccess = action.payload.success;
         state.isLoading = false;
       })
       .addCase(getUser.rejected, (state) => {
-        state.user = {};
+        state.user = null;
         state.isAuth = false;
         state.isSuccess = false;
         state.isLoading = false;
@@ -148,6 +148,7 @@ export const authSlice = createSlice({
         state.isLoading = true;
       })
       .addCase(logoutUser.fulfilled, (state) => {
+        state.user = null;
         state.isAuth = false;
         state.isLoading = false;
       })

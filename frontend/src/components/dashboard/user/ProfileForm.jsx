@@ -49,13 +49,13 @@ function ProfileForm() {
       </div>
       {isLoading ? (
         <>
-          <SkeletonItem className='w-full h-[48px] bg-[#ccc] rounded-md' />
-          <SkeletonItem className='w-full h-[48px] bg-[#ccc] rounded-md' />
-          <SkeletonItem className='w-full h-[48px] bg-[#ccc] rounded-md' />
-          <SkeletonItem className='w-full h-[48px] bg-[#ccc] rounded-md' />
-          <SkeletonItem className='w-full h-[48px] bg-[#ccc] rounded-md' />
-          <SkeletonItem className='w-full h-[48px] bg-[#ccc] rounded-md' />
-          <SkeletonItem className='w-full h-[48px] bg-[#ccc] rounded-md' />
+          <SkeletonItem className='w-full h-[48px] bg-[#ccc] rounded-md animate-pulse' />
+          <SkeletonItem className='w-full h-[48px] bg-[#ccc] rounded-md animate-pulse' />
+          <SkeletonItem className='w-full h-[48px] bg-[#ccc] rounded-md animate-pulse' />
+          <SkeletonItem className='w-full h-[48px] bg-[#ccc] rounded-md animate-pulse' />
+          <SkeletonItem className='w-full h-[48px] bg-[#ccc] rounded-md animate-pulse' />
+          <SkeletonItem className='w-full h-[48px] bg-[#ccc] rounded-md animate-pulse' />
+          <SkeletonItem className='w-full h-[48px] bg-[#ccc] rounded-md animate-pulse' />
         </>
       ) : (
         <>

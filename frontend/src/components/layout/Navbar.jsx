@@ -2,12 +2,18 @@ import { Link } from 'react-router-dom';
 import { FaBars } from 'react-icons/fa';
 import { useSelector, useDispatch } from 'react-redux';
 import { logoutUser } from '../../features/auth/authSlice';
+import { resetState } from '../../features/profiles/profilesSlice';
 import Spinner from '../shared/Spinner';
 import Avatar from '../shared/Avatar';
 
 function Navbar() {
   const dispatch = useDispatch();
   const { user, isAuth, isLoading } = useSelector((state) => state.auth);
+
+  const onLogout = () => {
+    dispatch(logoutUser());
+    dispatch(resetState());
+  };
 
   return (
     <div className='navbar bg-primary'>
@@ -64,7 +70,7 @@ function Navbar() {
                 <Link to='/settings'>Settings</Link>
               </li>
               <li>
-                <button onClick={() => dispatch(logoutUser())}>Logout</button>
+                <button onClick={onLogout}>Logout</button>
               </li>
             </ul>
           </div>

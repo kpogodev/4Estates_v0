@@ -1,5 +1,5 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import authService from './authService';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
+import authService from './authService'
 
 const initialState = {
   user: null,
@@ -8,199 +8,206 @@ const initialState = {
   isLoading: true,
   isError: false,
   message: '',
-};
+}
 
 // Login User
 export const loginUser = createAsyncThunk('auth/login', async (payload, thunkAPI) => {
   try {
-    return await authService.loginUser(payload);
+    return await authService.loginUser(payload)
   } catch (error) {
-    const message = error?.response?.data?.message ?? error.toString();
-    return thunkAPI.rejectWithValue(message);
+    const message = error?.response?.data?.message ?? error.toString()
+    return thunkAPI.rejectWithValue(message)
   }
-});
+})
 
 // Logout User
 export const logoutUser = createAsyncThunk('auth/logout', async (payload, thunkAPI) => {
   try {
-    return await authService.logoutUser();
+    return await authService.logoutUser()
   } catch (error) {
-    const message = error?.response?.data?.message ?? error.toString();
-    return thunkAPI.rejectWithValue(message);
+    const message = error?.response?.data?.message ?? error.toString()
+    return thunkAPI.rejectWithValue(message)
   }
-});
+})
 
 // Get User
 export const getUser = createAsyncThunk('auth/get_user', async (payload, thunkAPI) => {
   try {
-    return await authService.getUser();
+    return await authService.getUser()
   } catch (error) {
-    const message = error?.response?.data?.message ?? error.toString();
-    return thunkAPI.rejectWithValue(message);
+    const message = error?.response?.data?.message ?? error.toString()
+    return thunkAPI.rejectWithValue(message)
   }
-});
+})
 
 // Register User
 export const registerUser = createAsyncThunk('auth/register', async (payload, thunkAPI) => {
   try {
-    return await authService.registerUser(payload);
+    return await authService.registerUser(payload)
   } catch (error) {
-    const message = error?.response?.data?.message ?? error.toString();
-    return thunkAPI.rejectWithValue(message);
+    const message = error?.response?.data?.message ?? error.toString()
+    return thunkAPI.rejectWithValue(message)
   }
-});
+})
 
 // Recover Password
 export const recoverPassword = createAsyncThunk('auth/recover_password', async (payload, thunkAPI) => {
   try {
-    return await authService.recoverPassword(payload);
+    return await authService.recoverPassword(payload)
   } catch (error) {
-    const message = error?.response?.data?.message ?? error.toString();
-    return thunkAPI.rejectWithValue(message);
+    const message = error?.response?.data?.message ?? error.toString()
+    return thunkAPI.rejectWithValue(message)
   }
-});
+})
 
 // Reset Password
 export const resetPassword = createAsyncThunk('auth/reset_password', async (payload, thunkAPI) => {
   try {
-    return await authService.resetPassword(payload);
+    return await authService.resetPassword(payload)
   } catch (error) {
-    const message = error?.response?.data?.message ?? error.toString();
-    return thunkAPI.rejectWithValue(message);
+    const message = error?.response?.data?.message ?? error.toString()
+    return thunkAPI.rejectWithValue(message)
   }
-});
+})
 
 // Upload Avatar
 export const uploadAvatar = createAsyncThunk('auth/upload_avatar', async (payload, thunkAPI) => {
   try {
-    return await authService.uploadAvatar(payload);
+    return await authService.uploadAvatar(payload)
   } catch (error) {
-    const message = error?.response?.data?.message ?? error.toString();
-    return thunkAPI.rejectWithValue(message);
+    const message = error?.response?.data?.message ?? error.toString()
+    return thunkAPI.rejectWithValue(message)
   }
-});
+})
 
 export const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
     reset: (state) => {
-      state.isSuccess = false;
-      state.isLoading = false;
-      state.isError = false;
-      state.message = '';
+      state.isSuccess = false
+      state.isLoading = false
+      state.isError = false
+      state.message = ''
     },
     resetError: (state) => {
-      state.isError = false;
-      state.message = '';
+      state.isError = false
+      state.message = ''
+    },
+    resetSuccess: (state) => {
+      state.isSuccess = false
+      state.message = ''
     },
   },
   extraReducers: (builder) => {
     builder
       //Login
       .addCase(loginUser.pending, (state) => {
-        state.isLoading = true;
+        state.isLoading = true
       })
       .addCase(loginUser.fulfilled, (state, action) => {
-        state.isAuth = action.payload.success;
-        state.isSuccess = action.payload.success;
-        state.isLoading = false;
+        state.isAuth = action.payload.success
+        state.isSuccess = action.payload.success
+        state.isLoading = false
+        state.message = 'You have been logged in'
       })
       .addCase(loginUser.rejected, (state, action) => {
-        state.isAuth = false;
-        state.isLoading = false;
-        state.isError = true;
-        state.message = action.payload;
+        state.isLoading = false
+        state.isError = true
+        state.message = action.payload
       })
       //Register
       .addCase(registerUser.pending, (state) => {
-        state.isLoading = true;
+        state.isLoading = true
       })
       .addCase(registerUser.fulfilled, (state, action) => {
-        state.isAuth = action.payload.success;
-        state.isSuccess = action.payload.success;
-        state.isLoading = false;
+        state.isAuth = action.payload.success
+        state.isSuccess = action.payload.success
+        state.isLoading = false
+        state.message = 'You have been registered and logged in'
       })
       .addCase(registerUser.rejected, (state, action) => {
-        state.isAuth = false;
-        state.isLoading = false;
-        state.isError = true;
-        state.message = action.payload;
+        state.isLoading = false
+        state.isError = true
+        state.message = action.payload
       })
       //Get User
       .addCase(getUser.pending, (state) => {
-        state.isLoading = true;
+        state.isLoading = true
       })
       .addCase(getUser.fulfilled, (state, action) => {
-        state.isAuth = action.payload.success;
-        state.user = action.payload.data;
-        state.isSuccess = action.payload.success;
-        state.isLoading = false;
+        state.isAuth = action.payload.success
+        state.user = action.payload.data
+        state.isSuccess = action.payload.success
+        state.isLoading = false
       })
       .addCase(getUser.rejected, (state) => {
-        state.user = null;
-        state.isAuth = false;
-        state.isSuccess = false;
-        state.isLoading = false;
+        state.isLoading = false
+        state.user = null
+        state.isAuth = false
       })
       //Logout
       .addCase(logoutUser.pending, (state) => {
-        state.isLoading = true;
+        state.isLoading = true
       })
       .addCase(logoutUser.fulfilled, (state) => {
-        state.user = null;
-        state.isAuth = false;
-        state.isLoading = false;
+        state.user = null
+        state.isAuth = false
+        state.isLoading = false
+        state.isSuccess = false
+        state.isError = false
+        state.message = ''
       })
       .addCase(logoutUser.rejected, (state, action) => {
-        state.isLoading = false;
-        state.isError = true;
-        state.message = action.payload;
+        state.isLoading = false
+        state.isError = true
+        state.message = action.payload
       })
       //Recover Password
       .addCase(recoverPassword.pending, (state) => {
-        state.isLoading = true;
+        state.isLoading = true
       })
       .addCase(recoverPassword.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.isSuccess = action.payload.success;
-        state.message = action.payload.message;
+        state.isLoading = false
+        state.isSuccess = action.payload.success
+        state.message = action.payload.message
       })
       .addCase(recoverPassword.rejected, (state, action) => {
-        state.isLoading = false;
-        state.isError = true;
-        state.message = action.payload;
+        state.isLoading = false
+        state.isError = true
+        state.message = action.payload
       })
       //Reset Password
       .addCase(resetPassword.pending, (state) => {
-        state.isLoading = true;
+        state.isLoading = true
       })
       .addCase(resetPassword.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.isSuccess = action.payload.success;
-        state.message = action.payload.message;
+        state.isLoading = false
+        state.isSuccess = action.payload.success
+        state.message = action.payload.message
       })
       .addCase(resetPassword.rejected, (state, action) => {
-        state.isLoading = false;
-        state.isError = true;
-        state.message = action.payload;
+        state.isLoading = false
+        state.isError = true
+        state.message = action.payload
       })
       //Upload Avatar
       .addCase(uploadAvatar.pending, (state) => {
-        state.isLoading = true;
+        state.isLoading = true
       })
       .addCase(uploadAvatar.fulfilled, (state, action) => {
-        state.user = action.payload.data;
-        state.isSuccess = action.payload.success;
-        state.isLoading = false;
+        state.user = action.payload.data
+        state.isSuccess = action.payload.success
+        state.isLoading = false
+        state.message = 'You avatar has been updated'
       })
       .addCase(uploadAvatar.rejected, (state, action) => {
-        state.isLoading = false;
-        state.isError = true;
-        state.message = action.payload;
-      });
+        state.isLoading = false
+        state.isError = true
+        state.message = action.payload
+      })
   },
-});
+})
 
-export const { reset, resetError } = authSlice.actions;
-export default authSlice.reducer;
+export const { reset, resetError, resetSuccess } = authSlice.actions
+export default authSlice.reducer

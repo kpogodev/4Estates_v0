@@ -3,8 +3,8 @@ import profilesService from './profilesServices'
 
 const initialState = {
   profile: null,
-  isSuccess: false,
   isLoading: false,
+  isSuccess: false,
   isError: false,
   message: '',
 }
@@ -33,7 +33,7 @@ export const profilesSlice = createSlice({
   name: 'profiles',
   initialState,
   reducers: {
-    resetState: (state) => {
+    reset: (state) => {
       state.profile = null
       state.isSuccess = false
       state.isLoading = false
@@ -44,6 +44,10 @@ export const profilesSlice = createSlice({
       state.isError = false
       state.message = ''
     },
+    resetSuccess: (state) => {
+      state.isSuccess = false
+      state.message = ''
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -51,8 +55,8 @@ export const profilesSlice = createSlice({
         state.isLoading = true
       })
       .addCase(getMyProfile.fulfilled, (state, action) => {
-        state.profile = action.payload.data
         state.isLoading = false
+        state.profile = action.payload.data
         state.isSuccess = action.payload.success
       })
       .addCase(getMyProfile.rejected, (state, action) => {
@@ -76,5 +80,5 @@ export const profilesSlice = createSlice({
   },
 })
 
-export const { resetState, resetError } = profilesSlice.actions
+export const { reset, resetError, resetSuccess } = profilesSlice.actions
 export default profilesSlice.reducer

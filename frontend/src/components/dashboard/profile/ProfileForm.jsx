@@ -14,8 +14,10 @@ function ProfileForm() {
   const { profile, isLoading } = useSelector((state) => state.profiles)
 
   useEffect(() => {
-    dispatch(getMyProfile())
-  }, [dispatch])
+    if (!profile) {
+      dispatch(getMyProfile())
+    }
+  }, [profile, dispatch])
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -53,62 +55,13 @@ function ProfileForm() {
       ) : (
         <>
           <ProfileFormActions editable={editable} toggleEdit={setEditable} />
-          <ProfileInput
-            name='email'
-            label='Email'
-            type='email'
-            currentValue={profile?.contact?.email}
-            editable={editable}
-            setFormData={setFormData}
-          />
-          <ProfileInput
-            name='address'
-            label='Address'
-            type='text'
-            currentValue={profile?.contact?.address}
-            editable={editable}
-            setFormData={setFormData}
-          />
-          <ProfileInput
-            name='phone'
-            label='Phone'
-            type='text'
-            currentValue={profile?.contact?.phone}
-            editable={editable}
-            setFormData={setFormData}
-          />
-          <ProfileInput
-            name='fax'
-            label='Fax'
-            type='text'
-            currentValue={profile?.contact?.fax}
-            editable={editable}
-            setFormData={setFormData}
-          />
-          <ProfileInput
-            name='website'
-            label='Website'
-            type='text'
-            currentValue={profile?.contact?.website}
-            editable={editable}
-            setFormData={setFormData}
-          />
-          <ProfileInput
-            name='facebook'
-            label='Facebook'
-            type='text'
-            currentValue={profile?.contact?.socials?.facebook}
-            editable={editable}
-            setFormData={setFormData}
-          />
-          <ProfileInput
-            name='linkedin'
-            label='LinkedIn'
-            type='text'
-            currentValue={profile?.contact?.socials?.linkedin}
-            editable={editable}
-            setFormData={setFormData}
-          />
+          <ProfileInput name='email' label='Email' type='email' currentValue={profile?.contact?.email} editable={editable} setFormData={setFormData} />
+          <ProfileInput name='address' label='Address' type='text' currentValue={profile?.contact?.address} editable={editable} setFormData={setFormData} />
+          <ProfileInput name='phone' label='Phone' type='text' currentValue={profile?.contact?.phone} editable={editable} setFormData={setFormData} />
+          <ProfileInput name='fax' label='Fax' type='text' currentValue={profile?.contact?.fax} editable={editable} setFormData={setFormData} />
+          <ProfileInput name='website' label='Website' type='text' currentValue={profile?.contact?.website} editable={editable} setFormData={setFormData} />
+          <ProfileInput name='facebook' label='Facebook' type='text' currentValue={profile?.contact?.socials?.facebook} editable={editable} setFormData={setFormData} />
+          <ProfileInput name='linkedin' label='LinkedIn' type='text' currentValue={profile?.contact?.socials?.linkedin} editable={editable} setFormData={setFormData} />
         </>
       )}
     </form>

@@ -1,19 +1,19 @@
-import { Link } from 'react-router-dom';
-import { FaBars } from 'react-icons/fa';
-import { useSelector, useDispatch } from 'react-redux';
-import { logoutUser } from '../../features/auth/authSlice';
-import { resetState } from '../../features/profiles/profilesSlice';
-import Spinner from '../shared/Spinner';
-import Avatar from '../shared/Avatar';
+import { Link } from 'react-router-dom'
+import { FaBars } from 'react-icons/fa'
+import { useSelector, useDispatch } from 'react-redux'
+import { logoutUser } from '../../features/auth/authSlice'
+import { reset as resetProfile } from '../../features/profiles/profilesSlice'
+import Spinner from '../shared/Spinner'
+import Avatar from '../shared/Avatar'
 
 function Navbar() {
-  const dispatch = useDispatch();
-  const { user, isAuth, isLoading } = useSelector((state) => state.auth);
+  const dispatch = useDispatch()
+  const { user, isAuth, isLoading } = useSelector((state) => state.auth)
 
   const onLogout = () => {
-    dispatch(logoutUser());
-    dispatch(resetState());
-  };
+    dispatch(logoutUser())
+    dispatch(resetProfile())
+  }
 
   return (
     <div className='navbar bg-primary'>
@@ -59,10 +59,7 @@ function Navbar() {
             <label tabIndex={0} className='btn btn-ghost btn-circle avatar'>
               <Avatar className='w-10 rounded-full' user={user} />
             </label>
-            <ul
-              tabIndex={0}
-              className='mt-3 p-2 shadow menu menu-compact dropdown-content bg-base-100 rounded-box w-52'
-            >
+            <ul tabIndex={0} className='mt-3 p-2 shadow menu menu-compact dropdown-content bg-base-100 rounded-box w-52'>
               <li>
                 <Link to='/dashboard'>Dashboard</Link>
               </li>
@@ -82,7 +79,7 @@ function Navbar() {
         )}
       </div>
     </div>
-  );
+  )
 }
 
-export default Navbar;
+export default Navbar

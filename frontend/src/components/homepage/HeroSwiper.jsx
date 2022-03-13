@@ -1,26 +1,28 @@
-import { useEffect } from 'react';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Autoplay, Navigation, Pagination } from 'swiper';
-import 'swiper/css';
-import 'swiper/css/autoplay';
-import 'swiper/css/navigation';
-import 'swiper/css/pagination';
-import { handleSwiperProgress, handleSetTransition } from '../../utils/homeSwiper';
-import { useDispatch, useSelector } from 'react-redux';
-import { getProperties } from '../../features/properties/propertiesSlice';
-import HeroSwiperContent from './HeroSwiperContent';
+import { useEffect } from 'react'
+import { Swiper, SwiperSlide } from 'swiper/react'
+import { Autoplay, Navigation, Pagination } from 'swiper'
+import 'swiper/css'
+import 'swiper/css/autoplay'
+import 'swiper/css/navigation'
+import 'swiper/css/pagination'
+import { handleSwiperProgress, handleSetTransition } from '../../utils/homeSwiper'
+import { useDispatch, useSelector } from 'react-redux'
+import { getProperties } from '../../features/properties/propertiesSlice'
+import HeroSwiperContent from './HeroSwiperContent'
 
 function HeroSwiper() {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
 
-  const { properties, isError, isSuccess, message } = useSelector((state) => state.properties);
+  const { properties } = useSelector((state) => state.properties)
 
   useEffect(() => {
-    const query = {
-      select: 'price,location,images,description',
-    };
-    dispatch(getProperties(query));
-  }, [dispatch]);
+    if (properties.length === 0) {
+      const query = {
+        select: 'price,location,images,description',
+      }
+      dispatch(getProperties(query))
+    }
+  }, [properties, dispatch])
 
   return (
     <Swiper
@@ -43,7 +45,7 @@ function HeroSwiper() {
         </SwiperSlide>
       ))}
     </Swiper>
-  );
+  )
 }
 
-export default HeroSwiper;
+export default HeroSwiper

@@ -86,9 +86,7 @@ export const forgotPassword = asyncHandler(async (req, res, next) => {
   await user.save({ validateBeforeSave: false })
 
   const resetUrl =
-    process.env.NODE_ENV === 'production'
-      ? `${req.protocol}://${req.get('host')}/reset-password/${resetToken}`
-      : `${req.protocol}://localhost:3000/reset-password/${resetToken}`
+    process.env.NODE_ENV === 'production' ? `${req.protocol}://${req.get('host')}/reset-password/${resetToken}` : `${req.protocol}://localhost:3000/reset-password/${resetToken}`
 
   const message = `You received this email because you (or someone else) has requested the reset of your password. If it wasn't you please ignore this message, otherwise please click on the link below: \n\n ${resetUrl}`
 

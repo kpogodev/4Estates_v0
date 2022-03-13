@@ -27,7 +27,7 @@ function ResetPassword() {
       toast.error(message);
     }
     if (isSuccess) {
-      toast.success('Your password has been changed');
+      toast.success(message);
     }
 
     dispatch(reset());

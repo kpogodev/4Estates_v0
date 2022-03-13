@@ -1,14 +1,14 @@
-import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { getUser } from '../features/auth/authSlice';
+import { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { getUser, resetSuccess } from '../features/auth/authSlice'
 
 export const useCheckAuth = () => {
-  const dispatch = useDispatch();
-  const { isAuth, isLoading } = useSelector((state) => state.auth);
+  const dispatch = useDispatch()
+  const { isAuth, user } = useSelector((state) => state.auth)
 
   useEffect(() => {
-    dispatch(getUser());
-  }, [dispatch, isAuth]);
-
-  return { isAuth, isLoading };
-};
+    dispatch(resetSuccess())
+    if (isAuth && user) return
+    dispatch(getUser())
+  }, [isAuth, user, dispatch])
+}

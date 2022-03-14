@@ -36,6 +36,11 @@ export const getUser = createAsyncThunk('auth/get_user', async (payload, thunkAP
     return await authService.getUser()
   } catch (error) {
     const message = error?.response?.data?.message ?? error.toString()
+
+    if (error.response.status === 401) {
+      console.clear()
+    }
+    
     return thunkAPI.rejectWithValue(message)
   }
 })

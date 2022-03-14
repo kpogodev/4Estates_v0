@@ -28,23 +28,19 @@ function UserAvatar({ user: { name, avatar }, loading }) {
 
   const avatarImage = (
     <img
-      className={`w-24 h-24 object-cover rounded-full border-4 bg-black border-white shadow-md ${
-        preview && 'brightness-[0.8]'
-      } backface-hidden`}
-      src={preview ? preview : avatar.secure_url}
+      className={`w-24 h-24 object-cover rounded-full border-4 bg-black border-white shadow-md ${preview && 'brightness-[0.8]'} backface-hidden`}
+      src={preview ? preview : avatar?.secure_url}
       alt={name}
     />
   )
 
   const avatarPlaceholder = (
-    <span className='grid place-items-center w-24 h-24 font-bold text-accent text-4xl rounded-full border-4 border-accent shadow-md'>
-      {name?.charAt(0)?.toUpperCase()}
+    <span className='grid place-items-center w-24 h-24 bg-white font-bold text-accent text-4xl rounded-full border-4 border-accent shadow-md'>
+      {name?.split(' ').map((word) => word.charAt(0)?.toUpperCase())}
     </span>
   )
 
-  const previewBagde = (
-    <div class='badge badge-accent absolute top-0 left-1/2 -translate-y-1/2 -translate-x-1/2 font-medium z-10'>Preview</div>
-  )
+  const previewBagde = <div class='badge badge-accent absolute top-0 left-1/2 -translate-y-1/2 -translate-x-1/2 font-medium z-10'>Preview</div>
 
   return (
     <div className='relative'>
@@ -62,11 +58,7 @@ function UserAvatar({ user: { name, avatar }, loading }) {
         <label className='btn btn-sm w-[32px] h-[32px] p-0 btn-accent rounded-full absolute bottom-0 right-0 shadow-md'>
           <MdEdit className='w-5 h-5' />
           <input type='file' onChange={onFileChange} className='hidden' />
-          <button
-            className={`btn btn-sm w-[32px] h-[32px] p-0 btn-primary rounded-full absolute bottom-0 right-0 shadow-md ${
-              !preview && 'hidden'
-            }`}
-          >
+          <button className={`btn btn-sm w-[32px] h-[32px] p-0 btn-primary rounded-full absolute bottom-0 right-0 shadow-md ${!preview && 'hidden'}`}>
             <MdUpload className='w-5 h-5' />
           </button>
         </label>

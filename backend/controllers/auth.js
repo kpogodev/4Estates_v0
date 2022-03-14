@@ -76,7 +76,7 @@ export const logoutUser = asyncHandler(async (req, res, next) => {
 // @route     POST /api/v1/auth/recover
 // @access    Public
 export const forgotPassword = asyncHandler(async (req, res, next) => {
-  const user = await UserModel.findOne({ email: req.body.email })
+  const user = await UserModel.findOne({ email: req.body.email }).select('email')
 
   if (!user) return next(new ErrorResponse(`Email incorrect`, 404))
 

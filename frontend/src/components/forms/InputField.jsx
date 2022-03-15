@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import PropTypes from 'prop-types'
 
-function InputField({ name, type, placeholder, className, value, setFormData, validator }) {
+function InputField({ name, type, placeholder, className, value, setFormData, validator, autoComplete }) {
   const [isNotEmpty, setIsNotEmpty] = useState(null)
   const [isValid, setValidity] = validator
 
@@ -23,11 +23,14 @@ function InputField({ name, type, placeholder, className, value, setFormData, va
       name={name}
       type={type}
       placeholder={placeholder}
-      className={`${className} focus:border-info ${isNotEmpty && isValid !== false && 'border-success'} ${isValid === false && 'border-error'}`}
+      className={`${className} focus:border-info ${isNotEmpty && isValid !== false && 'border-success'} ${
+        isValid === false && 'border-error'
+      }`}
       value={value}
       onFocus={() => setValidity(null)}
       onChange={handleOnChange}
       onBlur={handleOnBlur}
+      autoComplete={autoComplete}
     />
   )
 }
@@ -43,6 +46,7 @@ InputField.propTypes = {
   className: PropTypes.string,
   setFormData: PropTypes.func.isRequired,
   validator: PropTypes.array.isRequired,
+  autoComplete: PropTypes.string,
 }
 
 export default InputField

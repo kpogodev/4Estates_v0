@@ -1,11 +1,11 @@
 import ProfileForm from './ProfileForm';
 import UserDetails from './UserDetails';
 
-function ProfileCard() {
+function ProfilePanel() {
   return (
-    <div className='card flex flex-col bg-base-100 shadow-lg max-w-md'>
+    <div className='card flex flex-col w-full bg-base-100 shadow-lg'>
       <div className='w-full h-[4rem] bg-primary'></div>
-      <div className='card-body flex flex-col  gap-5 pt-0'>
+      <div className='card-body flex flex-col gap-5 pt-0'>
         <UserDetails />
         <ProfileForm />
       </div>
@@ -13,4 +13,4 @@ function ProfileCard() {
   );
 }
 
-export default ProfileCard;
+export default ProfilePanel;

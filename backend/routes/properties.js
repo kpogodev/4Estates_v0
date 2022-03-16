@@ -1,4 +1,4 @@
-import express from 'express';
+import express from 'express'
 import {
   getProperties,
   getProperty,
@@ -6,17 +6,17 @@ import {
   updateProperty,
   deleteProperty,
   uploadPropertyImages,
-} from '../controllers/properties.js';
+} from '../controllers/properties.js'
 
-import PropertyModel from '../models/propertiesModel.js';
+import PropertyModel from '../models/propertiesModel.js'
 
-import { protect, authorize } from '../middleware/auth.js';
-import { advancedQueries } from '../middleware/advancedQueries.js';
+import { protect, authorize } from '../middleware/auth.js'
+import { advancedQueries } from '../middleware/advancedQueries.js'
 
-const router = express.Router();
+const router = express.Router()
 
-router.post('/upload', protect, uploadPropertyImages);
-router.route('/').get(advancedQueries(PropertyModel), getProperties).post(protect, createProperty);
-router.route('/:id').get(getProperty).put(protect, updateProperty).delete(protect, deleteProperty);
+router.post('/upload', protect, uploadPropertyImages)
+router.route('/').get(advancedQueries(PropertyModel), getProperties).post(protect, createProperty)
+router.route('/:id').get(getProperty).put(protect, updateProperty).delete(protect, deleteProperty)
 
-export default router;
+export default router

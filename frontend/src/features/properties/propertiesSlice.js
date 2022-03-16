@@ -3,6 +3,7 @@ import propertiesService from './propertiesService'
 
 const initialState = {
   properties: [],
+  myProperties: [],
   isSuccess: false,
   isLoading: false,
   isError: false,
@@ -10,6 +11,15 @@ const initialState = {
 }
 
 export const getProperties = createAsyncThunk('properties/get', async (payload, thunkAPI) => {
+  try {
+    return await propertiesService.getProperties(payload)
+  } catch (error) {
+    const message = error?.response?.data?.message ?? error.toString()
+    return thunkAPI.rejectWithValue(message)
+  }
+})
+
+export const getMyProperties = createAsyncThunk('properties/get_my', async (payload, thunkAPI) => {
   try {
     return await propertiesService.getProperties(payload)
   } catch (error) {
@@ -38,6 +48,7 @@ export const propertiesSlice = createSlice({
       state.message = ''
     },
   },
+
   extraReducers: (builder) => {
     builder
       .addCase(getProperties.pending, (state) => {
@@ -49,6 +60,19 @@ export const propertiesSlice = createSlice({
       })
       .addCase(getProperties.rejected, (state, action) => {
         state.properties = []
+        state.isLoading = false
+        state.isError = true
+        state.message = action.payload
+      })
+      .addCase(getMyProperties.pending, (state) => {
+        state.isLoading = true
+      })
+      .addCase(getMyProperties.fulfilled, (state, action) => {
+        state.myProperties = action.payload.data
+        state.isLoading = false
+      })
+      .addCase(getMyProperties.rejected, (state, action) => {
+        state.myProperties = []
         state.isLoading = false
         state.isError = true
         state.message = action.payload

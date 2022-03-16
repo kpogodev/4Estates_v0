@@ -2,7 +2,7 @@ import { useSelector } from 'react-redux'
 import UserAvatar from './UserAvatar'
 
 function UserDetails() {
-  const { user, isLoading, isError, message } = useSelector((state) => state.auth)
+  const { user, isLoading } = useSelector((state) => state.auth)
 
   return (
     <div className='flex items-center gap-4 mt-[-1.2rem]'>

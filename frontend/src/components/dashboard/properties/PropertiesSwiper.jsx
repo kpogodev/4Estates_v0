@@ -1,4 +1,3 @@
-import { useRef, useEffect, useState } from 'react'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Navigation, Pagination } from 'swiper'
 import 'swiper/css'
@@ -10,8 +9,8 @@ import { MdChevronLeft, MdChevronRight } from 'react-icons/md'
 function PropertiesSwiper({ properties }) {
   const swiperParams = {
     modules: [Navigation, Pagination],
-    slidesPerView: 3,
-    spaceBetween: 30,
+    slidesPerView: 1,
+    spaceBetween: 20,
     pagination: {
       el: '.properties-pagination',
       type: 'fraction',
@@ -20,10 +19,14 @@ function PropertiesSwiper({ properties }) {
       nextEl: '.property-next',
       prevEl: '.property-prev',
     },
-    onInit: (swiper) => {
-      swiper.pagination.destroy()
-      swiper.pagination.init()
-      swiper.pagination.update()
+    breakpoints: {
+      500: {
+        slidesPerView: 2,
+      },
+      768: {
+        slidesPerView: 3,
+        spaceBetween: 30,
+      },
     },
   }
 

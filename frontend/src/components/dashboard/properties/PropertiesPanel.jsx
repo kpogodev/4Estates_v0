@@ -8,12 +8,15 @@ import PropertiesGrid from './PropertiesGrid'
 import ViewSwitcher from '../../shared/ViewSwitcher'
 import PropertiesTabel from './PropertiesTabel'
 import PropertiesSwiper from './PropertiesSwiper'
+import { useMediaQuery } from '../../../hooks/useMediaQuery'
 
 function PropertiesPanel() {
   const [listType, setListType] = useState('grid')
   const { myProperties, loading } = useSelector((state) => state.properties)
   const { user } = useSelector((state) => state.auth)
+
   const dispatch = useDispatch()
+  const { matches } = useMediaQuery('(min-width: 768px)')
 
   useEffect(() => {
     dispatch(
@@ -23,12 +26,18 @@ function PropertiesPanel() {
     )
   }, [user._id, dispatch])
 
+  useEffect(() => {
+    if (!matches && listType === 'tabel') {
+      setListType('grid')
+    }
+  }, [matches, listType])
+
   const propertiesList = () => {
     switch (listType) {
       case 'grid':
         return <PropertiesGrid properties={myProperties} />
       case 'tabel':
-        return <PropertiesTabel properties={myProperties} />
+        return matches && <PropertiesTabel properties={myProperties} />
       case 'swiper':
         return <PropertiesSwiper properties={myProperties} />
       default:
@@ -38,7 +47,7 @@ function PropertiesPanel() {
 
   return (
     <div className='card w-full bg-base-100 shadow-lg col-span-2'>
-      <div className='card-body gap-8'>
+      <div className='card-body gap-12 pb-12'>
         <div className='flex justify-between items-center'>
           <h2 className='text-4xl font-bold'>My Properties</h2>
           <Link className='btn btn-outline btn-primary btn-md' to='/add-property'>

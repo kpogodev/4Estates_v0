@@ -7,7 +7,7 @@ function PropertiesTabel({ properties }) {
   return (
     <motion.div variants={forViewSwitcher} initial='hidden' animate='visible' exit='exit'>
       <div className='overflow-x-auto w-full'>
-        <table className='table w-full'>
+        <table className='table w-full lg:text-lg'>
           <thead>
             <tr>
               <th>Property</th>

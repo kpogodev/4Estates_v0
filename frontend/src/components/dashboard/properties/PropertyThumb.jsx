@@ -13,7 +13,7 @@ function PropertyThumb({ property }) {
           <img className='w-full !h-[140px] lg:!h-[200px]' src={property.images[0].secure_url} alt='' />
         </figure>
         <div className='card-body justify-center items-center p-4'>
-          <h3 className='card-title'>{property.location.street}</h3>
+          <h3 className='card-title text-center'>{property.location.street}</h3>
         </div>
       </Link>
     </motion.div>

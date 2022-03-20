@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import ResetPasswordForm from '../components/forms/ResetPasswordForm'
+import ResetPasswordForm from '../components/auth/ResetPasswordForm'
 import { pageTransition } from '../utils/animationVariants'
 
 function ResetPassword() {

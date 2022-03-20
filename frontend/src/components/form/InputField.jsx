@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import PropTypes from 'prop-types'
 
-function InputField({ name, type, placeholder, className, value, setFormData, validator, autoComplete }) {
+function InputField({ name, type, placeholder, className, value, setFormData, validator, autoComplete, disabled }) {
   const [isNotEmpty, setIsNotEmpty] = useState(null)
   const [isValid, setValidity] = validator
 
@@ -15,7 +15,7 @@ function InputField({ name, type, placeholder, className, value, setFormData, va
   }
 
   const handleOnBlur = (e) => {
-    return e.target.value.length > 0 && setIsNotEmpty(true)
+    return e.target.value.length > 0 ? setIsNotEmpty(true) : setIsNotEmpty(false)
   }
 
   return (
@@ -31,12 +31,14 @@ function InputField({ name, type, placeholder, className, value, setFormData, va
       onChange={handleOnChange}
       onBlur={handleOnBlur}
       autoComplete={autoComplete}
+      disabled={disabled}
     />
   )
 }
 
 InputField.defualtProps = {
   value: '',
+  disabled: false,
 }
 
 InputField.propTypes = {
@@ -47,6 +49,7 @@ InputField.propTypes = {
   setFormData: PropTypes.func.isRequired,
   validator: PropTypes.array.isRequired,
   autoComplete: PropTypes.string,
+  disabled: PropTypes.bool,
 }
 
 export default InputField

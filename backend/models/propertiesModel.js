@@ -1,5 +1,5 @@
-import mongoose from 'mongoose';
-import { useSetLocation } from '../hooks/propertiesHooks.js';
+import mongoose from 'mongoose'
+import { useSetLocation } from '../hooks/propertiesHooks.js'
 
 export const propertiesSchema = mongoose.Schema(
   {
@@ -12,10 +12,11 @@ export const propertiesSchema = mongoose.Schema(
       required: [true, 'Please select property type'],
       enum: ['house', 'flat', 'apartament', 'bungalow', 'land', 'commercial'],
     },
-    description: {
-      text: {
+    details: {
+      description: {
         type: String,
         required: [true, 'Please provide some description'],
+        length: [3200, 'Desription cannot be longer than 3200 characters'],
       },
       key_features: [String],
       bedrooms: {
@@ -26,7 +27,10 @@ export const propertiesSchema = mongoose.Schema(
         type: Number,
         min: [1, 'Property must have at least 1 bathroom'],
       },
-      size: Number,
+      size: {
+        type: Number,
+        min: [1, 'Size of the property must be a postive number'],
+      },
     },
     images: [
       {
@@ -44,7 +48,6 @@ export const propertiesSchema = mongoose.Schema(
       },
       coordinates: {
         type: [Number],
-
         index: '2dsphere',
       },
       formatted_address: String,
@@ -55,11 +58,6 @@ export const propertiesSchema = mongoose.Schema(
       country: String,
       neighborhood: String,
     },
-    price: {
-      type: Number,
-      required: true,
-    },
-    sale_history: [Date],
     publisher: {
       type: mongoose.Schema.ObjectId,
       ref: 'User',
@@ -71,10 +69,10 @@ export const propertiesSchema = mongoose.Schema(
     },
   },
   { timestamps: true }
-);
+)
 
 //Hooks
-useSetLocation();
+useSetLocation()
 
-const PropertyModel = mongoose.model('Property', propertiesSchema);
-export default PropertyModel;
+const PropertyModel = mongoose.model('Property', propertiesSchema)
+export default PropertyModel

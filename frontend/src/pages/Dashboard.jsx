@@ -1,4 +1,3 @@
-import React from 'react'
 import ProfilePanel from '../components/dashboard/profile/ProfilePanel'
 import { motion } from 'framer-motion'
 import { pageTransition } from '../utils/animationVariants'

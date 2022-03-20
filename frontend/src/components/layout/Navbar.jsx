@@ -24,13 +24,19 @@ function Navbar() {
           </label>
           <ul tabIndex={0} className='mt-3 p-2 shadow menu menu-compact dropdown-content bg-base-100 rounded-box w-52'>
             <li>
-              <Link to='/'>Homepage</Link>
+              <Link to='/' onClick={(e) => e.target.blur()}>
+                Homepage
+              </Link>
             </li>
             <li>
-              <Link to='/buy'>Buy</Link>
+              <Link to='/buy' onClick={(e) => e.target.blur()}>
+                Buy
+              </Link>
             </li>
             <li>
-              <Link to='/rent'>Rent</Link>
+              <Link to='/rent' onClick={(e) => e.target.blur()}>
+                Rent
+              </Link>
             </li>
           </ul>
         </div>
@@ -59,12 +65,19 @@ function Navbar() {
             <label tabIndex={0} className='btn btn-ghost btn-circle avatar'>
               <Avatar className='w-10 rounded-full' user={user} />
             </label>
-            <ul tabIndex={0} className='mt-3 p-2 shadow menu menu-compact dropdown-content bg-base-100 rounded-box w-52'>
+            <ul
+              tabIndex={0}
+              className='mt-3 p-2 shadow menu menu-compact dropdown-content bg-base-100 rounded-box w-52'
+            >
               <li>
-                <Link to='/dashboard'>Dashboard</Link>
+                <Link to='/dashboard' onClick={(e) => e.target.blur()}>
+                  Dashboard
+                </Link>
               </li>
               <li>
-                <Link to='/settings'>Settings</Link>
+                <Link to='/settings' onClick={(e) => e.target.blur()}>
+                  Settings
+                </Link>
               </li>
               <li>
                 <button onClick={onLogout}>Logout</button>

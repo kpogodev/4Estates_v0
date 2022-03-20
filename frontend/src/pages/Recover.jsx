@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { pageTransition } from '../utils/animationVariants'
-import RecoveryAccountForm from '../components/forms/RecoveryAccountForm'
+import RecoveryAccountForm from '../components/auth/RecoveryAccountForm'
 
 function Recover() {
   const [wasSent, setWasSent] = useState(false)

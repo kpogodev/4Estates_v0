@@ -4,6 +4,7 @@ import propertiesService from './propertiesService'
 const initialState = {
   properties: [],
   myProperties: [],
+  property: null,
   isSuccess: false,
   isLoading: false,
   isError: false,
@@ -22,6 +23,15 @@ export const getProperties = createAsyncThunk('properties/get', async (payload, 
 export const getMyProperties = createAsyncThunk('properties/get_my', async (payload, thunkAPI) => {
   try {
     return await propertiesService.getProperties(payload)
+  } catch (error) {
+    const message = error?.response?.data?.message ?? error.toString()
+    return thunkAPI.rejectWithValue(message)
+  }
+})
+
+export const addProperty = createAsyncThunk('properties/add', async (payload, thunkAPI) => {
+  try {
+    return await propertiesService.addProperty(payload)
   } catch (error) {
     const message = error?.response?.data?.message ?? error.toString()
     return thunkAPI.rejectWithValue(message)
@@ -73,6 +83,21 @@ export const propertiesSlice = createSlice({
       })
       .addCase(getMyProperties.rejected, (state, action) => {
         state.myProperties = []
+        state.isLoading = false
+        state.isError = true
+        state.message = action.payload
+      })
+      .addCase(addProperty.pending, (state) => {
+        state.isLoading = true
+      })
+      .addCase(addProperty.fulfilled, (state, action) => {
+        state.property = action.payload.data
+        state.isSuccess = action.payload.success
+        state.isLoading = false
+        state.message = `Your property on ${action.payload.data.location.street} has been added`
+      })
+      .addCase(addProperty.rejected, (state, action) => {
+        state.property = null
         state.isLoading = false
         state.isError = true
         state.message = action.payload

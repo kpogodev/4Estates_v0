@@ -9,7 +9,7 @@ function PropertiesTabelRow({ property }) {
         <div className='flex items-center space-x-3'>
           <div className='avatar'>
             <div className='mask mask-squircle w-12 h-12'>
-              <img src={property.images[0].secure_url} alt='Avatar Tailwind CSS Component' />
+              <img src={property?.images[0]?.secure_url} alt='' />
             </div>
           </div>
           <div>

@@ -41,7 +41,7 @@ function HeroSwiper() {
     >
       {properties.map((property) => (
         <SwiperSlide key={property._id} className='!w-[520px] !h-[340px] bg-white'>
-          <HeroSwiperContent property={property} />
+          {/* <HeroSwiperContent property={property} /> */}
         </SwiperSlide>
       ))}
     </Swiper>

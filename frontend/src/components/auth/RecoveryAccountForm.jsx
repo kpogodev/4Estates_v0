@@ -7,7 +7,7 @@ import { recoverPassword, reset } from '../../features/auth/authSlice'
 import { useAuthFormsValidator } from '../../hooks/useAuthFormsValidator'
 
 import Spinner from '../shared/Spinner'
-import InputField from './InputField'
+import InputField from '../form/InputField'
 
 function RecoveryAccountForm({ setWasSent }) {
   const [formData, setFormData] = useState({

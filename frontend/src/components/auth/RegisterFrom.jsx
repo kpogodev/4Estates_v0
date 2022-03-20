@@ -2,12 +2,12 @@ import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { useSelector, useDispatch } from 'react-redux'
-import InputField from './InputField'
+import InputField from '../form/InputField'
 import Spinner from '../shared/Spinner'
 import { MdAlternateEmail, MdPassword, MdAccountCircle } from 'react-icons/md'
 import { registerUser, reset } from '../../features/auth/authSlice'
 import { useAuthFormsValidator } from '../../hooks/useAuthFormsValidator'
-import InputRadio from './InputRadio'
+import InputRadio from '../form/InputRadio'
 
 function RegisterFrom() {
   const [formData, setFormData] = useState({

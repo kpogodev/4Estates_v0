@@ -10,8 +10,21 @@ const getProperties = async (query = null) => {
   return data
 }
 
+// Add Properties
+const addProperty = async (formData) => {
+  const config = {
+    headers: {
+      ContentType: 'application/json',
+    },
+  }
+
+  const { data } = await axios.post(`${API_URL}`, formData, config)
+  return data
+}
+
 const propertiesService = {
   getProperties,
+  addProperty,
 }
 
 export default propertiesService

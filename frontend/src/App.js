@@ -14,6 +14,7 @@ import NotFound from './pages/NotFound'
 import Recover from './pages/Recover'
 import ResetPassword from './pages/ResetPassword'
 import Dashboard from './pages/Dashboard'
+import AddProperty from './pages/AddProperty'
 
 // Hooks
 import { useCheckAuth } from './hooks/useCheckAuth'
@@ -37,6 +38,9 @@ function App() {
               <Route path='/*' element={<NotFound />} />
               <Route path='/dashboard' element={<PrivateRoute />}>
                 <Route path='/dashboard' element={<Dashboard />} />
+              </Route>
+              <Route path='/add-property' element={<PrivateRoute />}>
+                <Route path='/add-property' element={<AddProperty />} />
               </Route>
             </Routes>
             <ToastContainer position='bottom-center' autoClose={5000} />

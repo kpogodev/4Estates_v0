@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useEffect } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { useSelector, useDispatch } from 'react-redux'
@@ -6,26 +6,44 @@ import InputField from '../form/InputField'
 import Spinner from '../shared/Spinner'
 import { MdAlternateEmail, MdPassword } from 'react-icons/md'
 import { loginUser, reset } from '../../features/auth/authSlice'
-import { useAuthFormsValidator } from '../../hooks/useAuthFormsValidator'
+import useForm from '../../hooks/useForm'
 
 function LoginForm() {
-  const [formData, setFormData] = useState({
-    email: '',
-    password: '',
-  })
-
   const navigate = useNavigate()
-
-  //From Redux
   const dispatch = useDispatch()
+
+  // From Redux State
   const { isAuth, isError, message, isLoading } = useSelector((state) => state.auth)
 
-  const { emailValid, passwordValid, validateEmail, validatePassword, setValidityAll } = useAuthFormsValidator()
+  // useForm Hook
+  const { formData, isValid, handleChange, handleSubmit } = useForm({
+    initialFormData: {
+      email: '',
+      password: '',
+    },
+    validations: {
+      email: {
+        isRequired: 'Please provide your email address',
+        validation: (email) => {
+          const regex = new RegExp(
+            /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+          )
+          return regex.test(email.toLowerCase())
+        },
+        validationErrorMessage: 'Please provide a valid email address',
+      },
+      password: {
+        isRequired: 'Please provide your password',
+      },
+    },
+    onSubmit: (data) => {
+      dispatch(loginUser(data))
+    },
+  })
 
   useEffect(() => {
     if (isError) {
       toast.error(message)
-      setValidityAll(false)
     }
 
     if (isAuth) {
@@ -37,18 +55,8 @@ function LoginForm() {
     // eslint-disable-next-line
   }, [isError, message, isAuth, navigate, dispatch])
 
-  const onSubmit = (e) => {
-    e.preventDefault()
-    const validEmail = validateEmail(formData.email)
-    const validPassword = validatePassword(formData.password)
-
-    if (validEmail && validPassword) {
-      dispatch(loginUser(formData))
-    }
-  }
-
   return (
-    <form className='form my-4 flex flex-col items-start gap-4 w-full' onSubmit={onSubmit}>
+    <form className='form my-4 flex flex-col items-start gap-4 w-full' onSubmit={handleSubmit} noValidate>
       <div className='form-control w-full'>
         <label className='label'>
           <span className='label-text'>Your Email</span>
@@ -63,8 +71,8 @@ function LoginForm() {
             placeholder='name@domain.com'
             className='input input-bordered w-full'
             value={formData.email}
-            setFormData={setFormData}
-            validator={[emailValid, setValidityAll]}
+            handleChange={handleChange}
+            isValid={isValid.email}
             autoComplete='new-email'
           />
         </label>
@@ -83,8 +91,8 @@ function LoginForm() {
             placeholder='********'
             className='input input-bordered w-full'
             value={formData.password}
-            setFormData={setFormData}
-            validator={[passwordValid, setValidityAll]}
+            handleChange={handleChange}
+            isValid={isValid.password}
             autoComplete='new-password'
           />
         </label>

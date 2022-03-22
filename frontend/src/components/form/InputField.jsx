@@ -1,35 +1,15 @@
-import { useState } from 'react'
 import PropTypes from 'prop-types'
-
-function InputField({ name, type, placeholder, className, value, setFormData, validator, autoComplete, disabled }) {
-  const [isNotEmpty, setIsNotEmpty] = useState(null)
-  const [isValid, setValidity] = validator
-
-  const handleOnChange = (e) => {
-    setFormData((current) => {
-      return {
-        ...current,
-        [e.target.name]: e.target.value,
-      }
-    })
-  }
-
-  const handleOnBlur = (e) => {
-    return e.target.value.length > 0 ? setIsNotEmpty(true) : setIsNotEmpty(false)
-  }
-
+function InputField({ name, type, placeholder, className, value, handleChange, isValid, autoComplete, disabled }) {
   return (
     <input
       name={name}
       type={type}
       placeholder={placeholder}
-      className={`${className} focus:border-info ${isNotEmpty && isValid !== false && 'border-success'} ${
-        isValid === false && 'border-error'
+      className={`${className} focus:border-info ${isValid === false ? 'border-error' : ''} ${
+        isValid === true ? 'border-success' : ''
       }`}
       value={value}
-      onFocus={() => setValidity(null)}
-      onChange={handleOnChange}
-      onBlur={handleOnBlur}
+      onChange={handleChange}
       autoComplete={autoComplete}
       disabled={disabled}
     />
@@ -46,9 +26,9 @@ InputField.propTypes = {
   type: PropTypes.string.isRequired,
   placeholder: PropTypes.string.isRequired,
   className: PropTypes.string,
-  setFormData: PropTypes.func.isRequired,
-  validator: PropTypes.array.isRequired,
+  handleChange: PropTypes.func.isRequired,
   autoComplete: PropTypes.string,
+  isValid: PropTypes.bool,
   disabled: PropTypes.bool,
 }
 

@@ -1,20 +1,13 @@
 import PropTypes from 'prop-types'
 
-function InputRadio({ name, value, className, setFormData, checked, disabled }) {
-  const handleChange = (e) => {
-    setFormData((current) => ({
-      ...current,
-      [e.target.name]: e.target.value,
-    }))
-  }
-
+function InputRadio({ name, value, className, handleChange, checked, disabled }) {
   return (
     <input
       name={name}
       type='radio'
       value={value}
       onChange={handleChange}
-      className={`radio checked:bg-success ${className}`}
+      className={`${className} radio checked:bg-success`}
       checked={checked}
       disabled={disabled}
     />
@@ -29,7 +22,7 @@ InputRadio.propTypes = {
   name: PropTypes.string.isRequired,
   value: PropTypes.string.isRequired,
   className: PropTypes.string,
-  setFormData: PropTypes.func.isRequired,
+  handleChange: PropTypes.func.isRequired,
   checked: PropTypes.bool,
   disabled: PropTypes.bool,
 }

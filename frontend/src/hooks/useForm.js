@@ -14,6 +14,8 @@ export default function useFrom({ initialFormData = {}, validations, onSubmit = 
     return value != null && value.trim().length > 0 ? true : false
   }
 
+  const isMatching = (valueA, valueB) => (valueA === valueB ? true : false)
+
   const validate = () => {
     let validation = {}
 
@@ -32,11 +34,31 @@ export default function useFrom({ initialFormData = {}, validations, onSubmit = 
           validation = { ...validation, [key]: validationResult }
           if (!validationResult) toast.error(value.validationErrorMessage)
         }
+
+        if (value.isSame) {
+          const matchResult = isMatching(formData[value.isSame.values[0]], formData[value.isSame.values[1]])
+          validation = { ...validation, [key]: matchResult }
+
+          if (!matchResult) {
+            toast.error(value.isSame.compareErrorMessage)
+            continue
+          }
+        }
       } else {
         if (value.validation) {
           const validationResult = value.validation(formData[key])
           validation = { ...validation, [key]: validationResult }
           if (!validationResult) toast.error(value.validationErrorMessage)
+        }
+
+        if (value.isSame) {
+          const matchResult = isMatching(formData[value.isSame.values[0]], formData[value.isSame.values[1]])
+          validation = { ...validation, [key]: matchResult }
+
+          if (!matchResult) {
+            toast.error(value.isSame.compareErrorMessage)
+            continue
+          }
         }
       }
     }

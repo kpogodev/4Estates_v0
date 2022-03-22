@@ -6,37 +6,64 @@ import InputField from '../form/InputField'
 import Spinner from '../shared/Spinner'
 import { MdAlternateEmail, MdPassword, MdAccountCircle } from 'react-icons/md'
 import { registerUser, reset } from '../../features/auth/authSlice'
-import { useAuthFormsValidator } from '../../hooks/useAuthFormsValidator'
+import useForm from '../../hooks/useForm'
 import InputRadio from '../form/InputRadio'
 
 function RegisterFrom() {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    password: '',
-    rePassword: '',
-    role: 'user',
-  })
-
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const { isAuth, isError, message, isLoading } = useSelector((state) => state.auth)
-  const {
-    nameValid,
-    emailValid,
-    passwordValid,
-    rePasswordValid,
-    validateName,
-    validateEmail,
-    validatePassword,
-    validateRepeatPassword,
-    setValidityAll,
-  } = useAuthFormsValidator()
+
+  // useForm Hook
+  const { formData, isValid, handleChange, handleSubmit } = useForm({
+    initialFormData: {
+      name: '',
+      email: '',
+      password: '',
+      rePassword: '',
+      role: 'user',
+    },
+    validations: {
+      name: {
+        isRequired: 'Please provide your full name',
+        validation: (name) => (name.length > 0 && name.length <= 100 ? true : false),
+      },
+      email: {
+        isRequired: 'Please provide your email address',
+        validation: (email) => {
+          const regex = new RegExp(
+            /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+          )
+          return regex.test(email.toLowerCase())
+        },
+        validationErrorMessage: 'Please provide a valid email address',
+      },
+      password: {
+        isRequired: 'Please provide your password',
+      },
+      rePassword: {
+        isRequired: 'Please repeat your password',
+        isSame: {
+          values: ['password', 'rePassword'],
+          compareErrorMessage: 'Passwords must match',
+        },
+      },
+    },
+    onSubmit: (data) => {
+      dispatch(
+        registerUser({
+          name: data.name,
+          email: data.email,
+          password: data.password,
+          role: data.role,
+        })
+      )
+    },
+  })
 
   useEffect(() => {
     if (isError) {
       toast.error(message)
-      setValidityAll(false)
     }
 
     if (isAuth) {
@@ -48,30 +75,8 @@ function RegisterFrom() {
     // eslint-disable-next-line
   }, [isError, message, isAuth, navigate, dispatch])
 
-  const onSubmit = (e) => {
-    e.preventDefault()
-
-    const { name, email, password, rePassword, role } = formData
-
-    const validName = validateName(name)
-    const validEmail = validateEmail(email)
-    const validPassword = validatePassword(password)
-    const validRePassword = validateRepeatPassword(password, rePassword)
-
-    if (validEmail && validName && validPassword && validRePassword) {
-      dispatch(
-        registerUser({
-          name,
-          email,
-          password,
-          role,
-        })
-      )
-    }
-  }
-
   return (
-    <form className='form my-4 flex flex-col items-start gap-4 w-full' onSubmit={onSubmit} noValidate>
+    <form className='form my-4 flex flex-col items-start gap-4 w-full' onSubmit={handleSubmit} noValidate>
       <div className='form-control w-full'>
         <label className='label'>
           <span className='label-text'>Name</span>
@@ -86,8 +91,8 @@ function RegisterFrom() {
             placeholder='Joe Doe'
             className='input input-bordered w-full'
             value={formData.name}
-            setFormData={setFormData}
-            validator={[nameValid, setValidityAll]}
+            handleChange={handleChange}
+            isValid={isValid.name}
             autoComplete='new-name'
           />
         </label>
@@ -106,8 +111,8 @@ function RegisterFrom() {
             placeholder='name@domain.com'
             className='input input-bordered w-full'
             value={formData.email}
-            setFormData={setFormData}
-            validator={[emailValid, setValidityAll]}
+            handleChange={handleChange}
+            isValid={isValid.email}
             autoComplete='new-email'
           />
         </label>
@@ -126,8 +131,8 @@ function RegisterFrom() {
             placeholder='********'
             className='input input-bordered w-full'
             value={formData.password}
-            setFormData={setFormData}
-            validator={[passwordValid, setValidityAll]}
+            handleChange={handleChange}
+            isValid={isValid.password}
             autoComplete='new-password'
           />
         </label>
@@ -146,8 +151,8 @@ function RegisterFrom() {
             placeholder='********'
             className='input input-bordered w-full'
             value={formData.rePassword}
-            setFormData={setFormData}
-            validator={[rePasswordValid, setValidityAll]}
+            handleChange={handleChange}
+            isValid={isValid.rePassword}
             autoComplete='new-password2'
           />
         </label>
@@ -158,13 +163,13 @@ function RegisterFrom() {
           <div className='form-control'>
             <label className='cursor-pointer label flex gap-4'>
               <span className='label-text'>Private</span>
-              <InputRadio name='role' value='user' setFormData={setFormData} checked={formData.role === 'user'} />
+              <InputRadio name='role' value='user' handleChange={handleChange} checked={formData.role === 'user'} />
             </label>
           </div>
           <div className='form-control'>
             <label className='cursor-pointer label flex gap-4'>
               <span className='label-text'>Agency</span>
-              <InputRadio name='role' value='agency' setFormData={setFormData} checked={formData.role === 'agency'} />
+              <InputRadio name='role' value='agency' handleChange={handleChange} checked={formData.role === 'agency'} />
             </label>
           </div>
         </div>

@@ -21,7 +21,6 @@ export const imageMultiUpload = async (data) => {
 };
 
 export const imageSingleUpload = async (data) => {
-  console.log(typeof data);
   const response = await cloudinary.uploader.upload(data, { upload_preset: '4estates' });
   return {
     cloudinary_id: response.public_id,

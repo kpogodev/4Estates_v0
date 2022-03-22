@@ -1,14 +1,23 @@
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { getUser, resetSuccess } from '../features/auth/authSlice'
 
-export const useCheckAuth = () => {
+const useCheckAuth = () => {
   const dispatch = useDispatch()
-  const { isAuth, user } = useSelector((state) => state.auth)
+  const { isAuth, user, isLoading } = useSelector((state) => state.auth)
+  const isMounted = useRef(true)
 
   useEffect(() => {
-    dispatch(resetSuccess())
-    if (isAuth && user) return
-    dispatch(getUser())
+    if (isMounted) {
+      dispatch(resetSuccess())
+      if (isAuth && user) return () => (isMounted.current = false)
+      dispatch(getUser())
+    }
+
+    return () => (isMounted.current = false)
   }, [isAuth, user, dispatch])
+
+  return { isLoading }
 }
+
+export default useCheckAuth

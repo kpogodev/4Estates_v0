@@ -83,7 +83,6 @@ const uploadAvatar = async (imageData) => {
   }
 
   const { data } = await axios.post(`${API_URL}/upload`, { data: imageData }, config)
-  console.log(data)
   return data
 }
 

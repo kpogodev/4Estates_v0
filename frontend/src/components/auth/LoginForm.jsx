@@ -14,9 +14,12 @@ function LoginForm() {
     password: '',
   })
 
-  const dispatch = useDispatch()
   const navigate = useNavigate()
+
+  //From Redux
+  const dispatch = useDispatch()
   const { isAuth, isError, message, isLoading } = useSelector((state) => state.auth)
+
   const { emailValid, passwordValid, validateEmail, validatePassword, setValidityAll } = useAuthFormsValidator()
 
   useEffect(() => {

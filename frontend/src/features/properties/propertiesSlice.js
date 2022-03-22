@@ -84,8 +84,6 @@ export const propertiesSlice = createSlice({
       .addCase(getMyProperties.rejected, (state, action) => {
         state.myProperties = []
         state.isLoading = false
-        state.isError = true
-        state.message = action.payload
       })
       .addCase(addProperty.pending, (state) => {
         state.isLoading = true

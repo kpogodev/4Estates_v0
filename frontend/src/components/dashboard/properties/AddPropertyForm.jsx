@@ -10,6 +10,7 @@ import InputNumber from '../../form/InputNumber'
 import Spinner from '../../shared/Spinner'
 import { toast } from 'react-toastify'
 
+
 const initFormData = {
   address: '',
   type: '',
@@ -25,6 +26,7 @@ function AddPropertyForm() {
   const [formData, setFormData] = useState(initFormData)
   const [fieldsDisabled, setFieldsDisabled] = useState(false)
   const [showGoToBtn, setShowToBtn] = useState(false)
+
 
   //From Redxu State
   const dispatch = useDispatch()
@@ -71,6 +73,18 @@ function AddPropertyForm() {
 
     const { address, description, key_features, type, bedrooms, bathrooms, size } = formData
 
+    let newFormData = {
+      address,
+      type,
+      details: {
+        description,
+        key_features: key_features.split(',').map((item) => item.trim()),
+        bedrooms,
+        bathrooms,
+        size,
+      },
+    }
+
     if (fieldsDisabled) {
       const validAddress = validateAddress(address)
       const validDescription = validateDescription(description)
@@ -78,17 +92,10 @@ function AddPropertyForm() {
       const validKeyFeatures = validateKeyFeatures(key_features)
 
       if (validAddress && validDescription && validSize && validKeyFeatures) {
-        dispatch(
-          addProperty({
-            address,
-            type,
-            details: {
-              description,
-              key_features: key_features.split(',').map((item) => item.trim()),
-              size,
-            },
-          })
-        )
+        delete newFormData.details.bedrooms
+        delete newFormData.details.bathrooms
+
+        dispatch(addProperty(newFormData))
 
         return setFormData(initFormData) && setValidityAll(null)
       }
@@ -101,20 +108,7 @@ function AddPropertyForm() {
       const validKeyFeatures = validateKeyFeatures(key_features)
 
       if (validAddress && validDescription && validBedrooms && validBathrooms && validSize && validKeyFeatures) {
-        dispatch(
-          addProperty({
-            address,
-            type,
-            details: {
-              description,
-              key_features: key_features.split(',').map((item) => item.trim()),
-              bedrooms,
-              bathrooms,
-              size,
-            },
-          })
-        )
-
+        dispatch(addProperty(newFormData))
         return setFormData(initFormData) && setValidityAll(null)
       }
     }

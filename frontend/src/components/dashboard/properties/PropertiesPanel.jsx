@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { IoAddCircle } from 'react-icons/io5'
-import { getMyProperties } from '../../../features/properties/propertiesSlice'
+import { getMyProperties, resetError } from '../../../features/properties/propertiesSlice'
 import Spinner from '../../shared/Spinner'
 import PropertiesGrid from './PropertiesGrid'
 import ViewSwitcher from '../../shared/ViewSwitcher'
@@ -25,6 +25,7 @@ function PropertiesPanel() {
       })
     )
   }, [user._id, dispatch])
+
 
   useEffect(() => {
     if (!matches && listType === 'tabel') {

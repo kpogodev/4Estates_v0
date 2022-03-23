@@ -11,6 +11,7 @@ export default function useFrom({ initialFormData = {}, validations, onSubmit = 
   }
 
   const isNotEmpty = (value) => {
+    if (typeof value === 'number') return true
     return value != null && value.trim().length > 0 ? true : false
   }
 

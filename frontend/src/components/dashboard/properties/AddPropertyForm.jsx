@@ -3,34 +3,84 @@ import { useSelector, useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { addProperty, resetError, resetSuccess } from '../../../features/properties/propertiesSlice'
 import InputField from '../../form/InputField'
-import { usePropertyFormsValidator } from '../../../hooks/usePropertyFormsValidator'
+import useForm from '../../../hooks/useForm'
 import InputSelect from '../../form/InputSelect'
 import InputTextarea from '../../form/InputTextarea'
 import InputNumber from '../../form/InputNumber'
 import Spinner from '../../shared/Spinner'
 import { toast } from 'react-toastify'
 
-
-const initFormData = {
-  address: '',
-  type: '',
-  description: '',
-  key_features: '',
-  bedrooms: 0,
-  bathrooms: 0,
-  size: 0,
-}
-
 function AddPropertyForm() {
   //Component States
-  const [formData, setFormData] = useState(initFormData)
   const [fieldsDisabled, setFieldsDisabled] = useState(false)
   const [showGoToBtn, setShowToBtn] = useState(false)
-
 
   //From Redxu State
   const dispatch = useDispatch()
   const { property, isLoading, isSuccess, isError, message } = useSelector((state) => state.properties)
+
+  // useForm Hook
+  const { formData, isValid, handleChange, handleSubmit } = useForm({
+    initialFormData: {
+      address: '',
+      bathrooms: 0,
+      bedrooms: 0,
+      description: '',
+      key_features: '',
+      size: 0,
+      type: 'house',
+    },
+    validations: {
+      address: {
+        isRequired: 'Please provide address',
+      },
+      bathrooms: {
+        isRequired: !fieldsDisabled || 'Please specify number of bathrooms',
+        validation: (bathrooms) => (bathrooms >= 1 && bathrooms <= 100 ? true : false),
+        validationErrorMessage: 'Property should have between 1 and 100 bathrooms',
+      },
+      bedrooms: {
+        isRequired: !fieldsDisabled || 'Please specify number of bedrooms',
+        validation: (bedrooms) => (bedrooms >= 1 && bedrooms <= 100 ? true : false),
+        validationErrorMessage: 'Property should have between 1 and 100 bedrooms',
+      },
+      description: {
+        isRequired: 'Please provide some property description',
+        validation: (description) => (description.length <= 3200 ? true : false),
+        validationErrorMessage: 'Description is limited to 3200 characters',
+      },
+      key_features: {
+        validation: (key_features) => (key_features.length <= 1000 ? true : false),
+        validationErrorMessage: 'Key features are limited to 1000 characters',
+      },
+      size: {
+        isRequired: 'Please specify size of the property',
+        validation: (size) => (size > 0 && size <= 99999999 ? true : false),
+        validationErrorMessage: 'Size of the property is limited to 99.999.999 square meters',
+      },
+    },
+    onSubmit: ({ address, description, key_features, type, bedrooms, bathrooms, size }) => {
+      let newFormData = {
+        address,
+        type,
+        details: {
+          description,
+          key_features: key_features.split(',').map((item) => item.trim()),
+          bedrooms,
+          bathrooms,
+          size,
+        },
+      }
+
+      if (fieldsDisabled) {
+        delete newFormData.details.bedrooms
+        delete newFormData.details.bathrooms
+        dispatch(addProperty(newFormData))
+      } else {
+        dispatch(addProperty(newFormData))
+      }
+    },
+  })
 
   //Disable some fileds based on property type
   useEffect(() => {
@@ -39,85 +89,19 @@ function AddPropertyForm() {
 
   useEffect(() => {
     if (isSuccess) {
-      toast.success(message)
       dispatch(resetSuccess())
       setShowToBtn(true)
+      toast.success(message)
     }
 
     if (isError) {
-      toast.error(message)
       dispatch(resetError())
+      toast.error(message)
     }
   }, [dispatch, isError, isSuccess, message])
 
-  //Validation Hook
-  const {
-    addressValid,
-    descriptionValid,
-    keyFeaturesValid,
-    bedroomsValid,
-    bathroomsValid,
-    sizeValid,
-    validateAddress,
-    validateDescription,
-    validateKeyFeatures,
-    validateBedrooms,
-    validateBathrooms,
-    validateSize,
-    setValidityAll,
-  } = usePropertyFormsValidator()
-
-  //Submition
-  const onSubmit = (e) => {
-    e.preventDefault()
-
-    const { address, description, key_features, type, bedrooms, bathrooms, size } = formData
-
-    let newFormData = {
-      address,
-      type,
-      details: {
-        description,
-        key_features: key_features.split(',').map((item) => item.trim()),
-        bedrooms,
-        bathrooms,
-        size,
-      },
-    }
-
-    if (fieldsDisabled) {
-      const validAddress = validateAddress(address)
-      const validDescription = validateDescription(description)
-      const validSize = validateSize(size)
-      const validKeyFeatures = validateKeyFeatures(key_features)
-
-      if (validAddress && validDescription && validSize && validKeyFeatures) {
-        delete newFormData.details.bedrooms
-        delete newFormData.details.bathrooms
-
-        dispatch(addProperty(newFormData))
-
-        return setFormData(initFormData) && setValidityAll(null)
-      }
-    } else {
-      const validAddress = validateAddress(address)
-      const validDescription = validateDescription(description)
-      const validBedrooms = validateBedrooms(bedrooms)
-      const validBathrooms = validateBathrooms(bathrooms)
-      const validSize = validateSize(size)
-      const validKeyFeatures = validateKeyFeatures(key_features)
-
-      if (validAddress && validDescription && validBedrooms && validBathrooms && validSize && validKeyFeatures) {
-        dispatch(addProperty(newFormData))
-        return setFormData(initFormData) && setValidityAll(null)
-      }
-    }
-
-    return
-  }
-
   return (
-    <form className='max-w-screen-lg mx-auto' onSubmit={onSubmit} noValidate>
+    <form className='max-w-screen-lg mx-auto' onSubmit={handleSubmit} noValidate>
       <div className='grid md:grid-cols-2 lg:p-8 pt-0 gap-x-10 gap-y-4'>
         {/* col-1 */}
         <div className='flex flex-col gap-y-4'>
@@ -127,14 +111,14 @@ function AddPropertyForm() {
               <span className='label-alt text-error text-sm italic'>Required *</span>
             </label>
             <InputField
-              name='address'
-              type='text'
-              placeholder='54 Slaidburn St, London SW10 0JW'
-              className='input input-bordered w-full'
-              value={formData.address}
-              setFormData={setFormData}
-              validator={[addressValid, setValidityAll]}
               autoComplete='new-address'
+              className='input input-bordered w-full'
+              handleChange={handleChange}
+              isValid={isValid.address}
+              name='address'
+              placeholder='54 Slaidburn St, London SW10 0JW'
+              type='text'
+              value={formData.address}
             />
           </div>
           <div className='relative form-control w-full'>
@@ -147,8 +131,8 @@ function AddPropertyForm() {
               placeholder='Please provide some description...'
               value={formData.description}
               className='textarea textarea-bordered min-h-[200px]'
-              setFormData={setFormData}
-              validator={[descriptionValid, setValidityAll]}
+              isValid={isValid.description}
+              handleChange={handleChange}
               maxlength={3200}
             />
           </div>
@@ -162,9 +146,9 @@ function AddPropertyForm() {
                 className='input input-bordered'
                 minValue={1}
                 maxValue={100}
-                setFormData={setFormData}
-                value={formData.bedrooms}
-                validator={[bedroomsValid, setValidityAll]}
+                handleChange={handleChange}
+                value={+formData.bedrooms}
+                isValid={isValid.bedrooms}
                 disabled={fieldsDisabled}
               />
             </div>
@@ -177,9 +161,9 @@ function AddPropertyForm() {
                 className='input input-bordered'
                 minValue={1}
                 maxValue={100}
-                setFormData={setFormData}
-                value={formData.bathrooms}
-                validator={[bathroomsValid, setValidityAll]}
+                handleChange={handleChange}
+                value={+formData.bathrooms}
+                isValid={isValid.bathrooms}
                 disabled={fieldsDisabled}
               />
             </div>
@@ -194,9 +178,9 @@ function AddPropertyForm() {
                 className='input input-bordered'
                 minValue={0}
                 maxValue={99999999}
-                setFormData={setFormData}
-                validator={[sizeValid, setValidityAll]}
-                value={formData.size}
+                handleChange={handleChange}
+                isValid={isValid.size}
+                value={+formData.size}
               />
             </div>
           </div>
@@ -212,7 +196,7 @@ function AddPropertyForm() {
               name='type'
               options={['house', 'flat', 'apartament', 'bungalow', 'land', 'commercial']}
               value={formData.type}
-              setFormData={setFormData}
+              handleChange={handleChange}
             />
           </div>
           <div className='relative form-control w-full'>
@@ -225,8 +209,8 @@ function AddPropertyForm() {
               placeholder='Large Garden, Close to local amenities, etc.'
               value={formData.key_features}
               className='textarea textarea-bordered min-h-[120px]'
-              setFormData={setFormData}
-              validator={[keyFeaturesValid, setValidityAll]}
+              isValid={isValid.key_features}
+              handleChange={handleChange}
               maxlength={1000}
             />
           </div>

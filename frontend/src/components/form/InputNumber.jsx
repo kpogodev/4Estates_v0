@@ -1,29 +1,16 @@
-import { useState } from 'react'
 import PropTypes from 'prop-types'
-
-function InputNumber({ name, className, minValue, maxValue, value, setFormData, validator, disabled }) {
-  const [isNotEmpty, setIsNotEmpty] = useState(null)
-  const [isValid, setValidity] = validator
-
-  const handleOnChange = (e) => setFormData((prev) => ({ ...prev, [e.target.name]: +e.target.value }))
-
-  const handleOnBlur = (e) => {
-    return e.target.value > 0 ? setIsNotEmpty(true) : setIsNotEmpty(false)
-  }
-
+function InputNumber({ name, className, minValue, maxValue, value, handleChange, isValid, disabled }) {
   return (
     <input
       name={name}
-      className={`${className} focus:border-info ${isNotEmpty && isValid !== false && 'border-success'} ${
-        isValid === false && 'border-error'
+      className={`${className} focus:border-info ${isValid === false ? 'border-error' : ''} ${
+        isValid === true ? 'border-success' : ''
       }`}
       type='number'
       min={minValue}
       max={maxValue}
       value={value}
-      onInput={handleOnChange}
-      onBlur={handleOnBlur}
-      onFocus={() => setValidity(null)}
+      onInput={handleChange}
       disabled={disabled}
     />
   )
@@ -40,8 +27,8 @@ InputNumber.propTypes = {
   minValue: PropTypes.number,
   maxValue: PropTypes.number,
   value: PropTypes.number.isRequired,
-  setFormData: PropTypes.func.isRequired,
-  validator: PropTypes.array.isRequired,
+  handleChange: PropTypes.func.isRequired,
+  isValid: PropTypes.bool,
   disabled: PropTypes.bool,
 }
 

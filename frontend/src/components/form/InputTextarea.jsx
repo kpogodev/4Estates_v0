@@ -1,34 +1,26 @@
 import PropTypes from 'prop-types'
 import { useState } from 'react'
 
-function InputTextarea({ name, placeholder, value, className, setFormData, maxlength, validator, disabled }) {
+function InputTextarea({ name, placeholder, value, className, handleChange, maxlength, isValid, disabled }) {
   const [count, setCount] = useState(0)
-  const [isNotEmpty, setIsNotEmpty] = useState(null)
-  const [isValid, setValidity] = validator
 
   const handleOnChange = (e) => {
-    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }))
+    handleChange(e)
     setCount(e.target.value.length)
-  }
-
-  const handleOnBlur = (e) => {
-    return e.target.value.length > 0 ? setIsNotEmpty(true) : setIsNotEmpty(false)
   }
 
   return (
     <>
       <textarea
-        className={`${className} focus:border-info ${isNotEmpty && isValid !== false && 'border-success'} ${
-          isValid === false && 'border-error'
+        className={`${className} focus:border-info ${isValid === false ? 'border-error' : ''} ${
+          isValid === true ? 'border-success' : ''
         }`}
+        disabled={disabled}
         name={name}
+        maxLength={maxlength}
+        onChange={handleOnChange}
         placeholder={placeholder}
         value={value}
-        onChange={handleOnChange}
-        onFocus={() => setValidity(null)}
-        onBlur={handleOnBlur}
-        maxLength={maxlength}
-        disabled={disabled}
       ></textarea>
       <label className='label'>
         <span className='label-alt text-sm italic ml-auto'>
@@ -45,14 +37,14 @@ InputTextarea.defaultProps = {
 }
 
 InputTextarea.propTypes = {
-  name: PropTypes.string.isRequired,
   className: PropTypes.string,
+  disabled: PropTypes.bool,
+  handleChange: PropTypes.func.isRequired,
+  isValid: PropTypes.bool,
+  maxlength: PropTypes.number.isRequired,
+  name: PropTypes.string.isRequired,
   placeholder: PropTypes.string,
   value: PropTypes.string.isRequired,
-  setFormData: PropTypes.func.isRequired,
-  maxlength: PropTypes.number.isRequired,
-  validator: PropTypes.array.isRequired,
-  disabled: PropTypes.bool,
 }
 
 export default InputTextarea

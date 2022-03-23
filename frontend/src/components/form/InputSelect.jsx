@@ -1,20 +1,7 @@
-import { useEffect } from 'react'
 import PropTypes from 'prop-types'
-
-function InputSelect({ name, value, options, setFormData, disabled }) {
-  useEffect(() => {
-    setFormData((prev) => ({ ...prev, [name]: options[0] }))
-  }, [])
-
-  const handleOnChange = (e) => {
-    setFormData((prev) => ({
-      ...prev,
-      [e.target.name]: e.target.value,
-    }))
-  }
-
+function InputSelect({ name, value, options, handleChange, disabled }) {
   return (
-    <select name={name} className='select select-bordered' onChange={handleOnChange} value={value} disabled={disabled}>
+    <select name={name} className='select select-bordered' onChange={handleChange} value={value} disabled={disabled}>
       {options.map((option, index) => (
         <option key={index} value={option.toLowerCase()}>
           {`${option.trim().charAt(0).toUpperCase()}${option.slice(1)}`}
@@ -25,7 +12,6 @@ function InputSelect({ name, value, options, setFormData, disabled }) {
 }
 
 InputSelect.defaultProps = {
-  value: '',
   disabled: false,
 }
 
@@ -33,7 +19,7 @@ InputSelect.propTypes = {
   name: PropTypes.string.isRequired,
   value: PropTypes.string.isRequired,
   options: PropTypes.array.isRequired,
-  setFormData: PropTypes.func.isRequired,
+  handleChange: PropTypes.func.isRequired,
   disabled: PropTypes.bool,
 }
 

@@ -1,27 +1,40 @@
-import { useState, useEffect } from 'react'
+import { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { MdAlternateEmail } from 'react-icons/md'
 import { toast } from 'react-toastify'
 
 import { recoverPassword, reset } from '../../features/auth/authSlice'
-import { useAuthFormsValidator } from '../../hooks/useAuthFormsValidator'
+import useForm from '../../hooks/useForm'
 
 import Spinner from '../shared/Spinner'
 import InputField from '../form/InputField'
 
 function RecoveryAccountForm({ setWasSent }) {
-  const [formData, setFormData] = useState({
-    email: '',
+  const { formData, isValid, handleChange, handleSubmit } = useForm({
+    initialFormData: {
+      email: '',
+    },
+    validations: {
+      email: {
+        isRequired: 'Please provide your email address',
+        validation: (email) => {
+          const regex = new RegExp(
+            /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+          )
+          return regex.test(email.toLowerCase())
+        },
+        validationErrorMessage: 'Please provide a valid email address',
+      },
+    },
+    onSubmit: (data) => dispatch(recoverPassword(data.email)),
   })
 
   const dispatch = useDispatch()
   const { isSuccess, isError, isLoading, message } = useSelector((state) => state.auth)
-  const { emailValid, validateEmail, setValidityAll } = useAuthFormsValidator()
 
   useEffect(() => {
     if (isError) {
       toast.error(message)
-      setValidityAll(false)
     }
 
     if (isSuccess) {
@@ -33,17 +46,8 @@ function RecoveryAccountForm({ setWasSent }) {
     // eslint-disable-next-line
   }, [message, isError, isSuccess, setWasSent, dispatch])
 
-  const onSubmit = (e) => {
-    e.preventDefault()
-    const validEmail = validateEmail(formData.email)
-
-    if (validEmail) {
-      dispatch(recoverPassword(formData.email))
-    }
-  }
-
   return (
-    <form className='form flex flex-col items-start gap-4 w-full' onSubmit={onSubmit} noValidate>
+    <form className='form flex flex-col items-start gap-4 w-full' onSubmit={handleSubmit} noValidate>
       <div className='form-control w-full'>
         <label className='label'>
           <span className='label-text'>Your Email</span>
@@ -55,11 +59,11 @@ function RecoveryAccountForm({ setWasSent }) {
           <InputField
             name='email'
             type='email'
-            value={formData?.email}
+            value={formData.email}
             placeholder='name@domain.com'
             className='input input-bordered w-full'
-            setFormData={setFormData}
-            validator={[emailValid, setValidityAll]}
+            handleChange={handleChange}
+            isValid={isValid.email}
           />
         </label>
       </div>

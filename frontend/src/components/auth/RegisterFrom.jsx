@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { useSelector, useDispatch } from 'react-redux'
@@ -27,6 +27,7 @@ function RegisterFrom() {
       name: {
         isRequired: 'Please provide your full name',
         validation: (name) => (name.length > 0 && name.length <= 100 ? true : false),
+        validationErrorMessage: 'Your name must consist of 1 to 100 characters',
       },
       email: {
         isRequired: 'Please provide your email address',

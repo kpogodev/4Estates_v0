@@ -1,55 +1,51 @@
-import { useState, useEffect } from 'react'
+import { useEffect } from 'react'
 import { toast } from 'react-toastify'
 import { useSelector, useDispatch } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import { MdPassword } from 'react-icons/md'
 import { resetPassword, reset } from '../../features/auth/authSlice'
-import { useAuthFormsValidator } from '../../hooks/useAuthFormsValidator'
+import useForm from '../../hooks/useForm'
 import InputField from '../form/InputField'
 import Spinner from '../shared/Spinner'
 
 function ResetPasswordForm() {
-  const [formData, setFormData] = useState({
-    password: '',
-    rePassword: '',
-  })
-
+  const { isSuccess, isError, message, isLoading } = useSelector((state) => state.auth)
   const { token } = useParams()
   const dispatch = useDispatch()
 
-  const { isSuccess, isError, message, isLoading } = useSelector((state) => state.auth)
-  const { passwordValid, rePasswordValid, validatePassword, validateRepeatPassword, setValidityAll } =
-    useAuthFormsValidator()
+  const { formData, isValid, handleChange, handleSubmit } = useForm({
+    initialFormData: {
+      password: '',
+      rePassword: '',
+    },
+    validations: {
+      password: {
+        isRequired: 'Please provide your password',
+      },
+      rePassword: {
+        isRequired: 'Please repeat your password',
+        isSame: {
+          values: ['password', 'rePassword'],
+          compareErrorMessage: 'Passwords must match',
+        },
+      },
+    },
+    onSubmit: ({ password }) => dispatch(resetPassword({ password, token })),
+  })
 
   useEffect(() => {
     if (isError) {
       toast.error(message)
-      setValidityAll(false)
     }
-
     if (isSuccess) {
       toast.success(message)
     }
-
     dispatch(reset())
     // eslint-disable-next-line
   }, [isError, message, isSuccess, dispatch])
 
-  const onSubmit = (e) => {
-    e.preventDefault()
-
-    const { password, rePassword } = formData
-
-    const validPassword = validatePassword(password)
-    const validRePassword = validateRepeatPassword(password, rePassword)
-
-    if (validPassword && validRePassword) {
-      dispatch(resetPassword({ password, token }))
-    }
-  }
-
   return (
-    <form className='form flex flex-col items-start gap-4 w-full' onSubmit={onSubmit}>
+    <form className='form flex flex-col items-start gap-4 w-full' onSubmit={handleSubmit} noValidate>
       <div className='form-control w-full'>
         <label className='label'>
           <span className='label-text'>Password</span>
@@ -64,8 +60,8 @@ function ResetPasswordForm() {
             placeholder='********'
             className='input input-bordered w-full'
             value={formData.password}
-            setFormData={setFormData}
-            validator={[passwordValid, setValidityAll]}
+            handleChange={handleChange}
+            isValid={isValid.password}
             autoComplete='new-password'
           />
         </label>
@@ -84,8 +80,8 @@ function ResetPasswordForm() {
             placeholder='********'
             className='input input-bordered w-full'
             value={formData.rePassword}
-            setFormData={setFormData}
-            validator={[rePasswordValid, setValidityAll]}
+            handleChange={handleChange}
+            isValid={isValid.rePassword}
             autoComplete='new-password2'
           />
         </label>

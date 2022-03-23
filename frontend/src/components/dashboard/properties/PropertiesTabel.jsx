@@ -7,29 +7,21 @@ function PropertiesTabel({ properties }) {
   return (
     <motion.div variants={forViewSwitcher} initial='hidden' animate='visible' exit='exit'>
       <div className='overflow-x-auto w-full'>
-        <table className='table w-full lg:text-lg'>
-          <thead>
-            <tr>
-              <th>Property</th>
-              <th>Property Type</th>
-              <th>Status</th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
+        <div className='flex flex-col w-full lg:text-lg'>
+          <div>
+            <div className='w-full grid grid-cols-12 place-items-center font-bold py-2 px-1 bg-slate-100'>
+              <div className='col-span-6 justify-self-start'>Property</div>
+              <div className='col-span-2'>Property Type</div>
+              <div className='col-span-2'>Status</div>
+              <div className='col-span-2'></div>
+            </div>
+          </div>
+          <div className='flex flex-col w-full gap-3 py-3 max-h-[450px] overflow-y-auto'>
             {properties.map((property) => (
               <PropertiesTabelRow key={property._id} property={property} />
             ))}
-          </tbody>
-          <tfoot>
-            <tr>
-              <th>Property</th>
-              <th>Property Type</th>
-              <th>Status</th>
-              <th></th>
-            </tr>
-          </tfoot>
-        </table>
+          </div>
+        </div>
       </div>
     </motion.div>
   )

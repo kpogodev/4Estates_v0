@@ -4,8 +4,8 @@ import { Link } from 'react-router-dom'
 
 function PropertiesTabelRow({ property }) {
   return (
-    <motion.tr variants={forViewSwitcherItems}>
-      <td>
+    <motion.div variants={forViewSwitcherItems} className='w-full grid grid-cols-12 place-items-center'>
+      <div className='col-span-6 justify-self-start'>
         <div className='flex items-center space-x-3'>
           <div className='avatar'>
             <div className='mask mask-squircle w-12 h-12'>
@@ -17,21 +17,21 @@ function PropertiesTabelRow({ property }) {
             <div className='text-sm opacity-50'>{property.location.postcode}</div>
           </div>
         </div>
-      </td>
-      <td className='capitalize'>{property.type}</td>
-      <td>
+      </div>
+      <div className='capitalize col-span-2'>{property.type}</div>
+      <div className='col-span-2'>
         {property.is_published ? (
           <div className='badge badge-success'>Published</div>
         ) : (
           <div className='badge badge-accent'>Not Published</div>
         )}
-      </td>
-      <th>
+      </div>
+      <div className='col-span-2'>
         <Link to={`/property/${property._id}`} className='btn btn-ghost btn-xs'>
           details
         </Link>
-      </th>
-    </motion.tr>
+      </div>
+    </motion.div>
   )
 }
 

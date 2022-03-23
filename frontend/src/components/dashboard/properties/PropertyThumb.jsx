@@ -6,7 +6,7 @@ function PropertyThumb({ property }) {
   return (
     <motion.div variants={forViewSwitcherItems}>
       <Link
-        to={`/property/${property._id}`}
+        to={`/my-property/${property._id}`}
         className='card bg-base-100 shadow-lg image-full hover:before:opacity-30 before:transition-opacity'
       >
         <figure>

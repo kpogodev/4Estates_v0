@@ -5,6 +5,7 @@ const initialState = {
   properties: [],
   myProperties: [],
   property: null,
+  myProperty: null,
   isSuccess: false,
   isLoading: false,
   isError: false,
@@ -20,7 +21,16 @@ export const getProperties = createAsyncThunk('properties/get', async (payload, 
   }
 })
 
-export const getMyProperties = createAsyncThunk('properties/get_my', async (payload, thunkAPI) => {
+export const getProperty = createAsyncThunk('properties/get_property', async (payload, thunkAPI) => {
+  try {
+    return await propertiesService.getProperty(payload)
+  } catch (error) {
+    const message = error?.response?.data?.message ?? error.toString()
+    return thunkAPI.rejectWithValue(message)
+  }
+})
+
+export const getMyProperties = createAsyncThunk('properties/get_my_properties', async (payload, thunkAPI) => {
   try {
     return await propertiesService.getProperties(payload)
   } catch (error) {
@@ -44,6 +54,9 @@ export const propertiesSlice = createSlice({
   reducers: {
     reset: (state) => {
       state.properties = []
+      state.myProperties = []
+      state.property = null
+      state.myProperty = null
       state.isSuccess = false
       state.isLoading = false
       state.isError = false
@@ -56,6 +69,9 @@ export const propertiesSlice = createSlice({
     resetSuccess: (state) => {
       state.isSuccess = false
       state.message = ''
+    },
+    resetMyProperty: (state) => {
+      state.myProperty = null
     },
   },
 
@@ -70,6 +86,19 @@ export const propertiesSlice = createSlice({
       })
       .addCase(getProperties.rejected, (state, action) => {
         state.properties = []
+        state.isLoading = false
+        state.isError = true
+        state.message = action.payload
+      })
+      .addCase(getProperty.pending, (state) => {
+        state.isLoading = true
+      })
+      .addCase(getProperty.fulfilled, (state, action) => {
+        state.myProperty = action.payload.data
+        state.isLoading = false
+      })
+      .addCase(getProperty.rejected, (state, action) => {
+        state.myProperty = null
         state.isLoading = false
         state.isError = true
         state.message = action.payload
@@ -103,5 +132,5 @@ export const propertiesSlice = createSlice({
   },
 })
 
-export const { reset, resetError, resetSuccess } = propertiesSlice.actions
+export const { reset, resetError, resetSuccess, resetMyProperty } = propertiesSlice.actions
 export default propertiesSlice.reducer

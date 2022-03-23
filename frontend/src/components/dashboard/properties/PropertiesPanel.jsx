@@ -26,7 +26,6 @@ function PropertiesPanel() {
     )
   }, [user._id, dispatch])
 
-
   useEffect(() => {
     if (!matches && listType === 'tabel') {
       setListType('grid')
@@ -49,11 +48,11 @@ function PropertiesPanel() {
   return (
     <div className='card w-full bg-base-100 shadow-lg col-span-2'>
       <div className='card-body gap-12 pb-12'>
-        <div className='flex justify-between items-center'>
-          <h2 className='text-4xl font-bold'>My Properties</h2>
-          <Link className='btn btn-outline btn-primary btn-md' to='/add-property'>
-            <IoAddCircle className='text-2xl' />
-            <span className='font-semibold text-xl'>Add New</span>
+        <div className='flex justify-between items-center flex-wrap gap-4'>
+          <h2 className='text-2xl md:text-3xl lg:text-4xl font-bold'>My Properties</h2>
+          <Link className='btn btn-outline btn-primary btn-sm lg:btn-md' to='/add-property'>
+            <IoAddCircle className='text-xl lg:text-2xl' />
+            <span className='font-semibold text-lg lg:text-xl'>Add New</span>
           </Link>
         </div>
         <div className='pt-10 pb-5 border-y-2 relative'>

@@ -5,8 +5,13 @@ const API_URL = '/api/v1/properties'
 // Get Properties
 const getProperties = async (query = null) => {
   const params = (query && new URLSearchParams(query)) ?? ''
-
   const { data } = await axios.get(`${API_URL}?${params}`)
+  return data
+}
+
+// Get Properties
+const getProperty = async (id) => {
+  const { data } = await axios.get(`${API_URL}/${id}`)
   return data
 }
 
@@ -17,7 +22,6 @@ const addProperty = async (formData) => {
       ContentType: 'application/json',
     },
   }
-
   const { data } = await axios.post(`${API_URL}`, formData, config)
   return data
 }
@@ -25,6 +29,7 @@ const addProperty = async (formData) => {
 const propertiesService = {
   getProperties,
   addProperty,
+  getProperty,
 }
 
 export default propertiesService

@@ -37,14 +37,15 @@ function App() {
               <Route path='/recover/' element={<Recover />} />
               <Route path='/reset-password/:token' element={<ResetPassword />} />
               <Route path='/*' element={<NotFound />} />
+              {/* PRIVATE ROUTES */}
               <Route path='/dashboard' element={<PrivateRoute />}>
                 <Route path='/dashboard' element={<Dashboard />} />
               </Route>
               <Route path='/add-property' element={<PrivateRoute />}>
                 <Route path='/add-property' element={<AddProperty />} />
               </Route>
-              <Route path='/my-property' element={<PrivateRoute />}>
-                <Route path='/my-property' element={<MyProperty />} />
+              <Route path='/my-property/:id' element={<PrivateRoute />}>
+                <Route path='/my-property/:id' element={<MyProperty />} />
               </Route>
             </Routes>
             <ToastContainer position='bottom-center' autoClose={5000} />

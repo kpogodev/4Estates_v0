@@ -1,29 +1,29 @@
-import axios from 'axios';
-import { useState } from 'react';
+import axios from 'axios'
+import { useState } from 'react'
 
 export default function ImageUploaderRaw() {
-  const [fileInputState, setFileInputState] = useState([]);
+  const [fileInputState, setFileInputState] = useState([])
 
   const handleFileInputChange = (e) => {
-    const files = e.target.files;
-    handleFileConvertion(files);
-  };
+    const files = e.target.files
+    handleFileConvertion(files)
+  }
 
   const handleFileConvertion = (files) => {
-    [...files].forEach((file) => {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
+    ;[...files].forEach((file) => {
+      const reader = new FileReader()
+      reader.readAsDataURL(file)
       reader.onload = () => {
-        setFileInputState((prevState) => [...prevState, reader.result]);
-      };
-    });
-  };
+        setFileInputState((prevState) => [...prevState, reader.result])
+      }
+    })
+  }
 
   const handleSubmitFile = (e) => {
-    e.preventDefault();
-    if (fileInputState.length <= 0) return;
-    uploadImage(fileInputState);
-  };
+    e.preventDefault()
+    if (fileInputState.length <= 0) return
+    uploadImage(fileInputState)
+  }
 
   const uploadImage = async (imagesArray) => {
     try {
@@ -33,12 +33,12 @@ export default function ImageUploaderRaw() {
         {
           headers: { 'Content-Type': 'application/json' },
         }
-      );
-      console.log(res.data);
+      )
+      console.log(res.data)
     } catch (error) {
-      console.error(error);
+      console.error(error)
     }
-  };
+  }
 
   return (
     <div>
@@ -55,5 +55,5 @@ export default function ImageUploaderRaw() {
           ))}
       </div>
     </div>
-  );
+  )
 }

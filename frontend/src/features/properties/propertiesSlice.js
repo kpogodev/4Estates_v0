@@ -5,7 +5,7 @@ const initialState = {
   properties: [],
   myProperties: [],
   property: null,
-  myProperty: null,
+  uploadProgress: 0,
   isSuccess: false,
   isLoading: false,
   isError: false,
@@ -48,6 +48,15 @@ export const addProperty = createAsyncThunk('properties/add', async (payload, th
   }
 })
 
+export const uploadPropertyImages = createAsyncThunk('properties/upload', async (payload, thunkAPI) => {
+  try {
+    return await propertiesService.uploadPropertyImages(payload, thunkAPI)
+  } catch (error) {
+    const message = error?.response?.data?.message ?? error.toString()
+    return thunkAPI.rejectWithValue(message)
+  }
+})
+
 export const propertiesSlice = createSlice({
   name: 'properties',
   initialState,
@@ -56,7 +65,6 @@ export const propertiesSlice = createSlice({
       state.properties = []
       state.myProperties = []
       state.property = null
-      state.myProperty = null
       state.isSuccess = false
       state.isLoading = false
       state.isError = false
@@ -70,8 +78,11 @@ export const propertiesSlice = createSlice({
       state.isSuccess = false
       state.message = ''
     },
-    resetMyProperty: (state) => {
-      state.myProperty = null
+    resetProperty: (state) => {
+      state.property = null
+    },
+    setUploadProgress: (state, action) => {
+      state.uploadProgress = action.payload
     },
   },
 
@@ -94,11 +105,11 @@ export const propertiesSlice = createSlice({
         state.isLoading = true
       })
       .addCase(getProperty.fulfilled, (state, action) => {
-        state.myProperty = action.payload.data
+        state.property = action.payload.data
         state.isLoading = false
       })
       .addCase(getProperty.rejected, (state, action) => {
-        state.myProperty = null
+        state.property = null
         state.isLoading = false
         state.isError = true
         state.message = action.payload
@@ -129,8 +140,24 @@ export const propertiesSlice = createSlice({
         state.isError = true
         state.message = action.payload
       })
+      .addCase(uploadPropertyImages.pending, (state) => {
+        state.isLoading = true
+      })
+      .addCase(uploadPropertyImages.fulfilled, (state, action) => {
+        state.property = action.payload.data
+        state.isSuccess = action.payload.success
+        state.uploadProgress = 0
+        state.isLoading = false
+        state.message = `Your images have been uploaded`
+      })
+      .addCase(uploadPropertyImages.rejected, (state, action) => {
+        state.property = null
+        state.isLoading = false
+        state.isError = true
+        state.message = action.payload
+      })
   },
 })
 
-export const { reset, resetError, resetSuccess, resetMyProperty } = propertiesSlice.actions
+export const { reset, resetError, resetSuccess, resetProperty, setUploadProgress } = propertiesSlice.actions
 export default propertiesSlice.reducer

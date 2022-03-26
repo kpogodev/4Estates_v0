@@ -33,7 +33,10 @@ export default function useFrom({ initialFormData = {}, validations, onSubmit = 
         if (value.validation) {
           const validationResult = value.validation(formData[key])
           validation = { ...validation, [key]: validationResult }
-          if (!validationResult) toast.error(value.validationErrorMessage)
+          if (!validationResult) {
+            toast.error(value.validationErrorMessage)
+            continue
+          }
         }
 
         if (value.isSame) {

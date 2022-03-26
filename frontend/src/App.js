@@ -16,7 +16,7 @@ import Recover from './pages/Recover'
 import ResetPassword from './pages/ResetPassword'
 import Dashboard from './pages/Dashboard'
 import AddProperty from './pages/AddProperty'
-import MyProperty from './pages/MyProperty'
+import ManageProperty from './pages/ManageProperty'
 
 // Hooks
 import useCheckAuth from './hooks/useCheckAuth'
@@ -44,8 +44,8 @@ function App() {
               <Route path='/add-property' element={<PrivateRoute />}>
                 <Route path='/add-property' element={<AddProperty />} />
               </Route>
-              <Route path='/my-property/:id' element={<PrivateRoute />}>
-                <Route path='/my-property/:id' element={<MyProperty />} />
+              <Route path='/manage-property/:id' element={<PrivateRoute />}>
+                <Route path='/manage-property/:id' element={<ManageProperty />} />
               </Route>
             </Routes>
             <ToastContainer position='bottom-center' autoClose={5000} />

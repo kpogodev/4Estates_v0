@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { setUploadProgress } from './propertiesSlice'
 
 const API_URL = '/api/v1/properties'
 
@@ -26,10 +27,28 @@ const addProperty = async (formData) => {
   return data
 }
 
+// Upload Images
+const uploadPropertyImages = async (formData, thunkAPI) => {
+  const config = {
+    headers: {
+      ContentType: 'application/json',
+    },
+    onUploadProgress: (progressEvent) => {
+      const percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total)
+      console.log(progressEvent);
+      thunkAPI.dispatch(setUploadProgress(percentCompleted))
+    },
+  }
+
+  const { data } = await axios.post(`${API_URL}/upload`, formData, config)
+  return data
+}
+
 const propertiesService = {
   getProperties,
   addProperty,
   getProperty,
+  uploadPropertyImages,
 }
 
 export default propertiesService

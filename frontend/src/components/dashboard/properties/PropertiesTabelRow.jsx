@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 function PropertiesTabelRow({ property }) {
   return (
     <motion.div variants={forViewSwitcherItems} className='w-full grid grid-cols-12 place-items-center'>
-      <Link to={`/my-property/${property._id}`} className='col-span-6 justify-self-start'>
+      <Link to={`/manage-property/${property._id}`} className='col-span-6 justify-self-start'>
         <div className='flex items-center space-x-3'>
           <div className='avatar'>
             <div className='mask mask-squircle w-12 h-12 bg-slate-400'>
@@ -27,7 +27,7 @@ function PropertiesTabelRow({ property }) {
         )}
       </div>
       <div className='col-span-2'>
-        <Link to={`/my-property/${property._id}`} className='btn btn-primary btn-xs'>
+        <Link to={`/manage-property/${property._id}`} className='btn btn-primary btn-xs'>
           details
         </Link>
       </div>

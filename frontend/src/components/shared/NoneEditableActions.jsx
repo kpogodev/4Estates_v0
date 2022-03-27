@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion'
 import { MdEditNote } from 'react-icons/md'
-import { simpleFadeInOut } from '../../../utils/animationVariants'
+import { simpleFadeInOut } from '../../utils/animationVariants'
 
 function NoneEditableActions({ toggleEdit }) {
   return (

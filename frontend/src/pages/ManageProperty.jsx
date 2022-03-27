@@ -50,10 +50,12 @@ function ManageProperty() {
           Back to Dashboard
         </Link>
       </div>
-      <PropertySlider className='col-span-8 shadow-lg bg-black' images={property.images} />
-      <div className='col-span-4 grid grid-rows-3 gap-5'>
+      <div className='flex flex-col col-span-8'>
+        <PropertySlider className='max-h-[600px] shadow-lg bg-black' images={property.images} />
+      </div>
+      <div className='col-span-4 flex flex-col gap-10'>
         <PropertySliderUpload className='row-span-1' isLoading={isLoading} uploadProgress={uploadProgress} />
-        <PropertyDetails className='row-span-2' />
+        <PropertyDetails className='row-span-2' isLoading={isLoading} property={property} />
       </div>
     </motion.div>
   )

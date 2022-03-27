@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
-function InputTextarea({ name, placeholder, value, className, handleChange, maxlength, isValid, disabled }) {
-  const [count, setCount] = useState(0)
+function InputTextarea({ name, placeholder, value, className, handleChange, maxlength, isValid, disabled, readOnly }) {
+  const [count, setCount] = useState(value.length ?? 0)
 
   const handleOnChange = (e) => {
     handleChange(e)
@@ -20,6 +20,7 @@ function InputTextarea({ name, placeholder, value, className, handleChange, maxl
         maxLength={maxlength}
         onChange={handleOnChange}
         placeholder={placeholder}
+        readOnly={readOnly}
         value={value}
       ></textarea>
       <label className='label'>
@@ -33,6 +34,7 @@ function InputTextarea({ name, placeholder, value, className, handleChange, maxl
 
 InputTextarea.defaultProps = {
   disabled: false,
+  readOnly: false,
   value: '',
 }
 

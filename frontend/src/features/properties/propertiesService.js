@@ -26,6 +26,16 @@ const addProperty = async (formData) => {
   const { data } = await axios.post(`${API_URL}`, formData, config)
   return data
 }
+// Update Properties
+const updateProperty = async (payload) => {
+  const config = {
+    headers: {
+      ContentType: 'application/json',
+    },
+  }
+  const { data } = await axios.put(`${API_URL}/${payload.id}`, payload.data, config)
+  return data
+}
 
 // Upload Images
 const uploadPropertyImages = async (formData, thunkAPI) => {
@@ -35,7 +45,7 @@ const uploadPropertyImages = async (formData, thunkAPI) => {
     },
     onUploadProgress: (progressEvent) => {
       const percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total)
-      console.log(progressEvent);
+      console.log(progressEvent)
       thunkAPI.dispatch(setUploadProgress(percentCompleted))
     },
   }
@@ -46,8 +56,9 @@ const uploadPropertyImages = async (formData, thunkAPI) => {
 
 const propertiesService = {
   getProperties,
-  addProperty,
   getProperty,
+  addProperty,
+  updateProperty,
   uploadPropertyImages,
 }
 

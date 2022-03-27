@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types'
-function InputNumber({ name, className, minValue, maxValue, value, handleChange, isValid, disabled }) {
+function InputNumber({ name, className, minValue, maxValue, value, handleChange, isValid, disabled, readOnly }) {
   return (
     <input
       name={name}
@@ -12,6 +12,7 @@ function InputNumber({ name, className, minValue, maxValue, value, handleChange,
       value={value}
       onInput={handleChange}
       disabled={disabled}
+      readOnly={readOnly}
     />
   )
 }
@@ -19,6 +20,7 @@ function InputNumber({ name, className, minValue, maxValue, value, handleChange,
 InputNumber.defaultProps = {
   value: 1,
   disabled: false,
+  readOnly: false,
 }
 
 InputNumber.propTypes = {

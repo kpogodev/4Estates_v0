@@ -1,4 +1,3 @@
-import e from 'cors'
 import { useState, useCallback } from 'react'
 
 const useFileUplaoder = ({ onSubmit = () => {} }) => {

@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types'
-function InputSelect({ name, value, options, handleChange, disabled }) {
+function InputSelect({ name, value, options, handleChange, disabled, readOnly }) {
   return (
     <select name={name} className='select select-bordered' onChange={handleChange} value={value} disabled={disabled}>
       {options.map((option, index) => (

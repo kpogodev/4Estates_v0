@@ -21,15 +21,6 @@ export const getProperties = createAsyncThunk('properties/get', async (payload, 
   }
 })
 
-export const getProperty = createAsyncThunk('properties/get_property', async (payload, thunkAPI) => {
-  try {
-    return await propertiesService.getProperty(payload)
-  } catch (error) {
-    const message = error?.response?.data?.message ?? error.toString()
-    return thunkAPI.rejectWithValue(message)
-  }
-})
-
 export const getMyProperties = createAsyncThunk('properties/get_my_properties', async (payload, thunkAPI) => {
   try {
     return await propertiesService.getProperties(payload)
@@ -39,9 +30,27 @@ export const getMyProperties = createAsyncThunk('properties/get_my_properties', 
   }
 })
 
+export const getProperty = createAsyncThunk('properties/get_property', async (payload, thunkAPI) => {
+  try {
+    return await propertiesService.getProperty(payload)
+  } catch (error) {
+    const message = error?.response?.data?.message ?? error.toString()
+    return thunkAPI.rejectWithValue(message)
+  }
+})
+
 export const addProperty = createAsyncThunk('properties/add', async (payload, thunkAPI) => {
   try {
     return await propertiesService.addProperty(payload)
+  } catch (error) {
+    const message = error?.response?.data?.message ?? error.toString()
+    return thunkAPI.rejectWithValue(message)
+  }
+})
+
+export const updateProperty = createAsyncThunk('properties/update', async (payload, thunkAPI) => {
+  try {
+    return await propertiesService.updateProperty(payload)
   } catch (error) {
     const message = error?.response?.data?.message ?? error.toString()
     return thunkAPI.rejectWithValue(message)
@@ -135,6 +144,21 @@ export const propertiesSlice = createSlice({
         state.message = `Your property on ${action.payload.data.location.street} has been added`
       })
       .addCase(addProperty.rejected, (state, action) => {
+        state.property = null
+        state.isLoading = false
+        state.isError = true
+        state.message = action.payload
+      })
+      .addCase(updateProperty.pending, (state) => {
+        state.isLoading = true
+      })
+      .addCase(updateProperty.fulfilled, (state, action) => {
+        state.property = action.payload.data
+        state.isSuccess = action.payload.success
+        state.isLoading = false
+        state.message = `Property details have been updated`
+      })
+      .addCase(updateProperty.rejected, (state, action) => {
         state.property = null
         state.isLoading = false
         state.isError = true

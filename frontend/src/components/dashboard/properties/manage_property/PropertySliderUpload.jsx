@@ -35,9 +35,9 @@ function PropertySliderUpload({ className, isLoading, uploadProgress }) {
       {files.length > 0 && (
         <button
           type='submit'
-          className='btn btn-sm btn-circle btn-primary absolute !left-1/2 !bottom-2 !-translate-x-1/2 text-xl'
+          className='btn btn-sm btn-primary absolute !left-1/2 !bottom-2 !-translate-x-1/2 text-xl rounded-full'
         >
-          <MdUpload />
+          <MdUpload /> Upload
         </button>
       )}
     </form>

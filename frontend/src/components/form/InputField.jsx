@@ -1,5 +1,16 @@
 import PropTypes from 'prop-types'
-function InputField({ name, type, placeholder, className, value, handleChange, isValid, autoComplete, disabled }) {
+function InputField({
+  name,
+  type,
+  placeholder,
+  className,
+  value,
+  handleChange,
+  isValid,
+  autoComplete,
+  disabled,
+  readOnly,
+}) {
   return (
     <input
       name={name}
@@ -12,6 +23,7 @@ function InputField({ name, type, placeholder, className, value, handleChange, i
       onChange={handleChange}
       autoComplete={autoComplete}
       disabled={disabled}
+      readOnly={readOnly}
     />
   )
 }
@@ -19,6 +31,7 @@ function InputField({ name, type, placeholder, className, value, handleChange, i
 InputField.defualtProps = {
   value: '',
   disabled: false,
+  readOnly: false,
 }
 
 InputField.propTypes = {

@@ -1,5 +1,5 @@
-import { useEffect } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import useFileUploader from '../../../../hooks/useFileUploader'
 import DropBoxDefaultContent from './DropBoxDefaultContent'
@@ -8,15 +8,25 @@ import { uploadPropertyImages } from '../../../../features/properties/properties
 import DropBoxProgress from './DropBoxProgress'
 import { MdUpload } from 'react-icons/md'
 
-function PropertySliderUpload({ className, isLoading, uploadProgress }) {
+function PropertySliderUpload({ className }) {
+  const [hasBeenEdited, setHasBeenEdited] = useState(false)
+
+  const { isLoading, uploadProgress, isError, isSuccess } = useSelector((state) => state.properties)
   const dispatch = useDispatch()
   const params = useParams()
 
   const { files, handleChange, handleSubmit } = useFileUploader({
     onSubmit: (data) => {
       dispatch(uploadPropertyImages({ data, id: params.id }))
+      setHasBeenEdited(true)
     },
   })
+
+  useEffect(() => {
+    if (isSuccess || isError) {
+      setHasBeenEdited(false)
+    }
+  }, [isSuccess, isError])
 
   return (
     <form className={`${className} relative`} onSubmit={handleSubmit}>
@@ -29,8 +39,8 @@ function PropertySliderUpload({ className, isLoading, uploadProgress }) {
           multiple
         />
         {files.length > 0 && <DropBoxPreviewContent filesData={files} />}
-        {files.length === 0 && !isLoading && <DropBoxDefaultContent />}
-        {isLoading && <DropBoxProgress progress={uploadProgress} />}
+        {files.length === 0 && (!isLoading || !hasBeenEdited) && <DropBoxDefaultContent />}
+        {isLoading && hasBeenEdited && <DropBoxProgress progress={uploadProgress} />}
       </label>
       {files.length > 0 && (
         <button

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import useForm from '../../../../hooks/useForm'
 import InputSelect from '../../../form/InputSelect'
 import InputTextarea from '../../../form/InputTextarea'
@@ -8,10 +8,12 @@ import EditableActions from '../../../shared/EditableActions'
 import NoneEditableActions from '../../../shared/NoneEditableActions'
 import { updateProperty } from '../../../../features/properties/propertiesSlice'
 
-function PropertyDetails({ className, property }) {
+function PropertyDetails({ className }) {
   const [fieldsDisabled, setFieldsDisabled] = useState(false)
   const [editable, setEditable] = useState(false)
+  const [hasBeenEdited, setHasBeenEdited] = useState(false)
 
+  const { isLoading, isSuccess, isError, property } = useSelector((state) => state.properties)
   const dispatch = useDispatch()
 
   // useForm Hook
@@ -66,9 +68,11 @@ function PropertyDetails({ className, property }) {
         delete newFormData.details.bedrooms
         delete newFormData.details.bathrooms
         dispatch(updateProperty({ data: newFormData, id: property._id }))
+        setHasBeenEdited(true)
         setEditable(false)
       } else {
         dispatch(updateProperty({ data: newFormData, id: property._id }))
+        setHasBeenEdited(true)
         setEditable(false)
       }
     },
@@ -78,6 +82,12 @@ function PropertyDetails({ className, property }) {
   useEffect(() => {
     formData.type === 'commercial' || formData.type === 'land' ? setFieldsDisabled(true) : setFieldsDisabled(false)
   }, [formData.type])
+
+  useEffect(() => {
+    if (isSuccess || isError) {
+      setHasBeenEdited(false)
+    }
+  }, [isSuccess, isError])
 
   return (
     <div className={`${className}`}>
@@ -106,7 +116,7 @@ function PropertyDetails({ className, property }) {
             name='description'
             placeholder='Please provide some description...'
             value={formData.description}
-            className='textarea textarea-bordered min-h-[200px]'
+            className='textarea textarea-bordered min-h-[200px] disabled:cursor-default'
             isValid={isValid.description}
             handleChange={handleChange}
             maxlength={3200}
@@ -122,7 +132,7 @@ function PropertyDetails({ className, property }) {
             name='key_features'
             placeholder='Large Garden, Close to local amenities, etc.'
             value={formData.key_features}
-            className='textarea textarea-bordered min-h-[120px]'
+            className='textarea textarea-bordered min-h-[120px] disabled:cursor-default'
             isValid={isValid.key_features}
             handleChange={handleChange}
             maxlength={1000}
@@ -136,7 +146,7 @@ function PropertyDetails({ className, property }) {
             </label>
             <InputNumber
               name='bedrooms'
-              className='input input-bordered'
+              className='input input-bordered disabled:cursor-default'
               minValue={1}
               maxValue={100}
               handleChange={handleChange}
@@ -151,7 +161,7 @@ function PropertyDetails({ className, property }) {
             </label>
             <InputNumber
               name='bathrooms'
-              className='input input-bordered'
+              className='input input-bordered disabled:cursor-default'
               minValue={1}
               maxValue={100}
               handleChange={handleChange}
@@ -168,7 +178,7 @@ function PropertyDetails({ className, property }) {
             </label>
             <InputNumber
               name='size'
-              className='input input-bordered'
+              className='input input-bordered disabled:cursor-default'
               minValue={0}
               maxValue={99999999}
               handleChange={handleChange}

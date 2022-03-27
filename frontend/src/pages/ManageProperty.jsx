@@ -11,7 +11,7 @@ import PropertyDetails from '../components/dashboard/properties/manage_property/
 import Loading from '../components/shared/Loading'
 
 function ManageProperty() {
-  const { property, uploadProgress, message, isLoading, isSuccess, isError } = useSelector((state) => state.properties)
+  const { property, message, isLoading, isSuccess, isError } = useSelector((state) => state.properties)
   const dispatch = useDispatch()
   const params = useParams()
 
@@ -54,8 +54,8 @@ function ManageProperty() {
         <PropertySlider className='max-h-[600px] shadow-lg bg-black' images={property.images} />
       </div>
       <div className='col-span-4 flex flex-col gap-10'>
-        <PropertySliderUpload className='row-span-1' isLoading={isLoading} uploadProgress={uploadProgress} />
-        <PropertyDetails className='row-span-2' isLoading={isLoading} property={property} />
+        <PropertySliderUpload className='row-span-1' />
+        <PropertyDetails className='row-span-2' />
       </div>
     </motion.div>
   )

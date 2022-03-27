@@ -45,7 +45,6 @@ const uploadPropertyImages = async (formData, thunkAPI) => {
     },
     onUploadProgress: (progressEvent) => {
       const percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total)
-      console.log(progressEvent)
       thunkAPI.dispatch(setUploadProgress(percentCompleted))
     },
   }

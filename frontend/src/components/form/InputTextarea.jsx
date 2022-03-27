@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types'
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 
 function InputTextarea({ name, placeholder, value, className, handleChange, maxlength, isValid, disabled, readOnly }) {
   const [count, setCount] = useState(value.length ?? 0)

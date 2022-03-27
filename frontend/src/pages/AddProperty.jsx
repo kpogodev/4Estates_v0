@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion'
 import { pageTransition } from '../utils/animationVariants'
-import AddPropertyForm from '../components/dashboard/properties/AddPropertyForm'
+import AddPropertyForm from '../components/dashboard/properties/add_property/AddPropertyForm'
 import { Link } from 'react-router-dom'
 
 function AddProperty() {

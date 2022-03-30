@@ -66,7 +66,7 @@ export const deleteProperty = asyncHandler(async (req, res, next) => {
   if (property.publisher.toString() !== req.user.id) {
     return next(new ErrorResponse(`User with id ${req.user.id} is not authorized to delete this property`, 401))
   }
-
+  
   property.remove()
   res.status(200).json({ success: true, data: {} })
 })

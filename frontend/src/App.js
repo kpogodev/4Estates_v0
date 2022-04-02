@@ -20,9 +20,11 @@ import ManageProperty from './pages/ManageProperty'
 
 // Hooks
 import useCheckAuth from './hooks/useCheckAuth'
+import useLoadGoogleServices from './hooks/useLoadGoogleServices'
 
 function App() {
   useCheckAuth()
+  useLoadGoogleServices()
   return (
     <Router>
       <div className='flex flex-col justify-between min-h-screen bg-[#fdfdfd]'>

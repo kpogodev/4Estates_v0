@@ -8,7 +8,7 @@ import PropertiesGrid from './PropertiesGrid'
 import ViewSwitcher from '../../shared/ViewSwitcher'
 import PropertiesTabel from './PropertiesTabel'
 import PropertiesSwiper from './PropertiesSwiper'
-import { useMediaQuery } from '../../../hooks/useMediaQuery'
+import  useMediaQuery from '../../../hooks/useMediaQuery'
 
 function PropertiesPanel() {
   const [listType, setListType] = useState('grid')

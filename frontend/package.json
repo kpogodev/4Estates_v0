@@ -4,6 +4,7 @@
   "private": true,
   "proxy": "http://127.0.0.1:5000",
   "dependencies": {
+    "@reach/combobox": "^0.16.5",
     "@react-google-maps/api": "^2.7.0",
     "@reduxjs/toolkit": "^1.7.2",
     "@testing-library/jest-dom": "^5.16.2",

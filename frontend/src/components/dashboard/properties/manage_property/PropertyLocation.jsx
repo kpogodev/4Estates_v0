@@ -1,20 +1,34 @@
-import { useState } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
+import { useState, useRef } from 'react'
 import EditableActions from '../../../shared/EditableActions'
 import NoneEditableActions from '../../../shared/NoneEditableActions'
-import GoogleMaps from './GoogleMaps'
+import AddressSearch from './AddressSearch'
+import PropertyMap from './PropertyMap'
 
 function PropertyLocation() {
+  console.count('Location section render:')
   const [editable, setEditable] = useState(false)
-  const { property } = useSelector((state) => state.properties)
+
+  const refAddressSearch = useRef()
+  const refGoogleMaps = useRef()
+
+  const onSave = () => {
+    refAddressSearch.current.handleSave()
+    refGoogleMaps.current.handleSave()
+    setEditable(false)
+  }
 
   return (
     <div className='flex flex-col gap-5'>
       <div className='flex justify-end gap-2 items-center pb-2'>
-        <h3 className='text-2xl font-semibold mr-auto'>Property Location:</h3>
-        {editable ? <EditableActions toggleEdit={setEditable} /> : <NoneEditableActions toggleEdit={setEditable} />}
+        <h3 className='text-xl xl:text-2xl font-semibold mr-auto'>Property Location:</h3>
+        {editable ? (
+          <EditableActions toggleEdit={setEditable} onSave={onSave} />
+        ) : (
+          <NoneEditableActions toggleEdit={setEditable} />
+        )}
       </div>
-      <GoogleMaps className='w-full h-[400px] shadow-lg' coordinates={property.location.coordinates} />
+      <AddressSearch ref={refAddressSearch} editable={editable} />
+      <PropertyMap ref={refGoogleMaps} editable={editable} />
     </div>
   )
 }

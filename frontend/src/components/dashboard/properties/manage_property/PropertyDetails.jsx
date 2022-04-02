@@ -13,7 +13,7 @@ function PropertyDetails({ className }) {
   const [editable, setEditable] = useState(false)
   const [hasBeenEdited, setHasBeenEdited] = useState(false)
 
-  const { isLoading, isSuccess, isError, property } = useSelector((state) => state.properties)
+  const { isSuccess, isError, property } = useSelector((state) => state.properties)
   const dispatch = useDispatch()
 
   // useForm Hook
@@ -93,7 +93,7 @@ function PropertyDetails({ className }) {
     <div className={`${className}`}>
       <form className='max-w-screen-lg mx-auto' onSubmit={handleSubmit} noValidate>
         <div className='flex justify-end gap-2 items-center pb-2'>
-          <h3 className='text-2xl font-semibold mr-auto'>Property Details:</h3>
+          <h3 className='text-xl xl:text-2xl font-semibold mr-auto'>Property Details</h3>
           {editable ? <EditableActions toggleEdit={setEditable} /> : <NoneEditableActions toggleEdit={setEditable} />}
         </div>
         <div className='form-control w-full'>

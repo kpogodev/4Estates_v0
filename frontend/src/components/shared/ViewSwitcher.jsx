@@ -1,6 +1,6 @@
 import React from 'react'
 import { MdGridView, MdOutlineList, MdSwipe } from 'react-icons/md'
-import { useMediaQuery } from '../../hooks/useMediaQuery'
+import useMediaQuery from '../../hooks/useMediaQuery'
 
 function ViewSwitcher({ listType, setListType }) {
   const handleChangeListType = (e) => setListType(e.target.closest('button').dataset.enum)

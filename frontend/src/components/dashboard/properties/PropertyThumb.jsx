@@ -4,7 +4,7 @@ import { forViewSwitcherItems } from '../../../utils/animationVariants'
 
 function PropertyThumb({ property }) {
   return (
-    <motion.div variants={forViewSwitcherItems}>
+    <motion.div variants={forViewSwitcherItems} className='h-fit'>
       <Link
         to={`/manage-property/${property._id}`}
         className='card bg-base-100 shadow-lg image-full hover:before:opacity-30 before:transition-opacity'

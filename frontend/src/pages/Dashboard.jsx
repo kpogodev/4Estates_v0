@@ -6,7 +6,7 @@ import PropertiesPanel from '../components/dashboard/properties/PropertiesPanel'
 function Dashboard() {
   return (
     <motion.div
-      className='grid grid-cols-1 gap-5 xl:grid-cols-3 lg:gap-10'
+      className='flex flex-col gap-5 xl:grid xl:grid-cols-3 lg:gap-10'
       variants={pageTransition}
       initial='hidden'
       animate='visible'

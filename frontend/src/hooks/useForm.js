@@ -10,6 +10,11 @@ export default function useFrom({ initialFormData = {}, validations, onSubmit = 
     setIsValid({ ...isValid, [e.target.name]: null })
   }
 
+  const handleChangeCustom = (name, value) => {
+    setData({ ...formData, [name]: value })
+    setIsValid({ ...isValid, [name]: null })
+  }
+
   const isNotEmpty = (value) => {
     if (typeof value === 'number') return true
     return value != null && value.trim().length > 0 ? true : false
@@ -79,5 +84,5 @@ export default function useFrom({ initialFormData = {}, validations, onSubmit = 
     onSubmit(formData)
   }
 
-  return { formData, isValid, handleChange, handleSubmit }
+  return { formData, isValid, handleChange, handleSubmit, handleChangeCustom }
 }

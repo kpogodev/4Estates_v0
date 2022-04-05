@@ -1,11 +1,11 @@
-import mongoose from 'mongoose';
+import mongoose from 'mongoose'
 import {
   useEncryptPassword,
   getJwtToken,
   matchUserPassword,
   generateForgottenPasswordToken,
   initUserProfile,
-} from '../hooks/authHooks.js';
+} from '../hooks/authHooks.js'
 
 export const userSchema = mongoose.Schema(
   {
@@ -47,14 +47,14 @@ export const userSchema = mongoose.Schema(
     resetPasswordExpire: Date,
   },
   { timestamps: true }
-);
+)
 
 //Hooks & Methods
-useEncryptPassword();
-getJwtToken();
-matchUserPassword();
-generateForgottenPasswordToken();
-initUserProfile();
+useEncryptPassword()
+getJwtToken()
+matchUserPassword()
+generateForgottenPasswordToken()
+initUserProfile()
 
-const User = mongoose.model('User', userSchema);
-export default User;
+const User = mongoose.model('User', userSchema)
+export default User

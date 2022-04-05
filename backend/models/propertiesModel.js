@@ -71,6 +71,17 @@ export const propertiesSchema = mongoose.Schema(
   { timestamps: true }
 )
 
+// Cascade delete all rentals when a property is deleted
+propertiesSchema.pre('remove', async function (next) {
+  try {
+    await this.model('Rental').deleteMany({ property: this._id })
+    await this.model('Sale').deleteMany({ property: this._id })
+    next()
+  } catch (error) {
+    next(error)
+  }
+})
+
 //Hooks
 useSetLocation()
 

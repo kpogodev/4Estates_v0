@@ -14,7 +14,6 @@ const useLoadGoogleServices = () => {
 
   const dispatch = useDispatch()
 
-  console.log({ isLoaded, loadError })
   useEffect(() => {
     if (isLoaded && !loadError) {
       dispatch(googleServicesLoaded())

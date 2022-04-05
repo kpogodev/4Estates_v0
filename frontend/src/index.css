@@ -2,6 +2,27 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  h1 {
+    @apply font-bold;
+  }
+  h2 {
+    @apply font-bold;
+  }
+  h3 {
+    @apply font-bold;
+  }
+  h4 {
+    @apply font-bold;
+  }
+  h5 {
+    @apply font-bold;
+  }
+  h6 {
+    @apply font-bold;
+  }
+}
+
 body {
   font-family: 'Saira Condensed', sans-serif;
 }
@@ -35,4 +56,8 @@ body {
 
 .swiper-slide-thumb-active {
   border: 2px solid #fff;
+}
+
+.codex-editor__redactor {
+  padding-bottom: 50px!important;
 }

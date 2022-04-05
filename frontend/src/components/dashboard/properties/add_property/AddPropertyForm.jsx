@@ -9,6 +9,7 @@ import InputTextarea from '../../../form/InputTextarea'
 import InputNumber from '../../../form/InputNumber'
 import Spinner from '../../../shared/Spinner'
 import { toast } from 'react-toastify'
+import RichTextEditor from '../../../shared/RichTextEditor'
 
 function AddPropertyForm() {
   //Component States

@@ -1,7 +1,7 @@
 import ErrorResponse from '../utils/errorResponse.js'
 import asyncHandler from 'express-async-handler'
 import PropertyModel from '../models/propertiesModel.js'
-import { imageMultiUpload } from '../hooks/uploaderHooks.js'
+import { imageMultiUpload, imagesDelete } from '../hooks/uploaderHooks.js'
 
 // @desc      Get all properties
 // @route     GET /api/v1/properties
@@ -66,6 +66,8 @@ export const deleteProperty = asyncHandler(async (req, res, next) => {
   if (property.publisher.toString() !== req.user.id) {
     return next(new ErrorResponse(`User with id ${req.user.id} is not authorized to delete this property`, 401))
   }
+
+  await imagesDelete(property.images)
 
   property.remove()
   res.status(200).json({ success: true, data: {} })

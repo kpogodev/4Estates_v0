@@ -11,6 +11,7 @@ import PropertyDetails from '../components/dashboard/properties/manage_property/
 import PropertyLocation from '../components/dashboard/properties/manage_property/PropertyLocation'
 import Loading from '../components/shared/Loading'
 import useMediaQuery from '../hooks/useMediaQuery'
+import PublishProperty from '../components/dashboard/properties/manage_property/PublishProperty'
 
 function ManageProperty() {
   const { property, message, isSuccess, isError } = useSelector((state) => state.properties)
@@ -80,6 +81,7 @@ function ManageProperty() {
       <div className='col-span-4 flex flex-col gap-10' ref={columnTwoRef}>
         <PropertyDetails className='row-span-2' />
       </div>
+      <PublishProperty className='col-span-12' />
     </motion.div>
   )
 }

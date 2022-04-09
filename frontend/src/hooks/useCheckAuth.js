@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { getUser, resetSuccess } from 'features/auth/authSlice'
+import { getUser, resetSuccess } from 'context/auth/authSlice'
 
 const useCheckAuth = () => {
   const dispatch = useDispatch()

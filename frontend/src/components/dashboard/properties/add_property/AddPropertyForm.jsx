@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { addProperty, resetError, resetSuccess } from 'features/properties/propertiesSlice'
+import { addProperty, resetError, resetSuccess } from 'context/properties/propertiesSlice'
 import InputField from 'components/form/InputField'
 import useForm from 'hooks/useForm'
 import InputSelect from 'components/form/InputSelect'

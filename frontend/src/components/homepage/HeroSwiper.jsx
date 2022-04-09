@@ -7,7 +7,7 @@ import 'swiper/css/navigation'
 import 'swiper/css/pagination'
 import { handleSwiperProgress, handleSetTransition } from '../../utils/homeSwiper'
 import { useDispatch, useSelector } from 'react-redux'
-import { getProperties } from '../../features/properties/propertiesSlice'
+import { getProperties } from '../../context/properties/propertiesSlice'
 import HeroSwiperContent from './HeroSwiperContent'
 
 function HeroSwiper() {

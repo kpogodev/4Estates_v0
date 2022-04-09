@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Combobox, ComboboxInput, ComboboxPopover, ComboboxList, ComboboxOption } from '@reach/combobox'
 import '@reach/combobox/styles.css'
 import usePlacesAutocomplete from 'use-places-autocomplete'
-import { updateProperty } from 'features/properties/propertiesSlice'
+import { updateProperty } from 'context/properties/propertiesSlice'
 import SkeletonItem from 'components/shared/SkeletonItem'
 
 function AddressSearch({ editable }, ref) {

@@ -1,8 +1,8 @@
 import { configureStore } from '@reduxjs/toolkit'
-import propertiesReducer from 'features/properties/propertiesSlice'
-import authReducer from 'features/auth/authSlice'
-import profilesReducer from 'features/profiles/profilesSlice'
-import appReducer from 'features/app/appSlice'
+import propertiesReducer from 'context/properties/propertiesSlice'
+import authReducer from 'context/auth/authSlice'
+import profilesReducer from 'context/profiles/profilesSlice'
+import appReducer from 'context/app/appSlice'
 
 export const store = configureStore({
   reducer: {

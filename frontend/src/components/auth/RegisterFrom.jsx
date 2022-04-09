@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import InputField from 'components/form/InputField'
 import Spinner from 'components/shared/Spinner'
 import { MdAlternateEmail, MdPassword, MdAccountCircle } from 'react-icons/md'
-import { registerUser, reset } from 'features/auth/authSlice'
+import { registerUser, reset } from 'context/auth/authSlice'
 import useForm from 'hooks/useForm'
 import InputRadio from 'components/form/InputRadio'
 

@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { MdUpload, MdEdit } from 'react-icons/md'
 import { useDispatch } from 'react-redux'
-import { uploadAvatar } from 'features/auth/authSlice'
+import { uploadAvatar } from 'context/auth/authSlice'
 import Spinner from 'components/shared/Spinner'
 
 function UserAvatar({ user: { name, avatar }, loading }) {

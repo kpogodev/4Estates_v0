@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom'
 import useFileUploader from 'hooks/useFileUploader'
 import DropBoxDefaultContent from './DropBoxDefaultContent'
 import DropBoxPreviewContent from './DropBoxPreviewContent'
-import { uploadPropertyImages } from 'features/properties/propertiesSlice'
+import { uploadPropertyImages } from 'context/properties/propertiesSlice'
 import DropBoxProgress from './DropBoxProgress'
 import { MdUpload } from 'react-icons/md'
 

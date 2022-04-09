@@ -6,7 +6,7 @@ import InputTextarea from 'components/form/InputTextarea'
 import InputNumber from 'components/form/InputNumber'
 import EditableActions from 'components/shared/EditableActions'
 import NoneEditableActions from 'components/shared/NoneEditableActions'
-import { updateProperty } from 'features/properties/propertiesSlice'
+import { updateProperty } from 'context/properties/propertiesSlice'
 
 function PropertyDetails({ className }) {
   const [fieldsDisabled, setFieldsDisabled] = useState(false)

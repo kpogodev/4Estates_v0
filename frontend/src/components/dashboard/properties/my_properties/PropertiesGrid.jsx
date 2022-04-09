@@ -1,7 +1,7 @@
 import React from 'react'
 import PropertyThumb from './PropertyThumb'
 import { motion } from 'framer-motion'
-import { forViewSwitcher } from '../../../utils/animationVariants'
+import { forViewSwitcher } from '../../../../utils/animationVariants'
 
 function PropertiesGrid({ properties }) {
   return (

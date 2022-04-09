@@ -3,9 +3,7 @@ function InputNumber({ name, className, minValue, maxValue, value, handleChange,
   return (
     <input
       name={name}
-      className={`${className} focus:border-info ${isValid === false ? 'border-error' : ''} ${
-        isValid === true ? 'border-success' : ''
-      }`}
+      className={`${className} focus:border-info ${isValid === false ? 'border-error' : ''} ${isValid === true ? 'border-success' : ''}`}
       type='number'
       min={minValue}
       max={maxValue}
@@ -18,20 +16,19 @@ function InputNumber({ name, className, minValue, maxValue, value, handleChange,
 }
 
 InputNumber.defaultProps = {
-  value: 1,
   disabled: false,
   readOnly: false,
 }
 
 InputNumber.propTypes = {
-  name: PropTypes.string.isRequired,
   className: PropTypes.string.isRequired,
-  minValue: PropTypes.number,
-  maxValue: PropTypes.number,
-  value: PropTypes.number.isRequired,
+  disabled: PropTypes.bool,
   handleChange: PropTypes.func.isRequired,
   isValid: PropTypes.bool,
-  disabled: PropTypes.bool,
+  maxValue: PropTypes.number,
+  minValue: PropTypes.number,
+  name: PropTypes.string.isRequired,
+  value: PropTypes.number.isRequired,
 }
 
 export default InputNumber

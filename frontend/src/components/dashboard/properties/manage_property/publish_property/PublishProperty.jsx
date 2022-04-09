@@ -1,5 +1,6 @@
 import { useState } from 'react'
-import Modal from '../../../layout/Modal'
+import Modal from '../../../../layout/Modal'
+import PublishPropertyForm from './PublishPropertyForm'
 
 const PublishProperty = ({ className }) => {
   const [isOpen, setIsOpen] = useState(false)
@@ -12,7 +13,9 @@ const PublishProperty = ({ className }) => {
       <button className='btn btn-primary' onClick={handleOpen}>
         Publish Property
       </button>
-      <Modal onClose={handleClose} isOpen={isOpen}></Modal>
+      <Modal onClose={handleClose} isOpen={isOpen} boxStyle='!max-w-5xl p-12'>
+        <PublishPropertyForm />
+      </Modal>
     </div>
   )
 }

@@ -45,13 +45,14 @@ function RichTextEditor({ className }) {
 
   const handleSave = useCallback(async () => {
     const savedData = await editorCore.current.save()
+    console.log(savedData)
   }, [])
 
   return (
     <div className={className}>
       <>
         <ReactEditorJS tools={tools} onInitialize={handleInitialize} />
-        <button className='btn btn-primary' onClick={handleSave}>
+        <button className='btn btn-primary' onClick={handleSave} type='button'>
           Send
         </button>
       </>

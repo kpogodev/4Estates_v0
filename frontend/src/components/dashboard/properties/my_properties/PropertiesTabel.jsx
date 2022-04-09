@@ -1,6 +1,6 @@
 import React from 'react'
 import { motion } from 'framer-motion'
-import { forViewSwitcher } from '../../../utils/animationVariants'
+import { forViewSwitcher } from '../../../../utils/animationVariants'
 import PropertiesTabelRow from './PropertiesTabelRow'
 
 function PropertiesTabel({ properties }) {

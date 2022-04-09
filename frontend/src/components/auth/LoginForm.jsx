@@ -2,11 +2,11 @@ import { useEffect } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { useSelector, useDispatch } from 'react-redux'
-import InputField from '../form/InputField'
-import Spinner from '../shared/Spinner'
+import InputField from 'components/form/InputField'
+import Spinner from 'components/shared/Spinner'
 import { MdAlternateEmail, MdPassword } from 'react-icons/md'
-import { loginUser, reset } from '../../features/auth/authSlice'
-import useForm from '../../hooks/useForm'
+import { loginUser, reset } from 'features/auth/authSlice'
+import useForm from 'hooks/useForm'
 
 function LoginForm() {
   const navigate = useNavigate()

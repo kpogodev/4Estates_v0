@@ -1,8 +1,8 @@
 import { useId } from 'react'
 import { motion } from 'framer-motion'
-import { formContentChange } from '../../../../../utils/animationVariants'
-import InputNumber from '../../../../form/InputNumber'
-import InputRadio from '../../../../form/InputRadio'
+import { formContentChange } from 'utils/animationVariants'
+import InputNumber from 'components/form/InputNumber'
+import InputRadio from 'components/form/InputRadio'
 import DatePicker from 'react-datepicker'
 import { GoCalendar } from 'react-icons/go'
 import 'react-datepicker/dist/react-datepicker.css'
@@ -15,9 +15,6 @@ function PublishRentDetails({ onChange, formData }) {
       return onChange(e.target.name, +e.target.value)
     }
 
-    if (e.target.name === 'furnished') {
-      return onChange(e.target.name, JSON.parse(e.target.value))
-    }
     return onChange(e.target.name, e.target.value)
   }
 
@@ -59,23 +56,6 @@ function PublishRentDetails({ onChange, formData }) {
             maxValue={999999999}
           />
         </label>
-      </div>
-      <div className='flex flex-col items-center text-center'>
-        <p className=''>Is the property fully furnished?</p>
-        <div className='flex gap-3 mx-auto'>
-          <div className='form-control'>
-            <label className='label flex flex-col gap-2 items-center cursor-pointer'>
-              <InputRadio name='furnished' value={true} checked={formData.furnished} handleChange={handleChange} />
-              <span className='label-text text-center'>Yes</span>
-            </label>
-          </div>
-          <div className='form-control'>
-            <label className='label flex flex-col gap-2 items-center cursor-pointer'>
-              <InputRadio name='furnished' value={false} checked={!formData.furnished} handleChange={handleChange} />
-              <span className='label-text text-center'>No</span>
-            </label>
-          </div>
-        </div>
       </div>
       <div className='flex flex-col items-center text-center'>
         <p className=''>Length of the contract:</p>

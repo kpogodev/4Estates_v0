@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { getMyProfile, updateProfile } from '../../../features/profiles/profilesSlice'
+import { getMyProfile, updateProfile } from 'features/profiles/profilesSlice'
 import ProfileInput from './ProfileInput'
-import SkeletonItem from '../../shared/SkeletonItem'
+import SkeletonItem from 'components/shared/SkeletonItem'
 import ProfileFormActions from './ProfileFormActions'
 
 function ProfileForm() {

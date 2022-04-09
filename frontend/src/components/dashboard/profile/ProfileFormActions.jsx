@@ -1,5 +1,5 @@
-import EditableActions from '../../shared/EditableActions'
-import NoneEditableActions from '../../shared/NoneEditableActions'
+import EditableActions from 'components/shared/EditableActions'
+import NoneEditableActions from 'components/shared/NoneEditableActions'
 
 function ProfileFormActions({ editable, toggleEdit }) {
   return (

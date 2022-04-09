@@ -1,7 +1,7 @@
-import ProfilePanel from '../components/dashboard/profile/ProfilePanel'
+import ProfilePanel from 'components/dashboard/profile/ProfilePanel'
 import { motion } from 'framer-motion'
-import { pageTransition } from '../utils/animationVariants'
-import PropertiesPanel from '../components/dashboard/properties/my_properties/PropertiesPanel'
+import { pageTransition } from 'utils/animationVariants'
+import PropertiesPanel from 'components/dashboard/properties/my_properties/PropertiesPanel'
 
 function Dashboard() {
   return (

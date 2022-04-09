@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import Modal from '../../../../layout/Modal'
+import Modal from 'components/layout/Modal'
 import PublishPropertyForm from './PublishPropertyForm'
 
 const PublishProperty = ({ className }) => {

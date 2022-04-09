@@ -1,5 +1,3 @@
-import React from 'react'
-
 function Avatar({ className, user }) {
   return (
     <div className={className}>

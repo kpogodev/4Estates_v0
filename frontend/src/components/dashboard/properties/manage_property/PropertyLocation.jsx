@@ -1,6 +1,6 @@
 import { useState, useRef } from 'react'
-import EditableActions from '../../../shared/EditableActions'
-import NoneEditableActions from '../../../shared/NoneEditableActions'
+import EditableActions from 'components/shared/EditableActions'
+import NoneEditableActions from 'components/shared/NoneEditableActions'
 import AddressSearch from './AddressSearch'
 import PropertyMap from './PropertyMap'
 

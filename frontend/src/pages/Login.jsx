@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { pageTransition } from '../utils/animationVariants'
-import LoginForm from '../components/auth/LoginForm'
+import { pageTransition } from 'utils/animationVariants'
+import LoginForm from 'components/auth/LoginForm'
 
 function Login() {
   return (

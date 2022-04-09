@@ -1,10 +1,10 @@
 import { Link } from 'react-router-dom'
 import { FaBars } from 'react-icons/fa'
 import { useSelector, useDispatch } from 'react-redux'
-import { logoutUser } from '../../features/auth/authSlice'
-import { reset as resetProfile } from '../../features/profiles/profilesSlice'
-import Spinner from '../shared/Spinner'
-import Avatar from '../shared/Avatar'
+import { logoutUser } from 'features/auth/authSlice'
+import { reset as resetProfile } from 'features/profiles/profilesSlice'
+import Spinner from 'components/shared/Spinner'
+import Avatar from 'components/shared/Avatar'
 
 function Navbar() {
   const dispatch = useDispatch()

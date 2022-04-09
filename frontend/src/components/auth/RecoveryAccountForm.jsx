@@ -2,12 +2,10 @@ import { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { MdAlternateEmail } from 'react-icons/md'
 import { toast } from 'react-toastify'
-
-import { recoverPassword, reset } from '../../features/auth/authSlice'
-import useForm from '../../hooks/useForm'
-
-import Spinner from '../shared/Spinner'
-import InputField from '../form/InputField'
+import { recoverPassword, reset } from 'features/auth/authSlice'
+import useForm from 'hooks/useForm'
+import Spinner from 'components/shared/Spinner'
+import InputField from 'components/form/InputField'
 
 function RecoveryAccountForm({ setWasSent }) {
   const { formData, isValid, handleChange, handleSubmit } = useForm({

@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { forViewSwitcherItems } from '../../../../utils/animationVariants'
+import { forViewSwitcherItems } from 'utils/animationVariants'
 import { Link } from 'react-router-dom'
 
 function PropertiesTabelRow({ property }) {

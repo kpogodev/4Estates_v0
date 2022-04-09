@@ -2,13 +2,13 @@ import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { IoAddCircle } from 'react-icons/io5'
-import { getMyProperties } from '../../../../features/properties/propertiesSlice'
-import Spinner from '../../../shared/Spinner'
+import { getMyProperties } from 'features/properties/propertiesSlice'
+import Spinner from 'components/shared/Spinner'
+import ViewSwitcher from 'components/shared/ViewSwitcher'
+import useMediaQuery from 'hooks/useMediaQuery'
 import PropertiesGrid from './PropertiesGrid'
-import ViewSwitcher from '../../../shared/ViewSwitcher'
 import PropertiesTabel from './PropertiesTabel'
 import PropertiesSwiper from './PropertiesSwiper'
-import  useMediaQuery from '../../../../hooks/useMediaQuery'
 
 function PropertiesPanel() {
   const [listType, setListType] = useState('grid')

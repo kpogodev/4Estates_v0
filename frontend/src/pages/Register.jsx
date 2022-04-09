@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { pageTransition } from '../utils/animationVariants'
-import RegisterFrom from '../components/auth/RegisterFrom'
+import { pageTransition } from 'utils/animationVariants'
+import RegisterFrom from 'components/auth/RegisterFrom'
 
 function Register() {
   return (

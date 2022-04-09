@@ -1,9 +1,9 @@
 import { useId } from 'react'
-import sale_icon from '../../../../../assets/sale-icon.svg'
-import rent_icon from '../../../../../assets/rent-icon.svg'
+import sale_icon from 'assets/sale-icon.svg'
+import rent_icon from 'assets/rent-icon.svg'
 import { motion } from 'framer-motion'
-import { formContentChange } from '../../../../../utils/animationVariants'
-import InputRadio from '../../../../form/InputRadio'
+import { formContentChange } from 'utils/animationVariants'
+import InputRadio from 'components/form/InputRadio'
 
 const PublishPropertyType = ({ onChange, value }) => {
   const key = useId()

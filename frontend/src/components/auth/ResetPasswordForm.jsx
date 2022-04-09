@@ -3,10 +3,10 @@ import { toast } from 'react-toastify'
 import { useSelector, useDispatch } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import { MdPassword } from 'react-icons/md'
-import { resetPassword, reset } from '../../features/auth/authSlice'
-import useForm from '../../hooks/useForm'
-import InputField from '../form/InputField'
-import Spinner from '../shared/Spinner'
+import { resetPassword, reset } from 'features/auth/authSlice'
+import useForm from 'hooks/useForm'
+import InputField from 'components/form/InputField'
+import Spinner from 'components/shared/Spinner'
 
 function ResetPasswordForm() {
   const { isSuccess, isError, message, isLoading } = useSelector((state) => state.auth)

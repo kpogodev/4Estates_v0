@@ -1,7 +1,7 @@
-import HeroSwiper from '../components/homepage/HeroSwiper'
-import Hero from '../components/shared/Hero'
+import HeroSwiper from 'components/homepage/HeroSwiper'
+import Hero from 'components/shared/Hero'
 import { motion } from 'framer-motion'
-import { pageTransition } from '../utils/animationVariants'
+import { pageTransition } from 'utils/animationVariants'
 
 function Home() {
   return (

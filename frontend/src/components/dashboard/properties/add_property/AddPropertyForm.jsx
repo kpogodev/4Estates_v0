@@ -1,15 +1,15 @@
 import { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { addProperty, resetError, resetSuccess } from '../../../../features/properties/propertiesSlice'
-import InputField from '../../../form/InputField'
-import useForm from '../../../../hooks/useForm'
-import InputSelect from '../../../form/InputSelect'
-import InputTextarea from '../../../form/InputTextarea'
-import InputNumber from '../../../form/InputNumber'
-import Spinner from '../../../shared/Spinner'
+import { addProperty, resetError, resetSuccess } from 'features/properties/propertiesSlice'
+import InputField from 'components/form/InputField'
+import useForm from 'hooks/useForm'
+import InputSelect from 'components/form/InputSelect'
+import InputTextarea from 'components/form/InputTextarea'
+import InputNumber from 'components/form/InputNumber'
+import Spinner from 'components/shared/Spinner'
 import { toast } from 'react-toastify'
-import RichTextEditor from '../../../shared/RichTextEditor'
+
 
 function AddPropertyForm() {
   //Component States

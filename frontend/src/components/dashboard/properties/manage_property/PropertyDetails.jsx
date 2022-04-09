@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import useForm from '../../../../hooks/useForm'
-import InputSelect from '../../../form/InputSelect'
-import InputTextarea from '../../../form/InputTextarea'
-import InputNumber from '../../../form/InputNumber'
-import EditableActions from '../../../shared/EditableActions'
-import NoneEditableActions from '../../../shared/NoneEditableActions'
-import { updateProperty } from '../../../../features/properties/propertiesSlice'
+import useForm from 'hooks/useForm'
+import InputSelect from 'components/form/InputSelect'
+import InputTextarea from 'components/form/InputTextarea'
+import InputNumber from 'components/form/InputNumber'
+import EditableActions from 'components/shared/EditableActions'
+import NoneEditableActions from 'components/shared/NoneEditableActions'
+import { updateProperty } from 'features/properties/propertiesSlice'
 
 function PropertyDetails({ className }) {
   const [fieldsDisabled, setFieldsDisabled] = useState(false)

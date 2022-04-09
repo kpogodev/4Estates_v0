@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { forViewSwitcherItems } from '../../../../utils/animationVariants'
+import { forViewSwitcherItems } from 'utils/animationVariants'
 
 function PropertyThumb({ property }) {
   return (

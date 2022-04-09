@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { simpleFadeInOut } from '../../../../utils/animationVariants'
+import { simpleFadeInOut } from 'utils/animationVariants'
 function DropBoxPreviewContent({ filesData }) {
   return (
     <motion.div variants={simpleFadeInOut} initial='hidden' animate='visible' exit='exit'>

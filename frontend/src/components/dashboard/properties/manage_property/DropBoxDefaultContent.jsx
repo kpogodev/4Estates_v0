@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { simpleFadeInOut } from '../../../../utils/animationVariants'
+import { simpleFadeInOut } from 'utils/animationVariants'
 
 export function DropBoxDefaultContent() {
   return (

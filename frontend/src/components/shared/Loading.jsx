@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { pageTransition } from '../../utils/animationVariants'
+import { pageTransition } from 'utils/animationVariants'
 
 function Loading({ className }) {
   return (

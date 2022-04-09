@@ -1,6 +1,6 @@
 import { useState, useCallback, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { updateProperty } from '../../../../features/properties/propertiesSlice'
+import { updateProperty } from 'features/properties/propertiesSlice'
 import PropTypes from 'prop-types'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Navigation, Thumbs } from 'swiper'

@@ -1,9 +1,9 @@
 import { useState, useEffect, forwardRef, useImperativeHandle } from 'react'
 import { GoogleMap, Marker } from '@react-google-maps/api'
 import { useDispatch, useSelector } from 'react-redux'
-import { updateProperty } from '../../../../features/properties/propertiesSlice'
+import { updateProperty } from 'features/properties/propertiesSlice'
 import { BiInfoCircle } from 'react-icons/bi'
-import SkeletonItem from '../../../shared/SkeletonItem'
+import SkeletonItem from 'components/shared/SkeletonItem'
 
 function PropertyMap({ editable }, ref) {
   console.count('Google maps render:')

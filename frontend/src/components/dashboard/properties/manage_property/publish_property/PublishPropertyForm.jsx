@@ -2,19 +2,20 @@ import { useState, useCallback, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import PublishPropertyType from './PublishPropertyType'
-import PublishSaleDetails from './PublishSaleDetails'
-import PublishRentDetails from './PublishRentDetails'
 import { AnimatePresence, motion } from 'framer-motion'
-import MultiStepFormIndicator from '../../../../form/MultiStepFormIndicator'
+import PublishEquipmentDetails from './PublishEquipmentDetails'
+import PublishFinanceDetails from './PublishFinanceDetails'
+import PublishContractDetails from './PublishContractDetails'
 
 function PublishPropertyForm() {
+  const [listingType, setListingType] = useState('rent')
+  const [step, setStep] = useState(1)
+
   const [formData, setFormData] = useState({
     available_from: new Date(),
-    furnished: false,
-    rental_type: 'long',
+    furnished: true,
+    rental_type: 'short',
   })
-  const [offerType, setOfferType] = useState('rent')
-  const [step, setStep] = useState(1)
 
   const params = useParams()
 
@@ -32,28 +33,22 @@ function PublishPropertyForm() {
     setStep((prev) => (prev > 1 ? prev - 1 : prev))
   }, [])
 
+  const handleTypeChange = useCallback((e) => {
+    setListingType(e.target.value)
+  }, [])
+
   const handleChange = useCallback((key, value) => {
     setFormData((prev) => ({ ...prev, [key]: value }))
   }, [])
 
-  const handleTypeChange = useCallback((e) => {
-    setOfferType(e.target.value)
-  }, [])
-
-  const formSteps = () => {
+  const rentSteps = () => {
     switch (step) {
-      case 1:
-        return <PublishPropertyType onChange={handleTypeChange} value={offerType} />
-      case 2: {
-        if (offerType === 'rent') {
-          return <PublishRentDetails onChange={handleChange} formData={formData} />
-        }
-        if (offerType === 'sale') {
-          return <PublishSaleDetails onChange={handleChange} formData={formData} />
-        }
-      }
+      case 2:
+        return <PublishEquipmentDetails onChange={handleChange} formData={formData} />
       case 3:
-        return <div>Additional Info</div>
+        return <PublishFinanceDetails onChange={handleChange} formData={formData} isRent={true} />
+      case 4:
+        return <PublishContractDetails onChange={handleChange} formData={formData} />
       default:
         return <></>
     }
@@ -61,7 +56,8 @@ function PublishPropertyForm() {
 
   return (
     <motion.form className='w-full flex flex-col items-center gap-10' layout>
-      {formSteps()}
+      {step === 1 && <PublishPropertyType onChange={handleTypeChange} value={listingType} />}
+      {listingType === 'rent' && rentSteps()}
       <div className='flex gap-4 w-full justify-center'>
         {step > 1 && (
           <button className='btn btn-primary text-lg' onClick={handlePrev}>

@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify'
-import { AnimatePresence } from 'framer-motion'
+import { AnimatePresence, motion } from 'framer-motion'
 import 'react-toastify/dist/ReactToastify.css'
 //Components
 import Navbar from './components/layout/Navbar'
@@ -17,6 +17,7 @@ import ResetPassword from './pages/ResetPassword'
 import Dashboard from './pages/Dashboard'
 import AddProperty from './pages/AddProperty'
 import ManageProperty from './pages/ManageProperty'
+import PublishProperty from './pages/PublishProperty'
 
 // Hooks
 import useCheckAuth from './hooks/useCheckAuth'
@@ -29,7 +30,7 @@ function App() {
     <Router>
       <div className='flex flex-col justify-between min-h-screen bg-[#fdfdfd]'>
         <Navbar />
-        <AnimatePresence exitBeforeEnter>
+        <AnimatePresence exitBeforeEnter={true}>
           <main className='container flex flex-col mx-auto py-12 px-4'>
             <Routes>
               <Route path='/' element={<Home />} />
@@ -48,6 +49,9 @@ function App() {
               </Route>
               <Route path='/manage-property/:id' element={<PrivateRoute />}>
                 <Route path='/manage-property/:id' element={<ManageProperty />} />
+              </Route>
+              <Route path='/publish-property/:id' element={<PrivateRoute />}>
+                <Route path='/publish-property/:id' element={<PublishProperty />} />
               </Route>
             </Routes>
             <ToastContainer position='bottom-center' autoClose={5000} />

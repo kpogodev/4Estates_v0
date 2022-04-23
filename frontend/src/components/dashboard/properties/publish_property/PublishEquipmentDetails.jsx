@@ -1,13 +1,26 @@
 import InputRadio from 'components/form/InputRadio'
+import furniture_icon from 'assets/furniture-icon.svg'
+import { motion } from 'framer-motion'
+import { useId } from 'react'
+import { formContentChange } from 'utils/animationVariants'
 
 function PublishEquipmentDetails({ onChange, formData }) {
+  const keyId = useId()
   const handleChange = (e) => {
     onChange(e.target.name, JSON.parse(e.target.value))
   }
 
   return (
-    <div className='flex flex-col items-center text-center gap-3'>
+    <motion.div
+      className='flex flex-col items-center text-center gap-8 max-w-sm'
+      key={keyId}
+      variants={formContentChange}
+      initial='hidden'
+      animate='visible'
+      exit='exit'
+    >
       <p className='text-center font-medium text-2xl max-w-[45ch]'>Is the property fully furnished?</p>
+      <img className='block w-16 h-16 pointer-events-none' src={furniture_icon} alt='' />
       <div className='flex gap-3 mx-auto'>
         <div className='form-control'>
           <label className='label flex flex-col gap-2 items-center cursor-pointer'>
@@ -22,7 +35,7 @@ function PublishEquipmentDetails({ onChange, formData }) {
           </label>
         </div>
       </div>
-    </div>
+    </motion.div>
   )
 }
 

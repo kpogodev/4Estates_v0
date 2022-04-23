@@ -20,7 +20,7 @@ function PropertyLocation() {
   return (
     <div className='flex flex-col gap-5'>
       <div className='flex justify-end gap-2 items-center pb-2'>
-        <h3 className='text-xl xl:text-2xl font-semibold mr-auto'>Property Location:</h3>
+        <h3 className='text-xl xl:text-2xl font-semibold mr-auto'>Property Location</h3>
         {editable ? (
           <EditableActions toggleEdit={setEditable} onSave={onSave} />
         ) : (

@@ -3,12 +3,14 @@ import propertiesReducer from 'context/properties/propertiesSlice'
 import authReducer from 'context/auth/authSlice'
 import profilesReducer from 'context/profiles/profilesSlice'
 import appReducer from 'context/app/appSlice'
+import rentsReducer from 'context/rents/rentsSlice'
 
 export const store = configureStore({
   reducer: {
-    properties: propertiesReducer,
-    auth: authReducer,
-    profiles: profilesReducer,
     app: appReducer,
+    auth: authReducer,
+    properties: propertiesReducer,
+    profiles: profilesReducer,
+    rents: rentsReducer,
   },
 })

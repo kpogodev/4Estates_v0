@@ -93,6 +93,9 @@ export const propertiesSlice = createSlice({
     setUploadProgress: (state, action) => {
       state.uploadProgress = action.payload
     },
+    setPropertyIsPublished: (state, action) => {
+      state.property.is_published = action.payload
+    },
   },
 
   extraReducers: (builder) => {
@@ -139,6 +142,7 @@ export const propertiesSlice = createSlice({
       })
       .addCase(addProperty.fulfilled, (state, action) => {
         state.property = action.payload.data
+        state.myProperties = [...state.myProperties, action.payload.data]
         state.isSuccess = action.payload.success
         state.isLoading = false
         state.message = `Your property on ${action.payload.data.location.street} has been added`
@@ -183,5 +187,5 @@ export const propertiesSlice = createSlice({
   },
 })
 
-export const { reset, resetError, resetSuccess, resetProperty, setUploadProgress } = propertiesSlice.actions
+export const { reset, resetError, resetSuccess, resetProperty, setUploadProgress, setPropertyIsPublished } = propertiesSlice.actions
 export default propertiesSlice.reducer

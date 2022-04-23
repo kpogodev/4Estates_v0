@@ -6,6 +6,7 @@ import SkeletonItem from 'components/shared/SkeletonItem'
 import ProfileFormActions from './ProfileFormActions'
 
 function ProfileForm() {
+  console.count('ProfileForm')
   const [formData, setFormData] = useState({})
   const [editable, setEditable] = useState(false)
 
@@ -14,10 +15,8 @@ function ProfileForm() {
   const { profile, isLoading } = useSelector((state) => state.profiles)
 
   useEffect(() => {
-    if (!profile) {
-      dispatch(getMyProfile())
-    }
-  }, [profile, dispatch])
+    dispatch(getMyProfile())
+  }, [dispatch])
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -60,8 +59,22 @@ function ProfileForm() {
           <ProfileInput name='phone' label='Phone' type='text' currentValue={profile?.contact?.phone} editable={editable} setFormData={setFormData} />
           <ProfileInput name='fax' label='Fax' type='text' currentValue={profile?.contact?.fax} editable={editable} setFormData={setFormData} />
           <ProfileInput name='website' label='Website' type='text' currentValue={profile?.contact?.website} editable={editable} setFormData={setFormData} />
-          <ProfileInput name='facebook' label='Facebook' type='text' currentValue={profile?.contact?.socials?.facebook} editable={editable} setFormData={setFormData} />
-          <ProfileInput name='linkedin' label='LinkedIn' type='text' currentValue={profile?.contact?.socials?.linkedin} editable={editable} setFormData={setFormData} />
+          <ProfileInput
+            name='facebook'
+            label='Facebook'
+            type='text'
+            currentValue={profile?.contact?.socials?.facebook}
+            editable={editable}
+            setFormData={setFormData}
+          />
+          <ProfileInput
+            name='linkedin'
+            label='LinkedIn'
+            type='text'
+            currentValue={profile?.contact?.socials?.linkedin}
+            editable={editable}
+            setFormData={setFormData}
+          />
         </>
       )}
     </form>

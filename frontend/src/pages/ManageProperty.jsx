@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useId } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useParams, Link } from 'react-router-dom'
 import { toast } from 'react-toastify'
@@ -11,9 +11,10 @@ import PropertySlider from 'components/dashboard/properties/manage_property/Prop
 import PropertySliderUpload from 'components/dashboard/properties/manage_property/PropertySliderUpload'
 import PropertyDetails from 'components/dashboard/properties/manage_property/PropertyDetails'
 import PropertyLocation from 'components/dashboard/properties/manage_property/PropertyLocation'
-import PublishProperty from 'components/dashboard/properties/manage_property/publish_property/PublishProperty'
+import PropertyStatus from 'components/dashboard/properties/manage_property/PropertyStatus'
 
 function ManageProperty() {
+  const pageId = useId()
   const { property, message, isSuccess, isError } = useSelector((state) => state.properties)
   const dispatch = useDispatch()
 
@@ -57,6 +58,7 @@ function ManageProperty() {
 
   return (
     <motion.div
+      key={pageId}
       variants={pageTransition}
       initial='hidden'
       animate='visible'
@@ -79,9 +81,10 @@ function ManageProperty() {
         <PropertyLocation />
       </div>
       <div className='col-span-4 flex flex-col gap-10' ref={columnTwoRef}>
+        <PropertyStatus property={property} />
         <PropertyDetails className='row-span-2' />
       </div>
-      <PublishProperty className='col-span-12' />
+      <div className='col-span-12 flex'></div>
     </motion.div>
   )
 }

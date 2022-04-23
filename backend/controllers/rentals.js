@@ -15,12 +15,21 @@ export const getRentals = asyncHandler(async (req, res, next) => {
 // @route     GET /api/v1/rentals/:id
 // @access    Public
 export const getRental = asyncHandler(async (req, res, next) => {
-  const rental = await RentalModel.findById(req.params.id).populate([
+  let rental = await RentalModel.findById(req.params.id).populate([
     { path: 'publisher', select: 'name avatar' },
     { path: 'publisher_profile', select: '-observed' },
     'property',
   ])
-  if (!rental) return next(new ErrorResponse('Rental details not found', 404))
+  
+  if (!rental) {
+    rental = await RentalModel.findOne({ property: req.params.id }).populate([
+      { path: 'publisher', select: 'name avatar' },
+      { path: 'publisher_profile', select: '-observed' },
+      'property',
+    ])
+
+    if (!rental) return next(new ErrorResponse('Rental details not found', 404))
+  }
   res.status(200).json({ success: true, data: rental })
 })
 

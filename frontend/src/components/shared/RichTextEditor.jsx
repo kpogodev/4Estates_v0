@@ -1,4 +1,4 @@
-import { useRef, useCallback } from 'react'
+import { useRef, useCallback, useEffect } from 'react'
 import { createReactEditorJS } from 'react-editor-js'
 import FontSize from 'editorjs-inline-font-size-tool'
 import Header from '@editorjs/header'
@@ -6,7 +6,7 @@ import List from '@editorjs/list'
 import Paragraph from '@editorjs/paragraph'
 import Underline from '@editorjs/underline'
 
-function RichTextEditor({ className }) {
+function RichTextEditor({ className, intialData, onChange }) {
   const ReactEditorJS = createReactEditorJS()
 
   const tools = {
@@ -32,7 +32,7 @@ function RichTextEditor({ className }) {
       class: Paragraph,
       inlineToolbar: ['bold', 'italic', 'underline', 'fontSize'],
       config: {
-        placeholder: 'Paragraph',
+        placeholder: 'Here you can type...',
       },
     },
   }
@@ -45,17 +45,20 @@ function RichTextEditor({ className }) {
 
   const handleSave = useCallback(async () => {
     const savedData = await editorCore.current.save()
-    console.log(savedData)
-  }, [])
+    onChange('tenancy_info', savedData)
+  }, [onChange])
+
+  useEffect(() => {
+    return () => {
+      handleSave()
+    }
+  }, [handleSave])
 
   return (
     <div className={className}>
-      <>
-        <ReactEditorJS tools={tools} onInitialize={handleInitialize} />
-        <button className='btn btn-primary' onClick={handleSave} type='button'>
-          Send
-        </button>
-      </>
+      <div className='flex flex-col w-full gap-5'>
+        <ReactEditorJS tools={tools} onInitialize={handleInitialize} defaultValue={intialData} />
+      </div>
     </div>
   )
 }

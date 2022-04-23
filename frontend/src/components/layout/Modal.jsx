@@ -1,6 +1,5 @@
 import { useEffect, useCallback } from 'react'
 import ReactDOM from 'react-dom'
-import { LayoutGroup, motion } from 'framer-motion'
 
 const Modal = ({ children, isOpen, onClose, boxStyle }) => {
   const onClickOut = (e) => !e.target.closest('.modal-box') && onClose()
@@ -25,14 +24,12 @@ const Modal = ({ children, isOpen, onClose, boxStyle }) => {
 
   return ReactDOM.createPortal(
     <div className={`modal modal-bottom sm:modal-middle ${isOpen ? 'visible pointer-events-auto opacity-100' : ''}`} onClick={onClickOut}>
-      <LayoutGroup>
-        <motion.div className={`modal-box relative w-full ${boxStyle} !rounded-none block`} layout>
-          <motion.button className='btn btn-sm btn-secondary btn-circle absolute right-2 top-2' onClick={onClose} layout={true}>
-            ✕
-          </motion.button>
-          {children}
-        </motion.div>
-      </LayoutGroup>
+      <div className={`modal-box relative w-full ${boxStyle} !rounded-none block`}>
+        <button className='btn btn-sm btn-secondary btn-circle absolute right-2 top-2' onClick={onClose}>
+          ✕
+        </button>
+        {children}
+      </div>
     </div>,
     document.getElementById('portal')
   )

@@ -1,46 +1,46 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-import rentsService from './rentsServices'
+import salesService from './salesServices'
 
 const initialState = {
-  rents: [],
-  rental: null,
+  sales: [],
+  sale: null,
   isLoading: false,
   isSuccess: false,
   isError: false,
   message: '',
 }
-// Add rental
-export const addRental = createAsyncThunk('rents/add_rental', async (payload, thunkAPI) => {
+// Add sale
+export const addSale = createAsyncThunk('sales/add_sale', async (payload, thunkAPI) => {
   try {
-    return await rentsService.addRental(payload)
+    return await salesService.addSale(payload)
   } catch (error) {
     const message = error?.response?.data?.message ?? error.toString()
     return thunkAPI.rejectWithValue(message)
   }
 })
 
-// Get rental
-export const getRental = createAsyncThunk('rents/get_rental', async (payload, thunkAPI) => {
+// Get sale
+export const getSale = createAsyncThunk('sales/get_sale', async (payload, thunkAPI) => {
   try {
-    return await rentsService.getRental(payload)
+    return await salesService.getSale(payload)
   } catch (error) {
     const message = error?.response?.data?.message ?? error.toString()
     return thunkAPI.rejectWithValue(message)
   }
 })
 
-// Remove rental
-export const removeRental = createAsyncThunk('rents/remove_rental', async (payload, thunkAPI) => {
+// Remove sale
+export const removeSale = createAsyncThunk('sales/remove_sale', async (payload, thunkAPI) => {
   try {
-    return await rentsService.removeRental(payload)
+    return await salesService.removeSale(payload)
   } catch (error) {
     const message = error?.response?.data?.message ?? error.toString()
     return thunkAPI.rejectWithValue(message)
   }
 })
 
-export const rentsSlice = createSlice({
-  name: 'rents',
+export const salesSlice = createSlice({
+  name: 'sale',
   initialState,
   reducers: {
     reset: (state) => {
@@ -62,41 +62,41 @@ export const rentsSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(addRental.pending, (state) => {
+      .addCase(addSale.pending, (state) => {
         state.isLoading = true
       })
-      .addCase(addRental.fulfilled, (state, action) => {
+      .addCase(addSale.fulfilled, (state, action) => {
         state.isLoading = false
-        state.rents = [...state.rents, action.payload.data]
+        state.sales = [...state.sales, action.payload.data]
         state.isSuccess = action.payload.success
       })
-      .addCase(addRental.rejected, (state, action) => {
+      .addCase(addSale.rejected, (state, action) => {
         state.isLoading = false
         state.isError = true
         state.message = action.payload
       })
-      .addCase(getRental.pending, (state) => {
+      .addCase(getSale.pending, (state) => {
         state.isLoading = true
       })
-      .addCase(getRental.fulfilled, (state, action) => {
+      .addCase(getSale.fulfilled, (state, action) => {
         state.isLoading = false
-        state.rental = action.payload.data
+        state.sale = action.payload.data
         state.isSuccess = action.payload.success
       })
-      .addCase(getRental.rejected, (state, action) => {
+      .addCase(getSale.rejected, (state, action) => {
         state.isLoading = false
         state.isError = true
         state.message = action.payload
       })
-      .addCase(removeRental.pending, (state) => {
+      .addCase(removeSale.pending, (state) => {
         state.isLoading = true
       })
-      .addCase(removeRental.fulfilled, (state, action) => {
+      .addCase(removeSale.fulfilled, (state, action) => {
         state.isLoading = false
-        state.rental = null
+        state.sale = null
         state.isSuccess = action.payload.success
       })
-      .addCase(removeRental.rejected, (state, action) => {
+      .addCase(removeSale.rejected, (state, action) => {
         state.isLoading = false
         state.isError = true
         state.message = action.payload
@@ -104,5 +104,5 @@ export const rentsSlice = createSlice({
   },
 })
 
-export const { reset, resetError, resetSuccess } = rentsSlice.actions
-export default rentsSlice.reducer
+export const { reset, resetError, resetSuccess } = salesSlice.actions
+export default salesSlice.reducer

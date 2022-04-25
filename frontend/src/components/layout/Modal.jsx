@@ -15,12 +15,12 @@ const Modal = ({ children, isOpen, onClose, boxStyle }) => {
     }
   }, [onEscDown])
 
-  useEffect(
-    (e) => {
-      document.body.style.overflow = isOpen ? 'hidden' : 'auto'
-    },
-    [isOpen]
-  )
+  useEffect(() => {
+    document.body.style.overflow = isOpen ? 'hidden' : 'auto'
+    return () => {
+      document.body.style.overflow = 'auto'
+    }
+  }, [isOpen])
 
   return ReactDOM.createPortal(
     <div className={`modal modal-bottom sm:modal-middle ${isOpen ? 'visible pointer-events-auto opacity-100' : ''}`} onClick={onClickOut}>

@@ -6,7 +6,7 @@ import List from '@editorjs/list'
 import Paragraph from '@editorjs/paragraph'
 import Underline from '@editorjs/underline'
 
-function RichTextEditor({ className, intialData, onChange }) {
+function RichTextEditor({ className, initialData, stateName, onChange }) {
   const ReactEditorJS = createReactEditorJS()
 
   const tools = {
@@ -45,8 +45,8 @@ function RichTextEditor({ className, intialData, onChange }) {
 
   const handleSave = useCallback(async () => {
     const savedData = await editorCore.current.save()
-    onChange('tenancy_info', savedData)
-  }, [onChange])
+    onChange(stateName, savedData)
+  }, [onChange, stateName])
 
   useEffect(() => {
     return () => {
@@ -57,7 +57,7 @@ function RichTextEditor({ className, intialData, onChange }) {
   return (
     <div className={className}>
       <div className='flex flex-col w-full gap-5'>
-        <ReactEditorJS tools={tools} onInitialize={handleInitialize} defaultValue={intialData} />
+        <ReactEditorJS tools={tools} onInitialize={handleInitialize} defaultValue={initialData} />
       </div>
     </div>
   )

@@ -30,7 +30,7 @@ function PublishPropertyForm() {
 
   return (
     <div className='max-w-4xl flex flex-col gap-10 mx-auto'>
-      <div className='w-full flex items-center justify-between'>
+      <div className='w-full flex items-center justify-between flex-wrap gap-x-20'>
         <h2 className='block text-left font-bold text-2xl xl:text-4xl xl:py-4'>
           Publish Property<span className='!block text-lg text-gray-500 font-medium'>{property.location.formatted_address}</span>
         </h2>
@@ -39,8 +39,10 @@ function PublishPropertyForm() {
         </Link>
       </div>
       {!listingType && <PublishPropertyType setListingType={handleListingTypeChange} />}
-      {listingType === 'rent' && <RentForm property={property._id} steps={['equipment', 'financing', 'contract', 'availability', 'tenancy info', 'confirmation']} />}
-      {listingType === 'sale' && <SaleForm property={property._id} steps={['financing', 'additional info']} />}
+      {listingType === 'rent' && (
+        <RentForm propertyId={property._id} steps={['equipment', 'financing', 'contract', 'availability', 'tenancy info', 'summary']} />
+      )}
+      {listingType === 'sale' && <SaleForm propertyId={property._id} steps={['financing', 'additional info', 'summary']} />}
     </div>
   )
 }

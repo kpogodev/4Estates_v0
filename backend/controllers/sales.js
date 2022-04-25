@@ -15,12 +15,21 @@ export const getSales = asyncHandler(async (req, res, next) => {
 // @route     GET /api/v1/sales/:id
 // @access    Public
 export const getSale = asyncHandler(async (req, res, next) => {
-  const sale = await SaleModel.findById(req.params.id).populate([
+  let sale = await SaleModel.findById(req.params.id).populate([
     { path: 'publisher', select: 'name avatar' },
     { path: 'publisher_profile', select: '-observed' },
     'property',
   ])
-  if (!sale) return next(new ErrorResponse('Sale details not found', 404))
+
+  if(!sale) {
+    sale = await SaleModel.findOne({ property: req.params.id }).populate([
+      { path: 'publisher', select: 'name avatar' },
+      { path: 'publisher_profile', select: '-observed' },
+      'property',
+    ])
+
+    if (!sale) return next(new ErrorResponse('Sale details not found', 404))
+  }
   res.status(200).json({ success: true, data: sale })
 })
 

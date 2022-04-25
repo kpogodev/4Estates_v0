@@ -1,5 +1,8 @@
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify'
+import { resetError, resetSuccess } from 'context/rents/rentsSlice'
 import FormStepsControls from './FormStepsControls'
 import PublishAvailabilityDetails from './PublishAvailabilityDetails'
 import PublishContractDetails from './PublishContractDetails'
@@ -9,9 +12,15 @@ import PublishOptionalInfo from './PublishOptionalInfo'
 import RentFormConfirmation from './RentFormConfirmation'
 import useForm from 'hooks/useForm'
 import { addRental } from 'context/rents/rentsSlice'
+import MultiStepFormIndicator from 'components/form/MultiStepFormIndicator'
 
-function RentForm({ property, steps }) {
+function RentForm({ propertyId, steps }) {
+  const [formFilled, setFormFilled] = useState(false)
+  const [step, setStep] = useState(1)
+
+  const { isSuccess, isError, message } = useSelector((state) => state.rents)
   const dispatch = useDispatch()
+  const navigate = useNavigate()
 
   const { formData, isValid, handleChangeCustom, handleSubmit } = useForm({
     initialFormData: {
@@ -20,7 +29,7 @@ function RentForm({ property, steps }) {
       rental_type: 'short',
       price: 0,
       deposit: 0,
-      property,
+      property: propertyId,
     },
     validations: {
       available_from: {
@@ -32,9 +41,8 @@ function RentForm({ property, steps }) {
         validationErrorMessage: 'Monthly rent amount must be greater than £0',
       },
       deposit: {
-        isRequired: 'Please provide the deposit amount for the property',
-        validation: (deposit) => (deposit > 0 ? true : false),
-        validationErrorMessage: 'Deposit amount must be greater than £0',
+        validation: (deposit) => (deposit >= 0 ? true : false),
+        validationErrorMessage: 'Deposit amount cannot be a negative number',
       },
     },
     onSubmit: (data) => {
@@ -44,8 +52,6 @@ function RentForm({ property, steps }) {
       dispatch(addRental(data))
     },
   })
-
-  const [step, setStep] = useState(1)
 
   const handleNext = useCallback(
     (e) => {
@@ -60,6 +66,28 @@ function RentForm({ property, steps }) {
     setStep((prev) => (prev > 1 ? prev - 1 : prev))
   }, [])
 
+  const goToStep = useCallback((step) => {
+    setStep(step)
+  }, [])
+
+  useEffect(() => {
+    if (isSuccess) {
+      navigate(`/manage-property/${propertyId}`)
+      dispatch(resetSuccess())
+    }
+
+    if (isError) {
+      toast.error(message)
+      dispatch(resetError())
+    }
+  }, [isSuccess, isError, message, propertyId, navigate, dispatch])
+
+  useEffect(() => {
+    if (step === steps.length) {
+      setFormFilled(true)
+    }
+  }, [step, steps.length])
+
   const formSteps = () => {
     switch (step) {
       case 1:
@@ -71,9 +99,16 @@ function RentForm({ property, steps }) {
       case 4:
         return <PublishAvailabilityDetails onChange={handleChangeCustom} formData={formData} />
       case 5:
-        return <PublishOptionalInfo onChange={handleChangeCustom} formData={formData} />
+        return (
+          <PublishOptionalInfo
+            onChange={handleChangeCustom}
+            initialData={formData?.tenancy_info}
+            stateName='tenancy_info'
+            title='Tenancy Information (Optional)'
+          />
+        )
       case 6:
-        return <RentFormConfirmation formData={formData} validity={isValid} />
+        return <RentFormConfirmation formData={formData} isValid={isValid} goToStep={goToStep} />
       default:
         return <></>
     }
@@ -81,6 +116,7 @@ function RentForm({ property, steps }) {
 
   return (
     <form className='flex flex-col justify-center items-center gap-10 w-full mx-auto' onSubmit={handleSubmit} noValidate>
+      <MultiStepFormIndicator step={step} titles={steps} containerClassNames='w-full max-w-xl' clickable={formFilled} onClick={goToStep} />
       {formSteps()}
       <FormStepsControls steps={steps} currentStep={step} handleNext={handleNext} handlePrev={handlePrev} />
     </form>

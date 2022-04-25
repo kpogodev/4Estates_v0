@@ -2,8 +2,9 @@ import { useId } from 'react'
 import RichTextEditor from 'components/shared/RichTextEditor'
 import { motion } from 'framer-motion'
 import { formContentChange } from 'utils/animationVariants'
+import document_icon from 'assets/document-icon.svg'
 
-function PublishOptionalInfo({ formData, onChange }) {
+function PublishOptionalInfo({ initialData, stateName, onChange, title }) {
   const keyId = useId()
   return (
     <motion.div
@@ -14,8 +15,9 @@ function PublishOptionalInfo({ formData, onChange }) {
       exit='exit'
       key={keyId}
     >
-      <p className='text-center font-medium text-2xl max-w-[45ch]'>Tenancy Information (Optional)</p>
-      <RichTextEditor className='w-full py-2 px-4 rounded border-2' intialData={formData.tenancy_info} onChange={onChange} />
+      <p className='text-center font-medium text-2xl max-w-[45ch]'>{title}</p>
+      <img className='block w-16 h-16 pointer-events-none' src={document_icon} alt='' />
+      <RichTextEditor className='w-full py-2 px-4 rounded border-2' initialData={initialData} onChange={onChange} stateName={stateName} />
     </motion.div>
   )
 }

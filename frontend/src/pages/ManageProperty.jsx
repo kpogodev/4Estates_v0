@@ -7,11 +7,11 @@ import { pageTransition } from 'utils/animationVariants'
 import Loading from 'components/shared/Loading'
 import useMediaQuery from 'hooks/useMediaQuery'
 import { getProperty, resetError, resetSuccess, resetProperty } from 'context/properties/propertiesSlice'
-import PropertySlider from 'components/dashboard/properties/manage_property/PropertySlider'
-import PropertySliderUpload from 'components/dashboard/properties/manage_property/PropertySliderUpload'
-import PropertyDetails from 'components/dashboard/properties/manage_property/PropertyDetails'
-import PropertyLocation from 'components/dashboard/properties/manage_property/PropertyLocation'
-import PropertyStatus from 'components/dashboard/properties/manage_property/PropertyStatus'
+import PropertySlider from 'components/dashboard/properties/manage_property/property_gallery/PropertySlider'
+import PropertySliderUpload from 'components/dashboard/properties/manage_property/property_gallery/PropertySliderUpload'
+import PropertyDetails from 'components/dashboard/properties/manage_property/property_details/PropertyDetails'
+import PropertyLocation from 'components/dashboard/properties/manage_property/property_location/PropertyLocation'
+import PropertyStatus from 'components/dashboard/properties/manage_property/property_status/PropertyStatus'
 
 function ManageProperty() {
   const pageId = useId()
@@ -66,7 +66,7 @@ function ManageProperty() {
       className='w-full flex flex-col lg:grid lg:grid-cols-12 gap-8 lg:gap-10'
       ref={containerRef}
     >
-      <div className='col-span-12 flex justify-between items-center gap-5 flex-wrap'>
+      <div className='col-span-12 flex justify-between items-center gap-x-20 flex-wrap'>
         <h2 className='block text-left font-bold text-2xl xl:text-4xl xl:py-4'>
           Manage Property
           <span className='!block text-lg text-gray-500 font-medium'>{property.location.formatted_address}</span>

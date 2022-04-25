@@ -45,7 +45,7 @@ function PublishFinanceDetails({ formData, onChange, forRent }) {
           <div className='form-control w-full'>
             <label className='label'>
               <span className='label-text'>Deposit</span>
-              <span className='label-alt text-error text-sm italic'>Required *</span>
+              <span className='label-alt text-sm italic'>Optional*</span>
             </label>
             <label className='input-group'>
               <span className='font-medium'>£</span>

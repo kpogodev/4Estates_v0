@@ -1,15 +1,26 @@
 import { useEffect } from 'react'
-import { useDispatch } from 'react-redux'
-import { getRental } from 'context/rents/rentsSlice'
+import { useDispatch, useSelector } from 'react-redux'
+import { getRental, resetSuccess, resetError } from 'context/rents/rentsSlice'
 import PropertyStatusPublished from './PropertyStatusPublished'
 import PropertyStatusNotPublished from './PropertyStatusNotPublished'
 
 function PropertyStatus({ property }) {
+  const { rental, isLoading, isError, isSuccess } = useSelector((state) => state.rents)
   const dispatch = useDispatch()
 
   useEffect(() => {
     dispatch(getRental(property._id))
   }, [dispatch, property._id])
+
+  useEffect(() => {
+    if (isSuccess) {
+      dispatch(resetError())
+    }
+
+    if (isError) {
+      dispatch(resetError())
+    }
+  }, [isSuccess, isError, dispatch])
 
   return (
     <div className='w-full flex flex-col items-start justify-start gap-4'>

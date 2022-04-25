@@ -1,10 +1,27 @@
 import PropTypes from 'prop-types'
 
-function MultiStepFormIndicator({ step, titles, containerClassNames }) {
+function MultiStepFormIndicator({ step, titles, containerClassNames, clickable, onClick }) {
+  const handleClick = (e) => {
+    if (clickable) {
+      onClick(+e.target.dataset.step)
+    }
+  }
+
   return (
     <ul className={`steps ${containerClassNames}`}>
       {titles.map((title, index) => (
-        <li className={`step before:transition-all after:transition-all${step >= index + 1 ? ' step-primary' : ''}`}>{title}</li>
+        <li
+          key={index}
+          className={`step !min-w-fit before:transition-all after:transition-all${step >= index + 1 ? ' step-primary' : ''}${
+            clickable ? ' cursor-pointer' : ''
+          }`}
+          onClick={handleClick}
+          data-step={index + 1}
+        >
+          <span className={`hidden sm:inline pointer-events-none${clickable ? ' link text-primary' : ''}`}>{`${title.charAt(0)?.toUpperCase()}${title.slice(
+            1
+          )}`}</span>
+        </li>
       ))}
     </ul>
   )

@@ -59,6 +59,9 @@ export const salesSlice = createSlice({
       state.isSuccess = false
       state.message = ''
     },
+    resetSale: (state) => {
+      state.sale = null
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -67,7 +70,7 @@ export const salesSlice = createSlice({
       })
       .addCase(addSale.fulfilled, (state, action) => {
         state.isLoading = false
-        state.sales = [...state.sales, action.payload.data]
+        state.sale = action.payload.data
         state.isSuccess = action.payload.success
       })
       .addCase(addSale.rejected, (state, action) => {
@@ -104,5 +107,5 @@ export const salesSlice = createSlice({
   },
 })
 
-export const { reset, resetError, resetSuccess } = salesSlice.actions
+export const { reset, resetError, resetSuccess, resetSale } = salesSlice.actions
 export default salesSlice.reducer

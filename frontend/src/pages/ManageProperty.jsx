@@ -81,7 +81,7 @@ function ManageProperty() {
         <PropertyLocation />
       </div>
       <div className='col-span-4 flex flex-col gap-10' ref={columnTwoRef}>
-        <PropertyStatus property={property} />
+        <PropertyStatus propertyId={property._id} isPublished={property.is_published} />
         <PropertyDetails className='row-span-2' />
       </div>
       <div className='col-span-12 flex'></div>

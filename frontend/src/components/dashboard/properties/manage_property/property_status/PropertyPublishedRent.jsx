@@ -1,4 +1,5 @@
 import moment from 'moment'
+import { toLocalCurrency } from 'utils/toLocalCurrency'
 
 function PropertyPublishedRent({ rental }) {
   return (
@@ -12,10 +13,10 @@ function PropertyPublishedRent({ rental }) {
           Furnished: <span className='font-semibold'>{rental?.furnished ? 'Yes' : 'No'}</span>
         </p>
         <p>
-          Monthly Rent: <span className='font-semibold'>£{rental?.price}</span>
+          Monthly Rent: <span className='font-semibold'>{toLocalCurrency('en-GB', rental?.price, 'GBP')}</span>
         </p>
         <p>
-          Deposit: <span className='font-semibold'>£{rental?.deposit}</span>
+          Deposit: <span className='font-semibold'>{toLocalCurrency('en-GB', rental?.deposit, 'GBP')}</span>
         </p>
         <p>
           Contract: <span className='font-semibold'>{`${rental?.rental_type.charAt(0).toUpperCase()}${rental?.rental_type.slice(1)}`} Term</span>

@@ -59,6 +59,9 @@ export const rentsSlice = createSlice({
       state.isSuccess = false
       state.message = ''
     },
+    resetRental: (state) => {
+      state.rental = null
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -67,7 +70,7 @@ export const rentsSlice = createSlice({
       })
       .addCase(addRental.fulfilled, (state, action) => {
         state.isLoading = false
-        state.rents = [...state.rents, action.payload.data]
+        state.rental = action.payload.data
         state.isSuccess = action.payload.success
       })
       .addCase(addRental.rejected, (state, action) => {
@@ -104,5 +107,5 @@ export const rentsSlice = createSlice({
   },
 })
 
-export const { reset, resetError, resetSuccess } = rentsSlice.actions
+export const { reset, resetError, resetSuccess, resetRental } = rentsSlice.actions
 export default rentsSlice.reducer

@@ -6,8 +6,7 @@ import { forViewSwitcher } from 'utils/animationVariants'
 function PropertiesGrid({ properties }) {
   return (
     <motion.div
-      className='w-full grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-3 xl:h-[500px] overflow-y-auto
-      '
+      className='w-full grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-3'
       variants={forViewSwitcher}
       initial='hidden'
       animate='visible'

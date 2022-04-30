@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { toast } from 'react-toastify'
 
-export default function useFrom({ initialFormData = {}, validations, onSubmit = () => {} }) {
+export default function useForm({ initialFormData = {}, validations, onSubmit = () => {} }) {
   const [formData, setData] = useState(initialFormData)
   const [isValid, setIsValid] = useState({})
 

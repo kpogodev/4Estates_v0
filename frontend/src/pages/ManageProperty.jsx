@@ -14,13 +14,13 @@ import PropertyLocation from 'components/dashboard/properties/manage_property/pr
 import PropertyStatus from 'components/dashboard/properties/manage_property/property_status/PropertyStatus'
 
 function ManageProperty() {
+  const { matches } = useMediaQuery('(min-width: 1024px)')
   const pageId = useId()
+
   const { property, message, isSuccess, isError } = useSelector((state) => state.properties)
   const dispatch = useDispatch()
 
   const params = useParams()
-
-  const { matches } = useMediaQuery('(min-width: 1024px)')
 
   useEffect(() => {
     dispatch(getProperty(params.id))
@@ -39,21 +39,6 @@ function ManageProperty() {
     }
   }, [isSuccess, isError, message, dispatch])
 
-  //To handle layout responsive layout
-  const containerRef = useRef()
-  const columnOneRef = useRef()
-  const columnTwoRef = useRef()
-
-  useEffect(() => {
-    if (!containerRef.current && !columnOneRef.current && !columnTwoRef.current) return
-
-    if (!matches) {
-      containerRef.current.insertBefore(columnTwoRef.current, columnOneRef.current)
-    } else {
-      containerRef.current.insertBefore(columnTwoRef.current, columnOneRef.current.nextSibling)
-    }
-  }, [matches])
-
   if (!property) return <Loading />
 
   return (
@@ -64,7 +49,6 @@ function ManageProperty() {
       animate='visible'
       exit='exit'
       className='w-full flex flex-col lg:grid lg:grid-cols-12 gap-8 lg:gap-10'
-      ref={containerRef}
     >
       <div className='col-span-12 flex justify-between items-center gap-x-20 flex-wrap'>
         <h2 className='block text-left font-bold text-2xl xl:text-4xl xl:py-4'>
@@ -75,16 +59,31 @@ function ManageProperty() {
           Back to Dashboard
         </Link>
       </div>
-      <div className='flex flex-col col-span-8 gap-10' ref={columnOneRef}>
-        <PropertySlider className='max-h-[600px] bg-black shadow-lg aspect-[9.9/6]' />
-        <PropertySliderUpload className='row-span-1' />
-        <PropertyLocation />
-      </div>
-      <div className='col-span-4 flex flex-col gap-10' ref={columnTwoRef}>
-        <PropertyStatus propertyId={property._id} isPublished={property.is_published} />
-        <PropertyDetails className='row-span-2' />
-      </div>
-      <div className='col-span-12 flex'></div>
+      {matches ? (
+        <>
+          <div className='flex flex-col col-span-8 gap-10'>
+            <PropertySlider className='max-h-[600px] bg-black shadow-lg aspect-[9.9/6]' />
+            <PropertySliderUpload className='row-span-1' />
+            <PropertyLocation />
+          </div>
+          <div className='col-span-4 flex flex-col gap-10'>
+            <PropertyStatus propertyId={property._id} isPublished={property.is_published} />
+            <PropertyDetails className='row-span-2' />
+          </div>
+        </>
+      ) : (
+        <>
+          <div className='col-span-4 flex flex-col gap-10'>
+            <PropertyStatus propertyId={property._id} isPublished={property.is_published} />
+            <PropertyDetails className='row-span-2' />
+          </div>
+          <div className='flex flex-col col-span-8 gap-10'>
+            <PropertySlider className='max-h-[600px] bg-black shadow-lg aspect-[9.9/6]' />
+            <PropertySliderUpload className='row-span-1' />
+            <PropertyLocation />
+          </div>
+        </>
+      )}
     </motion.div>
   )
 }

@@ -1,7 +1,7 @@
 import ErrorResponse from '../utils/errorResponse.js'
 import asyncHandler from 'express-async-handler'
 import PropertyModel from '../models/propertiesModel.js'
-import { imageMultiUpload, imagesDelete } from '../hooks/uploaderHooks.js'
+import { imageMultiUpload, imagesDelete, imageDelete } from '../hooks/uploaderHooks.js'
 
 // @desc      Get all properties
 // @route     GET /api/v1/properties
@@ -85,6 +85,23 @@ export const uploadPropertyImages = asyncHandler(async (req, res, next) => {
   const newImages = await imageMultiUpload(data)
   property.images = [...property.images, ...newImages]
 
+  await property.save()
+
+  res.json({ success: true, data: property })
+})
+
+// @desc      Delete image
+// @route     DELETE /api/v1/properties/upload
+// @access    Private
+export const deletePropertyImage = asyncHandler(async (req, res, next) => {
+  const { image, propertyId } = req.body
+
+  let property = await PropertyModel.findById(propertyId)
+  if (!property) return new ErrorResponse(`Property with id: ${propertyId} not found`, 404)
+
+  await imageDelete(image)
+
+  property.images = property.images.filter((img) => img.cloudinary_id !== image.cloudinary_id)
   await property.save()
 
   res.json({ success: true, data: property })

@@ -4,7 +4,6 @@ import { pageTransition } from 'utils/animationVariants'
 import PropertiesPanel from 'components/dashboard/properties/my_properties/PropertiesPanel'
 
 function Dashboard() {
-  console.count('Dashboard')
   return (
     <motion.div className='flex flex-col gap-5 xl:grid xl:grid-cols-3 lg:gap-10' variants={pageTransition} initial='hidden' animate='visible' exit='exit'>
       <ProfilePanel />

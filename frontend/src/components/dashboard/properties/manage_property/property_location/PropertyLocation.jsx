@@ -5,7 +5,6 @@ import AddressSearch from './AddressSearch'
 import PropertyMap from './PropertyMap'
 
 function PropertyLocation() {
-  console.count('Location section render:')
   const [editable, setEditable] = useState(false)
 
   const refAddressSearch = useRef()

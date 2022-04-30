@@ -42,7 +42,6 @@ function PropertyStatusPublished({ propertyId }) {
     if (rents.isSuccess && !rents.rental) {
       setModalOpen(false)
       dispatch(setPropertyIsPublished(false))
-      dispatch(rentsContext.resetSuccess())
     }
   }, [rents.isSuccess, rents.rental, dispatch, handleModalToggle])
 
@@ -50,9 +49,15 @@ function PropertyStatusPublished({ propertyId }) {
     if (sales.isSuccess && !sales.sale) {
       setModalOpen(false)
       dispatch(setPropertyIsPublished(false))
-      dispatch(salesContext.resetSuccess())
     }
   }, [sales.isSuccess, sales.sale, dispatch, handleModalToggle])
+
+  useEffect(() => {
+    if (rents.isSuccess) dispatch(rentsContext.resetSuccess())
+    if (sales.isSuccess) dispatch(salesContext.resetSuccess())
+    if (rents.isError) dispatch(rentsContext.resetError())
+    if (sales.isError) dispatch(salesContext.resetError())
+  }, [dispatch, rents.isSuccess, sales.isSuccess, rents.isError, sales.isError])
 
   return (
     <div className='w-full'>

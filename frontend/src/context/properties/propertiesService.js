@@ -53,12 +53,26 @@ const uploadPropertyImages = async (formData, thunkAPI) => {
   return data
 }
 
+// Delete Image
+const deletePropertyImage = async (payload) => {
+  const config = {
+    headers: {
+      ContentType: 'application/json',
+    },
+    data: payload,
+  }
+
+  const { data } = await axios.delete(`${API_URL}/upload/`, config)
+  return data
+}
+
 const propertiesService = {
   getProperties,
   getProperty,
   addProperty,
   updateProperty,
   uploadPropertyImages,
+  deletePropertyImage,
 }
 
 export default propertiesService

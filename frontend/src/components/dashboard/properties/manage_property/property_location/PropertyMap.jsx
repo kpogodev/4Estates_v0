@@ -1,12 +1,15 @@
-import { useState, useEffect, forwardRef, useImperativeHandle } from 'react'
+import { useState, useEffect, forwardRef, useImperativeHandle, useId } from 'react'
 import { GoogleMap, Marker } from '@react-google-maps/api'
 import { useDispatch, useSelector } from 'react-redux'
 import { updateProperty } from 'context/properties/propertiesSlice'
 import { BiInfoCircle } from 'react-icons/bi'
 import SkeletonItem from 'components/shared/SkeletonItem'
+import { motion } from 'framer-motion'
+import { simpleFadeInOut } from 'utils/animationVariants'
 
 function PropertyMap({ editable }, ref) {
-  console.count('Google maps render:')
+  const animKey = useId()
+
   //Redux
   const { property } = useSelector((state) => state.properties)
   const { googleServicesLoaded } = useSelector((state) => state.app)
@@ -54,15 +57,15 @@ function PropertyMap({ editable }, ref) {
 
   return (
     <div className='w-full flex flex-col gap-4'>
-      <p className='flex gap-2 items-center text-info'>
-        <BiInfoCircle />
-        You can also manually adjust position of the pin (drag-and-drop)
-      </p>
+      {editable && (
+        <motion.p key={animKey} variants={simpleFadeInOut} className='flex gap-2 items-center text-info text-lg'>
+          <BiInfoCircle />
+          You can also manually adjust position of the pin (drag-and-drop)
+        </motion.p>
+      )}
       <GoogleMap mapContainerStyle={mapContainerStyle} zoom={18} center={InitialLocation}>
         <Marker
-          position={
-            !updatedMarker ? InitialLocation : { lat: updatedMarker.coordinates[0], lng: updatedMarker.coordinates[1] }
-          }
+          position={!updatedMarker ? InitialLocation : { lat: updatedMarker.coordinates[0], lng: updatedMarker.coordinates[1] }}
           draggable={editable}
           onDragStart={onMarkerDragStart}
           onDragEnd={onMarkerDragEnd}

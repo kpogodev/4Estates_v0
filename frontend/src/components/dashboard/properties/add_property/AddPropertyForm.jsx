@@ -9,7 +9,9 @@ import InputTextarea from 'components/form/InputTextarea'
 import InputNumber from 'components/form/InputNumber'
 import Spinner from 'components/shared/Spinner'
 import { toast } from 'react-toastify'
-
+import { Combobox, ComboboxInput, ComboboxPopover, ComboboxList, ComboboxOption } from '@reach/combobox'
+import '@reach/combobox/styles.css'
+import usePlacesAutocomplete from 'use-places-autocomplete'
 
 function AddPropertyForm() {
   //Component States
@@ -19,9 +21,10 @@ function AddPropertyForm() {
   //From Redxu State
   const dispatch = useDispatch()
   const { property, isLoading, isSuccess, isError, message } = useSelector((state) => state.properties)
+  const { googleServicesLoaded } = useSelector((state) => state.app)
 
   // useForm Hook
-  const { formData, isValid, handleChange, handleSubmit } = useForm({
+  const { formData, isValid, handleChange, handleChangeCustom, handleSubmit } = useForm({
     initialFormData: {
       address: '',
       bathrooms: 0,
@@ -83,6 +86,27 @@ function AddPropertyForm() {
     },
   })
 
+  // Places Auto Complete Hook
+  const { suggestions, setValue, clearSuggestions } = usePlacesAutocomplete({
+    requestOptions: {
+      componentRestrictions: {
+        country: ['uk'],
+      },
+    },
+    defaultValue: formData.address,
+  })
+
+  const onAddressChange = (e) => {
+    setValue(e.target.value)
+    handleChange(e)
+  }
+
+  const onAddressSelect = (address) => {
+    setValue(address, false)
+    handleChangeCustom('address', address)
+    clearSuggestions()
+  }
+
   //Disable some fileds based on property type
   useEffect(() => {
     formData.type === 'commercial' || formData.type === 'land' ? setFieldsDisabled(true) : setFieldsDisabled(false)
@@ -106,22 +130,29 @@ function AddPropertyForm() {
       <div className='grid md:grid-cols-2 lg:p-8 pt-0 gap-x-10 gap-y-4'>
         {/* col-1 */}
         <div className='flex flex-col gap-y-4'>
-          <div className='form-control w-full'>
-            <label className='label'>
-              <span className='label-text'>Address:</span>
-              <span className='label-alt text-error text-sm italic'>Required *</span>
-            </label>
-            <InputField
-              autoComplete='new-address'
-              className='input input-bordered w-full'
-              handleChange={handleChange}
-              isValid={isValid.address}
-              name='address'
-              placeholder='54 Slaidburn St, London SW10 0JW'
-              type='text'
-              value={formData.address}
-            />
-          </div>
+          <Combobox onSelect={onAddressSelect}>
+            <div className='form-control m-w-[300px] w-full'>
+              <label className='label'>
+                <span className='label-text'>Address:</span>
+                <span className='label-alt text-error text-sm italic'>Required *</span>
+              </label>
+              <ComboboxInput
+                name='address'
+                className={`input input-bordered w-full focus:border-info${isValid.address === false ? ' border-error' : ''}${
+                  isValid.address === true ? ' border-success' : ''
+                }`}
+                value={formData.address}
+                onChange={onAddressChange}
+                placeholder='54 Slaidburn St, London SW10 0JW'
+                autoComplete='off'
+              />
+            </div>
+            <ComboboxPopover>
+              <ComboboxList>
+                {suggestions.status === 'OK' && suggestions.data.map(({ place_id, description }) => <ComboboxOption key={place_id} value={description} />)}
+              </ComboboxList>
+            </ComboboxPopover>
+          </Combobox>
           <div className='relative form-control w-full'>
             <label className='label'>
               <span className='label-text'>Description:</span>

@@ -7,8 +7,6 @@ import { updateProperty } from 'context/properties/propertiesSlice'
 import SkeletonItem from 'components/shared/SkeletonItem'
 
 function AddressSearch({ editable }, ref) {
-  console.count('Address search render:')
-
   //Redux
   const { property } = useSelector((state) => state.properties)
   const { googleServicesLoaded } = useSelector((state) => state.app)
@@ -52,29 +50,20 @@ function AddressSearch({ editable }, ref) {
   }))
 
   // If connecting to Google API failed
-  if (!googleServicesLoaded) return <SkeletonItem className='w-[300px] h-[50px] shadow-lg bg-[#ccc] animate-pulse' />
+  if (!googleServicesLoaded) return <SkeletonItem className='m-w-[300px] w-full h-[50px] shadow-lg bg-[#ccc] animate-pulse' />
 
   return (
     <Combobox onSelect={onSelect}>
-      <div className='form-control w-[300px]'>
+      <div className='form-control m-w-[300px] w-full'>
         <label className='label'>
           <span className='label-text'>Address:</span>
         </label>
-        <ComboboxInput
-          name='address'
-          className='input input-bordered w-full'
-          value={value}
-          onChange={onChange}
-          disabled={!ready || !editable}
-        />
+        <ComboboxInput name='address' className='input input-bordered w-full' value={value} onChange={onChange} disabled={!ready || !editable} />
       </div>
       {editable && (
         <ComboboxPopover>
           <ComboboxList>
-            {suggestions.status === 'OK' &&
-              suggestions.data.map(({ place_id, description }) => (
-                <ComboboxOption key={place_id} value={description} />
-              ))}
+            {suggestions.status === 'OK' && suggestions.data.map(({ place_id, description }) => <ComboboxOption key={place_id} value={description} />)}
           </ComboboxList>
         </ComboboxPopover>
       )}

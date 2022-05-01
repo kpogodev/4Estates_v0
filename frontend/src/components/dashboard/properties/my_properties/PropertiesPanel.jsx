@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { IoAddCircle } from 'react-icons/io5'
-import { getMyProperties } from 'context/properties/propertiesSlice'
 import Spinner from 'components/shared/Spinner'
 import ViewSwitcher from 'components/shared/ViewSwitcher'
 import useMediaQuery from 'hooks/useMediaQuery'
@@ -13,18 +12,8 @@ import PropertiesSwiper from './PropertiesSwiper'
 function PropertiesPanel() {
   const [listType, setListType] = useState('grid')
   const { myProperties, loading } = useSelector((state) => state.properties)
-  const { user } = useSelector((state) => state.auth)
 
-  const dispatch = useDispatch()
   const { matches } = useMediaQuery('(min-width: 768px)')
-
-  useEffect(() => {
-    dispatch(
-      getMyProperties({
-        publisher: user._id,
-      })
-    )
-  }, [user._id, dispatch])
 
   useEffect(() => {
     if (!matches && listType === 'tabel') {

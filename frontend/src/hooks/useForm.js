@@ -2,16 +2,16 @@ import { useState } from 'react'
 import { toast } from 'react-toastify'
 
 export default function useForm({ initialFormData = {}, validations, onSubmit = () => {} }) {
-  const [formData, setData] = useState(initialFormData)
+  const [formData, setFormData] = useState(initialFormData)
   const [isValid, setIsValid] = useState({})
 
   const handleChange = (e) => {
-    setData({ ...formData, [e.target.name]: e.target.value })
+    setFormData({ ...formData, [e.target.name]: e.target.value })
     setIsValid({ ...isValid, [e.target.name]: null })
   }
 
   const handleChangeCustom = (name, value) => {
-    setData({ ...formData, [name]: value })
+    setFormData({ ...formData, [name]: value })
     setIsValid({ ...isValid, [name]: null })
   }
 

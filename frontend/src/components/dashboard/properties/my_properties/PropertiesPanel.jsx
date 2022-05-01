@@ -46,7 +46,7 @@ function PropertiesPanel() {
   }
 
   return (
-    <div className='card w-full bg-base-100 shadow-lg col-span-2'>
+    <div className='card w-full bg-base-100 shadow-lg col-span-2 [--padding-card:1rem] md:[--padding-card:2rem]'>
       <div className='card-body gap-12 pb-12'>
         <div className='flex justify-between items-center flex-wrap gap-4'>
           <h2 className='text-2xl md:text-3xl lg:text-4xl font-bold'>My Properties</h2>

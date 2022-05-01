@@ -26,6 +26,7 @@ const addProperty = async (formData) => {
   const { data } = await axios.post(`${API_URL}`, formData, config)
   return data
 }
+
 // Update Properties
 const updateProperty = async (payload) => {
   const config = {
@@ -34,6 +35,12 @@ const updateProperty = async (payload) => {
     },
   }
   const { data } = await axios.put(`${API_URL}/${payload.id}`, payload.data, config)
+  return data
+}
+
+// Delete Property
+const deleteProperty = async (id) => {
+  const { data } = await axios.delete(`${API_URL}/${id}`)
   return data
 }
 
@@ -71,6 +78,7 @@ const propertiesService = {
   getProperty,
   addProperty,
   updateProperty,
+  deleteProperty,
   uploadPropertyImages,
   deletePropertyImage,
 }

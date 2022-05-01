@@ -31,7 +31,7 @@ function App() {
       <div className='flex flex-col justify-between min-h-screen bg-[#fdfdfd]'>
         <Navbar />
         <AnimatePresence exitBeforeEnter={true}>
-          <main className='container flex flex-col mx-auto py-12 px-4'>
+          <main className='container flex flex-col mx-auto py-5 px-[15px] md:py-12 md:px-6'>
             <Routes>
               <Route path='/' element={<Home />} />
               <Route path='/login' element={<Login />} exact />

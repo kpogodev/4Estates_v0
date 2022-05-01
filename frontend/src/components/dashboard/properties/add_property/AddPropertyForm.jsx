@@ -2,12 +2,12 @@ import { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { addProperty, resetError, resetSuccess } from 'context/properties/propertiesSlice'
-import InputField from 'components/form/InputField'
 import useForm from 'hooks/useForm'
 import InputSelect from 'components/form/InputSelect'
 import InputTextarea from 'components/form/InputTextarea'
 import InputNumber from 'components/form/InputNumber'
 import Spinner from 'components/shared/Spinner'
+import Loading from 'components/shared/Loading'
 import { toast } from 'react-toastify'
 import { Combobox, ComboboxInput, ComboboxPopover, ComboboxList, ComboboxOption } from '@reach/combobox'
 import '@reach/combobox/styles.css'
@@ -124,6 +124,8 @@ function AddPropertyForm() {
       toast.error(message)
     }
   }, [dispatch, isError, isSuccess, message])
+
+  if (!googleServicesLoaded) return <Loading />
 
   return (
     <form className='max-w-screen-lg mx-auto' onSubmit={handleSubmit} noValidate>

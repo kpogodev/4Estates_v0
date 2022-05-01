@@ -1,4 +1,4 @@
-import { useEffect, useRef, useId } from 'react'
+import { useEffect, useId } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useParams, Link } from 'react-router-dom'
 import { toast } from 'react-toastify'
@@ -12,6 +12,7 @@ import PropertySliderUpload from 'components/dashboard/properties/manage_propert
 import PropertyDetails from 'components/dashboard/properties/manage_property/property_details/PropertyDetails'
 import PropertyLocation from 'components/dashboard/properties/manage_property/property_location/PropertyLocation'
 import PropertyStatus from 'components/dashboard/properties/manage_property/property_status/PropertyStatus'
+import PropertyDelete from 'components/dashboard/properties/manage_property/property_delete/PropertyDelete'
 
 function ManageProperty() {
   const { matches } = useMediaQuery('(min-width: 1024px)')
@@ -65,6 +66,7 @@ function ManageProperty() {
             <PropertySlider className='max-h-[600px] bg-black shadow-lg aspect-[9.9/6]' />
             <PropertySliderUpload className='row-span-1' />
             <PropertyLocation />
+            <PropertyDelete propertyId={property._id} />
           </div>
           <div className='col-span-4 flex flex-col gap-10'>
             <PropertyStatus propertyId={property._id} isPublished={property.is_published} />
@@ -81,6 +83,7 @@ function ManageProperty() {
             <PropertySlider className='max-h-[600px] bg-black shadow-lg aspect-[9.9/6]' />
             <PropertySliderUpload className='row-span-1' />
             <PropertyLocation />
+            <PropertyDelete propertyId={property._id} />
           </div>
         </>
       )}

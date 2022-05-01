@@ -78,7 +78,6 @@ function PropertyMap({ editable }, ref) {
 
 const mapContainerStyle = {
   width: '100%',
-  minHeight: '250px',
   aspectRatio: '6/4',
   boxShadow: '1px 4px 16px rgba(0,0,0,0.1)',
 }

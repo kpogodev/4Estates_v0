@@ -57,6 +57,15 @@ export const updateProperty = createAsyncThunk('properties/update', async (paylo
   }
 })
 
+export const deleteProperty = createAsyncThunk('properties/delete', async (payload, thunkAPI) => {
+  try {
+    return await propertiesService.deleteProperty(payload)
+  } catch (error) {
+    const message = error?.response?.data?.message ?? error.toString()
+    return thunkAPI.rejectWithValue(message)
+  }
+})
+
 export const uploadPropertyImages = createAsyncThunk('properties/upload', async (payload, thunkAPI) => {
   try {
     return await propertiesService.uploadPropertyImages(payload, thunkAPI)
@@ -203,6 +212,19 @@ export const propertiesSlice = createSlice({
         state.message = `Your image has been deleted`
       })
       .addCase(deletePropertyImage.rejected, (state, action) => {
+        state.isLoading = false
+        state.isError = true
+        state.message = action.payload
+      })
+      .addCase(deleteProperty.pending, (state) => {
+        state.isLoading = true
+      })
+      .addCase(deleteProperty.fulfilled, (state, action) => {
+        state.isSuccess = action.payload.success
+        state.isLoading = false
+        state.message = `Your property has been deleted`
+      })
+      .addCase(deleteProperty.rejected, (state, action) => {
         state.isLoading = false
         state.isError = true
         state.message = action.payload

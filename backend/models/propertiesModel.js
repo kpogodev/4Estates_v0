@@ -21,15 +21,15 @@ export const propertiesSchema = mongoose.Schema(
       key_features: [String],
       bedrooms: {
         type: Number,
-        min: [1, 'Property must have at least 1 bedroom'],
+        min: [0, 'Number of bedrooms cannot be less than 0'],
       },
       bathrooms: {
         type: Number,
-        min: [1, 'Property must have at least 1 bathroom'],
+        min: [0, 'Number of bathrooms cannot be less than 0'],
       },
       size: {
         type: Number,
-        min: [1, 'Size of the property must be a postive number'],
+        min: [0, 'Size of the property cannot be less than 0'],
       },
     },
     images: [

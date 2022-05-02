@@ -40,13 +40,13 @@ function AddPropertyForm() {
       },
       bathrooms: {
         isRequired: !fieldsDisabled || 'Please specify number of bathrooms',
-        validation: (bathrooms) => (bathrooms >= 1 && bathrooms <= 100 ? true : false),
-        validationErrorMessage: 'Property should have between 1 and 100 bathrooms',
+        validation: (bathrooms) => (bathrooms >= 0 && bathrooms <= 100 ? true : false),
+        validationErrorMessage: 'Number of bathrooms cannot be less than 0 and greater than 100',
       },
       bedrooms: {
         isRequired: !fieldsDisabled || 'Please specify number of bedrooms',
-        validation: (bedrooms) => (bedrooms >= 1 && bedrooms <= 100 ? true : false),
-        validationErrorMessage: 'Property should have between 1 and 100 bedrooms',
+        validation: (bedrooms) => (bedrooms >= 0 && bedrooms <= 100 ? true : false),
+        validationErrorMessage: 'Number of bedrooms cannot be less than 0 and greater than 100',
       },
       description: {
         isRequired: 'Please provide some property description',
@@ -59,8 +59,8 @@ function AddPropertyForm() {
       },
       size: {
         isRequired: 'Please specify size of the property',
-        validation: (size) => (size > 0 && size <= 99999999 ? true : false),
-        validationErrorMessage: 'Size of the property is limited to 99.999.999 square meters',
+        validation: (size) => (size >= 0 && size <= 999999999 ? true : false),
+        validationErrorMessage: 'Size of the property cannot be smaller than 0 and larger than 999.999.999 square meters',
       },
     },
     onSubmit: ({ address, description, key_features, type, bedrooms, bathrooms, size }) => {
@@ -178,7 +178,7 @@ function AddPropertyForm() {
               <InputNumber
                 name='bedrooms'
                 className='input input-bordered'
-                minValue={1}
+                minValue={0}
                 maxValue={100}
                 handleChange={handleChange}
                 value={+formData.bedrooms}
@@ -193,7 +193,7 @@ function AddPropertyForm() {
               <InputNumber
                 name='bathrooms'
                 className='input input-bordered'
-                minValue={1}
+                minValue={0}
                 maxValue={100}
                 handleChange={handleChange}
                 value={+formData.bathrooms}
@@ -211,7 +211,7 @@ function AddPropertyForm() {
                 name='size'
                 className='input input-bordered'
                 minValue={0}
-                maxValue={99999999}
+                maxValue={999999999}
                 handleChange={handleChange}
                 isValid={isValid.size}
                 value={+formData.size}

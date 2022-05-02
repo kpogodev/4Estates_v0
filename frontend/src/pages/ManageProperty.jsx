@@ -1,6 +1,6 @@
 import { useEffect, useId } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { useParams, Link } from 'react-router-dom'
+import { useParams, Link, useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { motion } from 'framer-motion'
 import { pageTransition } from 'utils/animationVariants'
@@ -22,11 +22,16 @@ function ManageProperty() {
   const dispatch = useDispatch()
 
   const params = useParams()
+  const navigate = useNavigate()
 
   useEffect(() => {
     dispatch(getProperty(params.id))
 
-    return () => dispatch(resetProperty())
+    return () => {
+      dispatch(resetProperty())
+      dispatch(resetError())
+      dispatch(resetSuccess())
+    }
   }, [dispatch, params.id])
 
   useEffect(() => {
@@ -39,6 +44,12 @@ function ManageProperty() {
       dispatch(resetError())
     }
   }, [isSuccess, isError, message, dispatch])
+
+  useEffect(() => {
+    if (isSuccess && !property) {
+      navigate('/dashboard')
+    }
+  }, [isSuccess, property, navigate])
 
   if (!property) return <Loading />
 

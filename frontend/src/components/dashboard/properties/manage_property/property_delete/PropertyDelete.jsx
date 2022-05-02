@@ -1,6 +1,5 @@
-import { useState, useCallback, useEffect } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
+import { useState, useCallback } from 'react'
+import { useDispatch } from 'react-redux'
 import { MdWarning, MdDeleteForever } from 'react-icons/md'
 import Modal from 'components/layout/Modal'
 import { deleteProperty } from 'context/properties/propertiesSlice'
@@ -9,9 +8,6 @@ function PropertyDelete({ propertyId }) {
   const [modalOpen, setModalOpen] = useState(false)
 
   const dispatch = useDispatch()
-  const navigate = useNavigate()
-
-  const { isSuccess, property } = useSelector((state) => state.properties)
 
   const handleModalToggle = useCallback(() => {
     setModalOpen((prev) => !prev)
@@ -20,12 +16,6 @@ function PropertyDelete({ propertyId }) {
   const handleRemove = () => {
     dispatch(deleteProperty(propertyId))
   }
-
-  useEffect(() => {
-    if (isSuccess && !property) {
-      navigate('/dashboard')
-    }
-  }, [isSuccess, property, navigate])
 
   return (
     <div className='flex items-center justify-between gap-x-10 gap-y-4 p-5 lg:p-8 border-gray-300 border-2 border-dashed rounded-md flex-wrap'>

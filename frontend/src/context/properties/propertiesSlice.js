@@ -220,6 +220,7 @@ export const propertiesSlice = createSlice({
         state.isLoading = true
       })
       .addCase(deleteProperty.fulfilled, (state, action) => {
+        state.property = null
         state.isSuccess = action.payload.success
         state.isLoading = false
         state.message = `Your property has been deleted`

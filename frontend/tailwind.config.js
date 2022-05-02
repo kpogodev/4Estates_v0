@@ -16,7 +16,7 @@ module.exports = {
   theme: {
     extend: {},
   },
-  plugins: [require('daisyui'), backfaceVisibility],
+  plugins: [require('daisyui'), require('@tailwindcss/typography'), backfaceVisibility],
   daisyui: {
     themes: [
       {

@@ -11,7 +11,7 @@ function PropertyDelete({ propertyId }) {
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
-  const { isSuccess } = useSelector((state) => state.properties)
+  const { isSuccess, property } = useSelector((state) => state.properties)
 
   const handleModalToggle = useCallback(() => {
     setModalOpen((prev) => !prev)
@@ -22,11 +22,10 @@ function PropertyDelete({ propertyId }) {
   }
 
   useEffect(() => {
-    if (isSuccess) {
-      console.log('do i even get here')
+    if (isSuccess && !property) {
       navigate('/dashboard')
     }
-  }, [isSuccess, navigate])
+  }, [isSuccess, property, navigate])
 
   return (
     <div className='flex items-center justify-between gap-x-10 gap-y-4 p-5 lg:p-8 border-gray-300 border-2 border-dashed rounded-md flex-wrap'>

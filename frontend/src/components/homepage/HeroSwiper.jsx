@@ -22,7 +22,7 @@ function HeroSwiper() {
       }
       dispatch(getProperties(query))
     }
-  }, [properties, dispatch])
+  }, [dispatch])
 
   return (
     <Swiper

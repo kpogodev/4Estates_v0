@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { getMyProfile, updateProfile } from 'context/profiles/profilesSlice'
+import {  updateProfile } from 'context/profiles/profilesSlice'
 import SkeletonItem from 'components/shared/SkeletonItem'
 import ProfileFormActions from './ProfileFormActions'
 import InputField from 'components/form/InputField'
@@ -14,13 +14,13 @@ function ProfileForm() {
 
   const { formData, isValid, handleChange, handleSubmit } = useForm({
     initialFormData: {
-      email: profile.contact.email || '',
-      address: profile.contact.address || '',
-      phone: profile.contact.phone || '',
-      fax: profile.contact.fax || '',
-      website: profile.contact.website || '',
-      facebook: profile.contact.socials.facebook || '',
-      linkedin: profile.contact.socials.linkedin || '',
+      email: profile?.contact?.email ?? '',
+      address: profile?.contact?.address ?? '',
+      phone: profile?.contact?.phone ?? '',
+      fax: profile?.contact?.fax ?? '',
+      website: profile?.contact?.website ?? '',
+      facebook: profile?.contact?.socials?.facebook ?? '',
+      linkedin: profile?.contact?.socials?.linkedin ?? '',
     },
     validations: {},
     onSubmit: (data) => {
@@ -65,7 +65,6 @@ function ProfileForm() {
           <InputField
             name='email'
             type='email'
-            placeholder='name@domain.com'
             className='input input-bordered w-full'
             value={formData.email}
             handleChange={handleChange}

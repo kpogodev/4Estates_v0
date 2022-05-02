@@ -17,7 +17,7 @@
     "@testing-library/user-event": "^13.5.0",
     "axios": "^0.26.0",
     "daisyui": "^2.2.0",
-    "editorjs-inline-font-size-tool": "^1.0.1",
+    "editorjs-blocks-react-renderer": "^1.2.4",
     "framer-motion": "^6.2.8",
     "moment": "^2.29.3",
     "react": "^18.0.0",
@@ -58,6 +58,7 @@
     ]
   },
   "devDependencies": {
+    "@tailwindcss/typography": "^0.5.2",
     "autoprefixer": "^10.4.2",
     "postcss": "^8.4.6",
     "redux-devtools": "^3.7.0",

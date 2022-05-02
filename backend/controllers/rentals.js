@@ -20,7 +20,7 @@ export const getRental = asyncHandler(async (req, res, next) => {
     { path: 'publisher_profile', select: '-observed' },
     'property',
   ])
-  
+
   if (!rental) {
     rental = await RentalModel.findOne({ property: req.params.id }).populate([
       { path: 'publisher', select: 'name avatar' },
@@ -83,6 +83,10 @@ export const deleteRental = asyncHandler(async (req, res, next) => {
   if (rental.publisher.toString() !== req.user.id) {
     return next(new ErrorResponse(`User with id ${req.user.id} is not authorized to delete this property`, 401))
   }
+
+  const profile = await ProfileModel.findOne({ user: req.user.id })
+  profile.rents.filter((rent) => rent.toString() !== req.params.id)
+  await profile.save({ validateBeforeSave: false })
 
   rental.remove()
   res.status(200).json({ success: true, data: {} })

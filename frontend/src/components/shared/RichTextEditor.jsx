@@ -1,6 +1,5 @@
 import { useRef, useCallback, useEffect } from 'react'
 import { createReactEditorJS } from 'react-editor-js'
-import FontSize from 'editorjs-inline-font-size-tool'
 import Header from '@editorjs/header'
 import List from '@editorjs/list'
 import Paragraph from '@editorjs/paragraph'
@@ -11,28 +10,27 @@ function RichTextEditor({ className, initialData, stateName, onChange }) {
 
   const tools = {
     underline: Underline,
-    fontSize: FontSize,
     header: {
       class: Header,
-      inlineToolbar: ['bold', 'italic', 'underline', 'fontSize'],
+      inlineToolbar: ['bold', 'italic', 'underline'],
       config: {
         placeholder: 'Header',
         levels: [2, 3, 4, 5, 6],
-        defaultLevel: 2,
+        defaultLevel: 3,
       },
     },
     list: {
       class: List,
-      inlineToolbar: ['bold', 'italic', 'underline', 'fontSize'],
+      inlineToolbar: ['bold', 'italic', 'underline'],
       config: {
         placeholder: 'List',
       },
     },
     paragraph: {
       class: Paragraph,
-      inlineToolbar: ['bold', 'italic', 'underline', 'fontSize'],
+      inlineToolbar: ['bold', 'italic', 'underline'],
       config: {
-        placeholder: 'Here you can type...',
+        placeholder: 'Here you can type your paragraph...',
       },
     },
   }

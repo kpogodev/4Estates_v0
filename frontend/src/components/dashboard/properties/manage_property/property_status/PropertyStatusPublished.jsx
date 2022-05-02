@@ -6,6 +6,7 @@ import { setPropertyIsPublished } from 'context/properties/propertiesSlice'
 import PropertyPublishedRent from './PropertyPublishedRent'
 import PropertyPublishedSale from './PropertyPublishedSale'
 import Modal from 'components/layout/Modal'
+import { MdDeleteForever } from 'react-icons/md'
 
 function PropertyStatusPublished({ propertyId }) {
   const [modalOpen, setModalOpen] = useState(false)
@@ -63,8 +64,9 @@ function PropertyStatusPublished({ propertyId }) {
     <div className='w-full'>
       {rents.rental && <PropertyPublishedRent rental={rents.rental} />}
       {sales.sale && <PropertyPublishedSale sale={sales.sale} />}
-      <button className='btn btn-error btn-outline btn-sm block ml-auto' onClick={handleModalToggle}>
-        Remove Offer
+      <button className='btn btn-error btn-outline btn-sm flex items-center gap-1 ml-auto text-lg capitalize' onClick={handleModalToggle}>
+        <MdDeleteForever className='w-6 h-6 pointer-events-none' />
+        <span>Remove Offer</span>
       </button>
       <Modal isOpen={modalOpen} onClose={handleModalToggle} boxStyle='max-w-md flex flex-col gap-5'>
         <h3 className='text-xl xl:text-2xl font-semibold'>Remove Offer</h3>
@@ -73,7 +75,7 @@ function PropertyStatusPublished({ propertyId }) {
           <button className='btn btn-ghost btn-sm text-lg' onClick={handleModalToggle}>
             Cancel
           </button>
-          <button className='btn btn-error btn-outline btn-sm  text-lg' onClick={handleRemove}>
+          <button className='btn btn-error btn-outline btn-sm text-lg' onClick={handleRemove}>
             Remove
           </button>
         </div>

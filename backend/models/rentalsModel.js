@@ -1,6 +1,5 @@
 import mongoose from 'mongoose'
 import uniqueValidator from 'mongoose-unique-validator'
-import PropertyModel from './propertiesModel.js'
 
 export const rentalsSchema = mongoose
   .Schema(
@@ -81,7 +80,7 @@ rentalsSchema.virtual('publisher_profile', {
 })
 
 rentalsSchema.pre('save', async function (next) {
-  await PropertyModel.findOneAndUpdate(
+  await this.model('Property').findOneAndUpdate(
     { _id: this.property },
     { is_published: true },
     {
@@ -93,8 +92,8 @@ rentalsSchema.pre('save', async function (next) {
   next()
 })
 
-rentalsSchema.pre('remove', async function (next) {
-  await PropertyModel.findOneAndUpdate(
+rentalsSchema.pre('remove', async function (req, res, next) {
+  await this.model('Property').findOneAndUpdate(
     { _id: this.property },
     { is_published: false },
     {

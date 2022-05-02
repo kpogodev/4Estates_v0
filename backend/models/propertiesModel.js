@@ -74,8 +74,22 @@ export const propertiesSchema = mongoose.Schema(
 // Cascade delete all rentals when a property is deleted
 propertiesSchema.pre('remove', async function (next) {
   try {
-    await this.model('Rental').deleteMany({ property: this._id })
-    await this.model('Sale').deleteMany({ property: this._id })
+    let profile = await this.model('Profile').findOne({ user: this.publisher })
+    const rental = await this.model('Rental').findOne({ property: this._id })
+    const sale = await this.model('Sale').findOne({ property: this._id })
+
+    if (rental) {
+      profile.rents = profile.rents.filter((rent) => rent.toString() !== rental._id.toString())
+      profile.save()
+      rental.remove()
+    }
+
+    if (sale) {
+      profile.sales = profile.sales.filter((sale) => sale.toString() !== sale._id.toString())
+      profile.save()
+      sale.remove()
+    }
+
     next()
   } catch (error) {
     next(error)

@@ -84,8 +84,8 @@ export const deleteSale = asyncHandler(async (req, res, next) => {
     return next(new ErrorResponse(`User with id ${req.user.id} is not authorized to delete this property`, 401))
   }
 
-  const profile = await ProfileModel.findOne({ user: req.user.id })
-  profile.sales.filter((sale) => sale.toString() !== req.params.id)
+  let profile = await ProfileModel.findOne({ user: req.user.id })
+  profile.sales = profile.sales.filter((sale) => sale.toString() !== req.params.id)
   await profile.save({ validateBeforeSave: false })
 
   sale.remove()

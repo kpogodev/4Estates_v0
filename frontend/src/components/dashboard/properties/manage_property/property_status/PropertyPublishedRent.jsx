@@ -38,14 +38,21 @@ function PropertyPublishedRent({ rental }) {
           <p>
             Tenancy Information: <span className='font-semibold'>{rental?.tenancy_info?.blocks.length > 0 ? 'Included' : 'Not Included'}</span>
           </p>
-          <button className='btn btn-link btn-primary flex gap-1 p-0 h-fit min-h-0' onClick={handleModalToggle}>
-            <GrDocumentTxt className='w-4 h-4' />
-            Read
-          </button>
-          <Modal isOpen={modalOpen} onClose={handleModalToggle} boxStyle='p-[15px] md:p-10 !max-w-4xl'>
-            <h2 className='text-2xl lg:text-4xl font-semibold'>Tenancy Information</h2>
-            <DisplayRichText blocks={rental?.tenancy_info} className='mt-6 mx-auto p-3 md:p-6 max-w-none border-gray-200 border-[1px] rounded-md shadow-md' />
-          </Modal>
+          {rental.tenancy_info.blocks.length > 0 && (
+            <>
+              <button className='btn btn-link btn-primary flex gap-1 p-0 h-fit min-h-0' onClick={handleModalToggle}>
+                <GrDocumentTxt className='w-4 h-4' />
+                Read
+              </button>
+              <Modal isOpen={modalOpen} onClose={handleModalToggle} boxStyle='p-[15px] md:p-10 !max-w-4xl'>
+                <h2 className='text-2xl lg:text-4xl font-semibold'>Tenancy Information</h2>
+                <DisplayRichText
+                  blocks={rental?.tenancy_info}
+                  className='mt-6 mx-auto p-3 md:p-6 max-w-none border-gray-200 border-[1px] rounded-md shadow-md'
+                />
+              </Modal>
+            </>
+          )}
         </div>
       </div>
     </>

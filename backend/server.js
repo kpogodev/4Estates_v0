@@ -49,6 +49,11 @@ app.use('/api/v1/properties', requestLimiterProperties, properties)
 app.use('/api/v1/rentals', rentals)
 app.use('/api/v1/sales', sales)
 
+//Paypal Client Id Route
+app.get('/api/v1/config/paypal', async (req, res) => {
+  res.send(process.env.PAYPAL_CLIENT_ID)
+})
+
 //Custom Middlewares
 app.use(notFound)
 app.use(errorHandler)

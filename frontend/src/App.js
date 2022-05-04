@@ -18,14 +18,18 @@ import Dashboard from './pages/Dashboard'
 import AddProperty from './pages/AddProperty'
 import ManageProperty from './pages/ManageProperty'
 import PublishProperty from './pages/PublishProperty'
+import Settings from 'pages/Settings'
 
 // Hooks
 import useCheckAuth from './hooks/useCheckAuth'
 import useLoadGoogleServices from './hooks/useLoadGoogleServices'
+import usePayPal from 'hooks/usePayPal'
 
 function App() {
   useCheckAuth()
   useLoadGoogleServices()
+  usePayPal()
+
   return (
     <Router>
       <div className='flex flex-col justify-between min-h-screen bg-[#fdfdfd]'>
@@ -52,6 +56,9 @@ function App() {
               </Route>
               <Route path='/publish-property/:id' element={<PrivateRoute />}>
                 <Route path='/publish-property/:id' element={<PublishProperty />} />
+              </Route>
+              <Route path='/settings' element={<PrivateRoute />}>
+                <Route path='/settings' element={<Settings />} />
               </Route>
             </Routes>
             <ToastContainer position='bottom-center' autoClose={5000} />

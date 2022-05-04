@@ -29,7 +29,6 @@ export default function useForm({ initialFormData = {}, validations, onSubmit = 
       if (value.isRequired) {
         const isNotEmptyResult = isNotEmpty(formData[key])
         validation = { ...validation, [key]: isNotEmptyResult }
-
         if (!isNotEmptyResult) {
           toast.error(value.isRequired)
           continue
@@ -54,7 +53,7 @@ export default function useForm({ initialFormData = {}, validations, onSubmit = 
           }
         }
       } else {
-        if (value.validation) {
+        if (value.validation && formData[key].toString().length > 0) {
           const validationResult = value.validation(formData[key])
           validation = { ...validation, [key]: validationResult }
           if (!validationResult) toast.error(value.validationErrorMessage)
@@ -84,5 +83,10 @@ export default function useForm({ initialFormData = {}, validations, onSubmit = 
     onSubmit(formData)
   }
 
-  return { formData, isValid, handleChange, handleSubmit, handleChangeCustom }
+  const handleReset = () => {
+    setFormData(initialFormData)
+    setIsValid({})
+  }
+
+  return { formData, isValid, handleChange, handleSubmit, handleChangeCustom, handleReset }
 }

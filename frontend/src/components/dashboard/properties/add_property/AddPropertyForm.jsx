@@ -24,7 +24,7 @@ function AddPropertyForm() {
   const { googleServicesLoaded } = useSelector((state) => state.app)
 
   // useForm Hook
-  const { formData, isValid, handleChange, handleChangeCustom, handleSubmit } = useForm({
+  const { formData, isValid, handleChange, handleChangeCustom, handleSubmit, handleReset } = useForm({
     initialFormData: {
       address: '',
       bathrooms: 0,
@@ -114,16 +114,17 @@ function AddPropertyForm() {
 
   useEffect(() => {
     if (isSuccess) {
-      dispatch(resetSuccess())
-      setShowToBtn(true)
       toast.success(message)
+      setShowToBtn(true)
+      dispatch(resetSuccess())
+      handleReset()
     }
 
     if (isError) {
-      dispatch(resetError())
       toast.error(message)
+      dispatch(resetError())
     }
-  }, [dispatch, isError, isSuccess, message])
+  }, [dispatch, handleReset, isError, isSuccess, message])
 
   if (!googleServicesLoaded) return <Loading />
 

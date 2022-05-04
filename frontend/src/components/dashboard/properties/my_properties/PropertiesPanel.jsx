@@ -15,12 +15,6 @@ function PropertiesPanel() {
 
   const { matches } = useMediaQuery('(min-width: 768px)')
 
-  useEffect(() => {
-    if (!matches && listType === 'tabel') {
-      setListType('grid')
-    }
-  }, [matches, listType])
-
   const propertiesList = () => {
     switch (listType) {
       case 'grid':
@@ -34,6 +28,12 @@ function PropertiesPanel() {
     }
   }
 
+  useEffect(() => {
+    if (!matches && listType === 'tabel') {
+      setListType('grid')
+    }
+  }, [matches, listType])
+
   return (
     <div className='card w-full bg-base-100 shadow-lg col-span-2 [--padding-card:1rem] md:[--padding-card:2rem]'>
       <div className='card-body gap-12 pb-12'>
@@ -44,10 +44,14 @@ function PropertiesPanel() {
             <span className='font-semibold text-lg lg:text-xl'>Add New</span>
           </Link>
         </div>
-        <div className='pt-10 pb-5 border-y-2 relative'>
-          <ViewSwitcher listType={listType} setListType={setListType} />
-          {loading ? <Spinner className='w-10 h-10' /> : propertiesList()}
-        </div>
+        {myProperties.length === 0 ? (
+          <p className='text-xl font-semibold mx-auto py-2 px-5 bg-slate-100 rounded-lg shadow-md'>You do not have any properties to display yet</p>
+        ) : (
+          <div className='pt-10 pb-5 border-y-2 relative'>
+            <ViewSwitcher listType={listType} setListType={setListType} />
+            {propertiesList()}
+          </div>
+        )}
       </div>
     </div>
   )

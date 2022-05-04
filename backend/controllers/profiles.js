@@ -57,7 +57,7 @@ export const updateProfile = asyncHandler(async (req, res, next) => {
 
   const updatedProfile = await ProfileModel.findByIdAndUpdate(req.params.id, req.body, {
     new: true,
-    runValidators: false,
+    runValidators: true,
     timestamps: true,
   })
 

@@ -3,20 +3,21 @@ import { motion } from 'framer-motion'
 import { simpleFadeInOut } from 'utils/animationVariants'
 import PropTypes from 'prop-types'
 
-function EditableActions({ toggleEdit, onSave }) {
+function EditableActions({ toggleEdit, onSave, onCancel, notSubmit }) {
+  const handleCancel = () => {
+    toggleEdit((prevState) => !prevState)
+    onCancel()
+  }
+
   return (
     <motion.div className='flex gap-4' variants={simpleFadeInOut} initial='hidden' animate='visible' exit='exit'>
-      <button
-        type='button'
-        className={`btn btn-sm btn-outline btn-error text-lg capitalize font-semibold flex items-center gap-1`}
-        onClick={() => toggleEdit((prevState) => !prevState)}
-      >
+      <button type='button' className={`btn btn-sm btn-outline btn-error text-lg capitalize font-semibold flex items-center gap-1`} onClick={handleCancel}>
         <MdCancel />
         <span>Cancel</span>
       </button>
       <button
         className='btn btn-sm btn-outline btn-success text-lg capitalize font-semibold flex items-center gap-1'
-        type='submit'
+        type={notSubmit ? 'button' : 'submit'}
         onClick={onSave}
       >
         <MdOutlineDone />
@@ -28,11 +29,15 @@ function EditableActions({ toggleEdit, onSave }) {
 
 EditableActions.defaults = {
   onSave: () => {},
+  onCancle: () => {},
+  notSubmit: false,
 }
 
 EditableActions.propTypes = {
   toggleEdit: PropTypes.func.isRequired,
   onSave: PropTypes.func,
+  onCancel: PropTypes.func,
+  notSubmit: PropTypes.bool,
 }
 
 export default EditableActions

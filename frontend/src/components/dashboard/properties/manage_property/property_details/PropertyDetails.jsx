@@ -17,7 +17,7 @@ function PropertyDetails({ className }) {
   const dispatch = useDispatch()
 
   // useForm Hook
-  const { formData, isValid, handleChange, handleSubmit } = useForm({
+  const { formData, isValid, handleChange, handleSubmit, handleReset } = useForm({
     initialFormData: {
       bathrooms: property.details.bathrooms ?? 0,
       bedrooms: property.details.bedrooms ?? 0,
@@ -94,7 +94,7 @@ function PropertyDetails({ className }) {
       <form className='max-w-screen-lg mx-auto' onSubmit={handleSubmit} noValidate>
         <div className='flex justify-end gap-2 items-center pb-2'>
           <h3 className='text-xl xl:text-2xl font-semibold mr-auto'>Property Details</h3>
-          {editable ? <EditableActions toggleEdit={setEditable} /> : <NoneEditableActions toggleEdit={setEditable} />}
+          {editable ? <EditableActions toggleEdit={setEditable} onCancel={handleReset} /> : <NoneEditableActions toggleEdit={setEditable} />}
         </div>
         <div className='form-control w-full'>
           <label className='label'>

@@ -1,18 +1,20 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import {  updateProfile } from 'context/profiles/profilesSlice'
+import { updateProfile, resetSuccess, resetError } from 'context/profiles/profilesSlice'
+import { toast } from 'react-toastify'
 import SkeletonItem from 'components/shared/SkeletonItem'
 import ProfileFormActions from './ProfileFormActions'
 import InputField from 'components/form/InputField'
 import useForm from 'hooks/useForm'
 
 function ProfileForm() {
+  const { profile, isLoading, isSuccess, isError, message } = useSelector((state) => state.profiles)
   const [editable, setEditable] = useState(false)
+  const [hasBeenEdited, setHasBeenEdited] = useState(false)
 
-  const { profile, isLoading } = useSelector((state) => state.profiles)
   const dispatch = useDispatch()
 
-  const { formData, isValid, handleChange, handleSubmit } = useForm({
+  const { formData, isValid, handleChange, handleSubmit, handleReset } = useForm({
     initialFormData: {
       email: profile?.contact?.email ?? '',
       address: profile?.contact?.address ?? '',
@@ -22,7 +24,39 @@ function ProfileForm() {
       facebook: profile?.contact?.socials?.facebook ?? '',
       linkedin: profile?.contact?.socials?.linkedin ?? '',
     },
-    validations: {},
+    validations: {
+      email: {
+        validation: (email) => {
+          if (email.length === 0) return true
+          const regex = new RegExp(
+            /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+          )
+          return regex.test(email.toLowerCase())
+        },
+        validationErrorMessage: 'Please provide a valid email address',
+      },
+      phone: {
+        validation: (phone) => {
+          const regex = new RegExp(/^[\d()\-+ ]+$/)
+          return regex.test(phone.toLowerCase())
+        },
+        validationErrorMessage: 'Please provide a valid phone number',
+      },
+      fax: {
+        validation: (fax) => {
+          const regex = new RegExp(/^[\d()\-+ ]+$/)
+          return regex.test(fax.toLowerCase())
+        },
+        validationErrorMessage: 'Please provide a valid fax number',
+      },
+      website: {
+        validation: (website) => {
+          const regex = new RegExp(/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&//=]*)/)
+          return regex.test(website.toLowerCase())
+        },
+        validationErrorMessage: 'Please use a valid URL starting with HTTP/HTTPS',
+      },
+    },
     onSubmit: (data) => {
       const newFormData = {
         contact: {
@@ -39,9 +73,24 @@ function ProfileForm() {
       }
       dispatch(updateProfile({ newFormData, profileId: profile._id }))
       setEditable(false)
+      setHasBeenEdited(true)
     },
   })
 
+  useEffect(() => {
+    if (isSuccess) {
+      dispatch(resetSuccess())
+    }
+
+    if (isSuccess && hasBeenEdited) {
+      toast.success('Profile updated successfully!')
+    }
+
+    if (isError) {
+      toast.error(message)
+      dispatch(resetError())
+    }
+  })
 
   if (isLoading)
     return (
@@ -58,7 +107,7 @@ function ProfileForm() {
 
   return (
     <form className='flex flex-col gap-3' onSubmit={handleSubmit} noValidate>
-      <ProfileFormActions editable={editable} toggleEdit={setEditable} />
+      <ProfileFormActions editable={editable} toggleEdit={setEditable} onCancel={handleReset} />
       <div className='form-control w-full relative'>
         <label>
           <span className='label-text absolute top-0 left-3 translate-y-[-50%] bg-white px-1'>Email</span>

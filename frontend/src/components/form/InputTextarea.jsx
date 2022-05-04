@@ -1,20 +1,21 @@
 import PropTypes from 'prop-types'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 function InputTextarea({ name, placeholder, value, className, handleChange, maxlength, isValid, disabled, readOnly }) {
   const [count, setCount] = useState(value.length ?? 0)
 
   const handleOnChange = (e) => {
     handleChange(e)
-    setCount(e.target.value.length)
   }
+
+  useEffect(() => {
+    setCount(value.length)
+  }, [value.length])
 
   return (
     <>
       <textarea
-        className={`${className} focus:border-info ${isValid === false ? 'border-error' : ''} ${
-          isValid === true ? 'border-success' : ''
-        }`}
+        className={`${className} focus:border-info ${isValid === false ? 'border-error' : ''} ${isValid === true ? 'border-success' : ''}`}
         disabled={disabled}
         name={name}
         maxLength={maxlength}

@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import mongoose from 'mongoose'
 
 export const profilesSchema = mongoose.Schema(
   {
@@ -16,8 +16,14 @@ export const profilesSchema = mongoose.Schema(
         ],
       },
       address: String,
-      phone: String,
-      fax: String,
+      phone: {
+        type: String,
+        match: [/^[\d\(\)\-+ ]+$/g, 'Please provide a valid phone number'],
+      },
+      fax: {
+        type: String,
+        match: [/^[\d\(\)\-+ ]+$/g, 'Please provide a valid fax number'],
+      },
       socials: {
         facebook: String,
         linkedin: String,
@@ -48,7 +54,7 @@ export const profilesSchema = mongoose.Schema(
     rents: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Rent' }],
   },
   { timestamps: true }
-);
+)
 
-const Profile = mongoose.model('Profile', profilesSchema);
-export default Profile;
+const Profile = mongoose.model('Profile', profilesSchema)
+export default Profile

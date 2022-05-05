@@ -1,11 +1,5 @@
 import mongoose from 'mongoose'
-import {
-  useEncryptPassword,
-  getJwtToken,
-  matchUserPassword,
-  generateForgottenPasswordToken,
-  initUserProfile,
-} from '../hooks/authHooks.js'
+import { useEncryptPassword, getJwtToken, matchUserPassword, generateForgottenPasswordToken, initUserProfile } from '../hooks/authHooks.js'
 
 export const userSchema = mongoose.Schema(
   {
@@ -42,6 +36,10 @@ export const userSchema = mongoose.Schema(
       height: Number,
       format: String,
       secure_url: String,
+    },
+    premium: {
+      status: String,
+      subscription_id: String,
     },
     resetPasswordToken: String,
     resetPasswordExpire: Date,

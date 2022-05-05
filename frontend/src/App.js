@@ -28,7 +28,6 @@ import usePayPal from 'hooks/usePayPal'
 function App() {
   useCheckAuth()
   useLoadGoogleServices()
-  usePayPal()
 
   return (
     <Router>

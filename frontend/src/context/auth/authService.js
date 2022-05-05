@@ -86,6 +86,18 @@ const uploadAvatar = async (imageData) => {
   return data
 }
 
+// Reset Password
+const addPremium = async (body) => {
+  const config = {
+    headers: {
+      ContentType: 'application/json',
+    },
+  }
+
+  const { data } = await axios.post(`${API_URL}/premium`, body, config)
+  return data
+}
+
 const authService = {
   loginUser,
   logoutUser,
@@ -94,6 +106,7 @@ const authService = {
   recoverPassword,
   resetPassword,
   uploadAvatar,
+  addPremium,
 }
 
 export default authService

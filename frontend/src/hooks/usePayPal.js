@@ -10,7 +10,7 @@ const usePayPal = () => {
       const script = document.createElement('script')
       script.type = 'text/javascript'
       script.async = true
-      script.src = `https://www.paypal.com/sdk/js?client-id=${clientId}`
+      script.src = `https://www.paypal.com/sdk/js?client-id=${clientId}&currency=GBP&vault=true&intent=subscription`
       script.onload = () => {
         setSdkReady(true)
       }
@@ -21,6 +21,8 @@ const usePayPal = () => {
       addPayPalScript()
     }
   }, [])
+
+  return { sdkReady }
 }
 
 export default usePayPal

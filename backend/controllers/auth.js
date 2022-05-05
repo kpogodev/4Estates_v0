@@ -5,6 +5,7 @@ import cookie from 'cookie'
 import crypto from 'crypto'
 import { sendEmail } from '../utils/sendEmail.js'
 import { imageSingleUpload } from '../hooks/uploaderHooks.js'
+import axios from 'axios'
 
 // @desc      Check if user is already authorized
 // @route     GET /api/v1/auth/check
@@ -86,7 +87,9 @@ export const forgotPassword = asyncHandler(async (req, res, next) => {
   await user.save({ validateBeforeSave: false })
 
   const resetUrl =
-    process.env.NODE_ENV === 'production' ? `${req.protocol}://${req.get('host')}/reset-password/${resetToken}` : `${req.protocol}://localhost:3000/reset-password/${resetToken}`
+    process.env.NODE_ENV === 'production'
+      ? `${req.protocol}://${req.get('host')}/reset-password/${resetToken}`
+      : `${req.protocol}://localhost:3000/reset-password/${resetToken}`
 
   const message = `You received this email because you (or someone else) has requested the reset of your password. If it wasn't you please ignore this message, otherwise please click on the link below: \n\n ${resetUrl}`
 
@@ -165,3 +168,42 @@ export const uploadAvatar = asyncHandler(async (req, res, next) => {
 
   res.json({ success: true, data: user })
 })
+
+// @desc      Add Premium
+// @route     POST /api/v1/auth/premium
+// @access    private
+export const addPremium = asyncHandler(async (req, res, next) => {
+  const user = await UserModel.findById(req.user.id)
+  if (!user) return new ErrorResponse(`User with id: ${id} not found`, 404)
+
+  user.premium = {
+    status: req.body.status,
+    subscription_id: req.body.subscription_id,
+  }
+
+  user.save()
+  res.json({ success: true, data: user })
+})
+
+//Paypal Access Token
+const getPayPalAccessToken = async () => {
+  const url = 'https://api.sandbox.paypal.com/v1/oauth2/token'
+  const params = new URLSearchParams()
+  params.append('grant_type', 'client_credentials')
+  const config = {
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
+    auth: {
+      username: process.env.PAYPAL_CLIENT_ID,
+      password: process.env.PAYPAL_CLIENT_SECRET,
+    },
+  }
+
+  try {
+    const response = await axios.post(url, params, config)
+    return response.data.access_token
+  } catch (error) {
+    return console.error(error)
+  }
+}

@@ -85,6 +85,16 @@ export const uploadAvatar = createAsyncThunk('auth/upload_avatar', async (payloa
   }
 })
 
+// Add Premium
+export const addPremium = createAsyncThunk('auth/add_premium', async (payload, thunkAPI) => {
+  try {
+    return await authService.addPremium(payload)
+  } catch (error) {
+    const message = error?.response?.data?.message ?? error.toString()
+    return thunkAPI.rejectWithValue(message)
+  }
+})
+
 export const authSlice = createSlice({
   name: 'auth',
   initialState,
@@ -207,6 +217,21 @@ export const authSlice = createSlice({
         state.message = 'You avatar has been updated'
       })
       .addCase(uploadAvatar.rejected, (state, action) => {
+        state.isLoading = false
+        state.isError = true
+        state.message = action.payload
+      })
+      //Add Premium
+      .addCase(addPremium.pending, (state) => {
+        state.isLoading = true
+      })
+      .addCase(addPremium.fulfilled, (state, action) => {
+        state.user = action.payload.data
+        state.isSuccess = action.payload.success
+        state.isLoading = false
+        state.message = 'Congratulations, you have been upgraded to premium member'
+      })
+      .addCase(addPremium.rejected, (state, action) => {
         state.isLoading = false
         state.isError = true
         state.message = action.payload

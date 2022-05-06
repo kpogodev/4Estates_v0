@@ -1,5 +1,12 @@
 import mongoose from 'mongoose'
-import { useEncryptPassword, getJwtToken, matchUserPassword, generateForgottenPasswordToken, initUserProfile } from '../hooks/authHooks.js'
+import {
+  useEncryptPassword,
+  getJwtToken,
+  matchUserPassword,
+  generateForgottenPasswordToken,
+  initUserProfile,
+  getJwtTokenSubscription,
+} from '../hooks/authHooks.js'
 
 export const userSchema = mongoose.Schema(
   {
@@ -24,12 +31,6 @@ export const userSchema = mongoose.Schema(
       minlength: [8, 'Password must consist of at least 8 characters'],
       select: false,
     },
-    role: {
-      type: String,
-      enum: ['user', 'agency'],
-      required: true,
-      default: 'user',
-    },
     avatar: {
       cloudinary_id: String,
       width: Number,
@@ -37,10 +38,12 @@ export const userSchema = mongoose.Schema(
       format: String,
       secure_url: String,
     },
-    premium: {
-      status: String,
-      subscription_id: String,
+    subscription_status: {
+      type: String,
+      enum: ['APPROVAL_PENDING', 'APPROVED', 'ACTIVE', 'SUSPENDED', 'CANCELLED', 'EXPIRED', 'INACTIVE'],
+      default: 'INACTIVE',
     },
+    subscription_id: String,
     resetPasswordToken: String,
     resetPasswordExpire: Date,
   },
@@ -50,6 +53,7 @@ export const userSchema = mongoose.Schema(
 //Hooks & Methods
 useEncryptPassword()
 getJwtToken()
+getJwtTokenSubscription()
 matchUserPassword()
 generateForgottenPasswordToken()
 initUserProfile()

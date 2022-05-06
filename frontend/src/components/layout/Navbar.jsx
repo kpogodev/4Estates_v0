@@ -5,6 +5,7 @@ import { logoutUser } from 'context/auth/authSlice'
 import { reset as resetProfile } from 'context/profiles/profilesSlice'
 import Spinner from 'components/shared/Spinner'
 import Avatar from 'components/shared/Avatar'
+import diamond_icon from 'assets/diamond-icon.svg'
 
 function Navbar() {
   const dispatch = useDispatch()
@@ -40,7 +41,7 @@ function Navbar() {
             </li>
           </ul>
         </div>
-        <Link to='/' className='btn btn-ghost btn-sm lg:btn-md normal-case text-xl lg:text-xl font-bold text-base-100'>
+        <Link to='/' className='btn btn-ghost btn-sm lg:btn-md normal-case text-xl lg:text-2xl font-bold text-base-100'>
           4Estates
         </Link>
       </div>
@@ -62,13 +63,15 @@ function Navbar() {
         {isLoading && <Spinner className='w-7 h-7' />}
         {isAuth && !isLoading && (
           <div className='dropdown dropdown-end'>
-            <label tabIndex={0} className='btn btn-ghost btn-circle avatar'>
-              <Avatar className='w-10 rounded-full' user={user} />
+            <label tabIndex={0} className='relative btn btn-ghost btn-circle avatar'>
+              {user?.subscription_status?.toLowerCase() === 'active' && (
+                <div className='badge-sm absolute top-0 left-0 p-0'>
+                  <img className='block' src={diamond_icon} alt='' />
+                </div>
+              )}
+              <Avatar user={user} />
             </label>
-            <ul
-              tabIndex={0}
-              className='mt-3 p-2 shadow menu menu-compact dropdown-content bg-base-100 rounded-box w-52'
-            >
+            <ul tabIndex={0} className='mt-3 p-2 shadow menu menu-compact dropdown-content bg-base-100 rounded-box w-52'>
               <li>
                 <Link to='/dashboard' onClick={(e) => e.target.blur()}>
                   Dashboard

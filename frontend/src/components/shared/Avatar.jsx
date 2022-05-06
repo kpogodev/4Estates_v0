@@ -1,6 +1,6 @@
-function Avatar({ className, user }) {
+function Avatar({ user }) {
   return (
-    <div className={className}>
+    <div className='w-10 rounded-full'>
       {user?.avatar?.secure_url ? (
         <img src={user?.avatar?.secure_url} alt={user?.name} />
       ) : (

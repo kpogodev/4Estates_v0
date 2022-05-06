@@ -46,6 +46,22 @@ export const loginUser = asyncHandler(async (req, res, next) => {
   const isMatch = await user.matchPassword(password)
   if (!isMatch) return next(new ErrorResponse(`Invalid credentials`, 401))
 
+  //Check Premium Subscription
+  if (user.subscription_id) {
+    const accessToken = await getPayPalAccessToken()
+    const subscription = await getPayPalSubscriptionDetails(accessToken, user.subscription_id)
+
+    if (!subscription) {
+      user.subscription_id = undefined
+      user.subscription_status = 'INACTIVE'
+      await user.save()
+    }
+
+    user.subscription_status = subscription.status
+    await user.save()
+    return sendTokenResponse(res, 200, user, subscription)
+  }
+
   //Create token
   sendTokenResponse(res, 200, user)
 })
@@ -70,7 +86,10 @@ export const logoutUser = asyncHandler(async (req, res, next) => {
     path: '/',
   }
 
-  res.status(200).setHeader('Set-Cookie', cookie.serialize('token', '', options)).json({ success: true })
+  res
+    .status(200)
+    .setHeader('Set-Cookie', [cookie.serialize('token', '', options), cookie.serialize('sub_token', '', options)])
+    .json({ success: true })
 })
 
 // @desc      Forgot password
@@ -137,21 +156,6 @@ export const resetPassword = asyncHandler(async (req, res, next) => {
   sendTokenResponse(res, 200, user)
 })
 
-//Helper function
-function sendTokenResponse(res, statusCode, user) {
-  const token = user.getSignedJwtToken()
-
-  const options = {
-    httpOnly: true,
-    secure: process.env.NODE_ENV !== 'development',
-    maxAge: process.env.NODE_ENV === 'development' ? 60 * 60 * 24 * 30 : process.env.TOKEN_COOKIE_EXPIRE,
-    sameSite: 'strict',
-    path: '/',
-  }
-
-  res.status(statusCode).setHeader('Set-Cookie', cookie.serialize('token', token, options)).json({ success: true })
-}
-
 // @desc      Upload Avatar
 // @route     POST /api/v1/auth/upload
 // @access    Private
@@ -176,14 +180,36 @@ export const addPremium = asyncHandler(async (req, res, next) => {
   const user = await UserModel.findById(req.user.id)
   if (!user) return new ErrorResponse(`User with id: ${id} not found`, 404)
 
-  user.premium = {
-    status: req.body.status,
-    subscription_id: req.body.subscription_id,
+  if (user.subscription_id) return new ErrorResponse(`User already has a subscription`, 400)
+  user.subscription_status = req.body.status
+  user.subscription_id = req.body.subscription_id
+  user.save()
+
+  return sendTokenResponse(res, 200, user, { id: req.body.subscription_id, status: req.body.status })
+})
+
+//Helper function
+function sendTokenResponse(res, statusCode, user, subscription = null) {
+  const token = user.getSignedJwtToken()
+
+  const options = {
+    httpOnly: true,
+    secure: process.env.NODE_ENV !== 'development',
+    maxAge: process.env.NODE_ENV === 'development' ? 60 * 60 * 24 * 30 : process.env.TOKEN_COOKIE_EXPIRE,
+    sameSite: 'strict',
+    path: '/',
   }
 
-  user.save()
-  res.json({ success: true, data: user })
-})
+  if (subscription) {
+    const subscriptionToken = user.getSignedJwtTokenSubscription(subscription)
+    return res
+      .status(statusCode)
+      .setHeader('Set-Cookie', [cookie.serialize('token', token, options), cookie.serialize('sub_token', subscriptionToken, options)])
+      .json({ success: true })
+  }
+
+  res.status(statusCode).setHeader('Set-Cookie', cookie.serialize('token', token, options)).json({ success: true })
+}
 
 //Paypal Access Token
 const getPayPalAccessToken = async () => {
@@ -205,5 +231,23 @@ const getPayPalAccessToken = async () => {
     return response.data.access_token
   } catch (error) {
     return console.error(error)
+  }
+}
+
+//Paypal Subscription Details
+const getPayPalSubscriptionDetails = async (accessToken, subscriptionId) => {
+  const url = `https://api.sandbox.paypal.com/v1/billing/subscriptions/${subscriptionId}`
+  const config = {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  }
+
+  try {
+    const { data } = await axios.get(url, config)
+    return data
+  } catch (error) {
+    console.error(error)
+    return {}
   }
 }

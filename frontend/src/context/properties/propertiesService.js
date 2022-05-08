@@ -20,7 +20,7 @@ const getProperty = async (id) => {
 const addProperty = async (formData) => {
   const config = {
     headers: {
-      ContentType: 'application/json',
+      'Content-Type': 'application/json',
     },
   }
   const { data } = await axios.post(`${API_URL}`, formData, config)
@@ -31,7 +31,7 @@ const addProperty = async (formData) => {
 const updateProperty = async (payload) => {
   const config = {
     headers: {
-      ContentType: 'application/json',
+      'Content-Type': 'application/json',
     },
   }
   const { data } = await axios.put(`${API_URL}/${payload.id}`, payload.data, config)
@@ -48,7 +48,7 @@ const deleteProperty = async (id) => {
 const uploadPropertyImages = async (formData, thunkAPI) => {
   const config = {
     headers: {
-      ContentType: 'application/json',
+      'Content-Type': 'application/json',
     },
     onUploadProgress: (progressEvent) => {
       const percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total)
@@ -64,7 +64,7 @@ const uploadPropertyImages = async (formData, thunkAPI) => {
 const deletePropertyImage = async (payload) => {
   const config = {
     headers: {
-      ContentType: 'application/json',
+      'Content-Type': 'application/json',
     },
     data: payload,
   }

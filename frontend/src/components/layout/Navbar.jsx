@@ -64,10 +64,11 @@ function Navbar() {
         {isAuth && !isLoading && (
           <div className='dropdown dropdown-end'>
             <label tabIndex={0} className='relative btn btn-ghost btn-circle avatar'>
-              {user?.subscription_status?.toLowerCase() === 'active' && (
-                <div className='badge-sm absolute top-0 left-0 p-0'>
+              {user?.is_premium.active && (
+                <span className='badge-sm absolute top-0 left-0 p-0'>
                   <img className='block' src={diamond_icon} alt='' />
-                </div>
+                  <span className='tooltip tooltip-accent tooltip-left absolute w-full h-full top-0 left-0' data-tip='Premium'></span>
+                </span>
               )}
               <Avatar user={user} />
             </label>

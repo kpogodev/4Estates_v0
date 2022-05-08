@@ -1,4 +1,4 @@
-import PremiumMembership from 'components/settings/PremiumMembership'
+import PremiumMembership from 'components/settings/premium/PremiumMembership'
 
 function Settings() {
   return (

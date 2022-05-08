@@ -15,6 +15,7 @@ import profiles from './routes/profiles.js'
 import properties from './routes/properties.js'
 import rentals from './routes/rentals.js'
 import sales from './routes/sales.js'
+import users from './routes/users.js'
 
 import { protect } from './middleware/auth.js'
 
@@ -48,6 +49,7 @@ app.use('/api/v1/profiles', requestLimiterAuth, profiles)
 app.use('/api/v1/properties', requestLimiterProperties, properties)
 app.use('/api/v1/rentals', rentals)
 app.use('/api/v1/sales', sales)
+app.use('/api/v1/users', users)
 
 //Paypal Client Id Route
 app.get('/api/v1/config/paypal', async (req, res) => {

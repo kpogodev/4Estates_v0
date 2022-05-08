@@ -4,8 +4,7 @@ import ErrorResponse from '../utils/errorResponse.js'
 import cookie from 'cookie'
 import crypto from 'crypto'
 import { sendEmail } from '../utils/sendEmail.js'
-import { imageSingleUpload } from '../hooks/uploaderHooks.js'
-import axios from 'axios'
+import { getPayPalSubscriptionDetails } from '../utils/paypal.js'
 
 // @desc      Check if user is already authorized
 // @route     GET /api/v1/auth/check
@@ -23,7 +22,6 @@ export const registerUser = asyncHandler(async (req, res, next) => {
     name,
     email,
     password,
-    role,
   })
 
   sendTokenResponse(res, 200, user)
@@ -35,34 +33,62 @@ export const registerUser = asyncHandler(async (req, res, next) => {
 export const loginUser = asyncHandler(async (req, res, next) => {
   const { email, password } = req.body
 
-  //Validate email & pwd
   if (!email || !password) return next(new ErrorResponse(`Please provide an email and password`, 400))
 
-  //Find user
   const user = await UserModel.findOne({ email }).select('+password')
   if (!user) return next(new ErrorResponse(`Invalid credentials`, 401))
 
-  //Check if password matches
   const isMatch = await user.matchPassword(password)
   if (!isMatch) return next(new ErrorResponse(`Invalid credentials`, 401))
 
-  //Check Premium Subscription
-  if (user.subscription_id) {
-    const accessToken = await getPayPalAccessToken()
-    const subscription = await getPayPalSubscriptionDetails(accessToken, user.subscription_id)
+  // Check subscription status
+  if (user.is_premium.active) {
+    const subscription = await getPayPalSubscriptionDetails(user.subscription.subscription_id)
 
-    if (!subscription) {
-      user.subscription_id = undefined
-      user.subscription_status = 'INACTIVE'
+    if (subscription.status === 'ACTIVE') {
+      user.is_premium = {
+        active: true,
+        expires: req.body.billing_info.next_billing_time,
+      }
+
+      user.subscription = {
+        status: req.body.status,
+        paid_until: req.body.billing_info.next_billing_time,
+      }
+
       await user.save()
     }
 
-    user.subscription_status = subscription.status
-    await user.save()
-    return sendTokenResponse(res, 200, user, subscription)
+    if (subscription.status === 'SUSPENDED') {
+      user.subscription.status = req.body.status
+      await user.save()
+    }
+
+    if (subscription.status === 'CANCELLED') {
+      if (Date.now() > user.is_premium.expires) {
+        user.is_premium = {
+          active: false,
+          expires: undefined,
+        }
+        user.subscription = {
+          status: 'INACTIVE',
+          paid_until: undefined,
+          id: undefined,
+          plan_id: undefined,
+        }
+
+        await user.save()
+      }
+
+      user.subscription = {
+        status: req.body.status,
+        paid_until: undefined,
+      }
+
+      await user.save()
+    }
   }
 
-  //Create token
   sendTokenResponse(res, 200, user)
 })
 
@@ -156,38 +182,6 @@ export const resetPassword = asyncHandler(async (req, res, next) => {
   sendTokenResponse(res, 200, user)
 })
 
-// @desc      Upload Avatar
-// @route     POST /api/v1/auth/upload
-// @access    Private
-export const uploadAvatar = asyncHandler(async (req, res, next) => {
-  const { data } = req.body
-
-  const user = await UserModel.findById(req.user.id)
-  if (!user) return new ErrorResponse(`User with id: ${id} not found`, 404)
-
-  const newImage = await imageSingleUpload(data)
-  user.avatar = newImage
-
-  await user.save()
-
-  res.json({ success: true, data: user })
-})
-
-// @desc      Add Premium
-// @route     POST /api/v1/auth/premium
-// @access    private
-export const addPremium = asyncHandler(async (req, res, next) => {
-  const user = await UserModel.findById(req.user.id)
-  if (!user) return new ErrorResponse(`User with id: ${id} not found`, 404)
-
-  if (user.subscription_id) return new ErrorResponse(`User already has a subscription`, 400)
-  user.subscription_status = req.body.status
-  user.subscription_id = req.body.subscription_id
-  user.save()
-
-  return sendTokenResponse(res, 200, user, { id: req.body.subscription_id, status: req.body.status })
-})
-
 //Helper function
 function sendTokenResponse(res, statusCode, user, subscription = null) {
   const token = user.getSignedJwtToken()
@@ -200,54 +194,5 @@ function sendTokenResponse(res, statusCode, user, subscription = null) {
     path: '/',
   }
 
-  if (subscription) {
-    const subscriptionToken = user.getSignedJwtTokenSubscription(subscription)
-    return res
-      .status(statusCode)
-      .setHeader('Set-Cookie', [cookie.serialize('token', token, options), cookie.serialize('sub_token', subscriptionToken, options)])
-      .json({ success: true })
-  }
-
-  res.status(statusCode).setHeader('Set-Cookie', cookie.serialize('token', token, options)).json({ success: true })
-}
-
-//Paypal Access Token
-const getPayPalAccessToken = async () => {
-  const url = 'https://api.sandbox.paypal.com/v1/oauth2/token'
-  const params = new URLSearchParams()
-  params.append('grant_type', 'client_credentials')
-  const config = {
-    headers: {
-      'Content-Type': 'application/x-www-form-urlencoded',
-    },
-    auth: {
-      username: process.env.PAYPAL_CLIENT_ID,
-      password: process.env.PAYPAL_CLIENT_SECRET,
-    },
-  }
-
-  try {
-    const response = await axios.post(url, params, config)
-    return response.data.access_token
-  } catch (error) {
-    return console.error(error)
-  }
-}
-
-//Paypal Subscription Details
-const getPayPalSubscriptionDetails = async (accessToken, subscriptionId) => {
-  const url = `https://api.sandbox.paypal.com/v1/billing/subscriptions/${subscriptionId}`
-  const config = {
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-    },
-  }
-
-  try {
-    const { data } = await axios.get(url, config)
-    return data
-  } catch (error) {
-    console.error(error)
-    return {}
-  }
+  res.status(statusCode).setHeader('Set-Cookie', cookie.serialize('token', token, options)).json({ success: true, data: user })
 }

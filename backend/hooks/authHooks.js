@@ -27,8 +27,8 @@ export const getJwtToken = () => {
 // Sign JWT for Subscription
 export const getJwtTokenSubscription = () => {
   userSchema.methods.getSignedJwtTokenSubscription = function (subscription) {
-    return jwt.sign({ subscription_id: subscription.id, subscription_status: subscription.status }, process.env.JWT_SECRET, {
-      expiresIn: Math.floor((new Date(subscription.billing_info.next_billing_time).getTime() - Date.now()) / 1000),
+    return jwt.sign({ subscription_id: subscription.id }, process.env.JWT_SECRET, {
+      expiresIn: process.env.NODE_ENV === 'development' ? '30d' : process.env.JWT_EXPIRE,
     })
   }
 }

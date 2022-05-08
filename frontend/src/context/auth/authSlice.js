@@ -95,6 +95,26 @@ export const addPremium = createAsyncThunk('auth/add_premium', async (payload, t
   }
 })
 
+// Update Premium
+export const updatePremium = createAsyncThunk('auth/update_premium', async (payload, thunkAPI) => {
+  try {
+    return await authService.updatePremium(payload)
+  } catch (error) {
+    const message = error?.response?.data?.message ?? error.toString()
+    return thunkAPI.rejectWithValue(message)
+  }
+})
+
+// Cancel Premium
+export const cancelPremium = createAsyncThunk('auth/cancel_premium', async (_, thunkAPI) => {
+  try {
+    return await authService.cancelPremium()
+  } catch (error) {
+    const message = error?.response?.data?.message ?? error.toString()
+    return thunkAPI.rejectWithValue(message)
+  }
+})
+
 export const authSlice = createSlice({
   name: 'auth',
   initialState,
@@ -121,6 +141,7 @@ export const authSlice = createSlice({
         state.isLoading = true
       })
       .addCase(loginUser.fulfilled, (state, action) => {
+        state.user = action.payload.data
         state.isAuth = action.payload.success
         state.isSuccess = action.payload.success
         state.isLoading = false
@@ -136,6 +157,7 @@ export const authSlice = createSlice({
         state.isLoading = true
       })
       .addCase(registerUser.fulfilled, (state, action) => {
+        state.user = action.payload.data
         state.isAuth = action.payload.success
         state.isSuccess = action.payload.success
         state.isLoading = false
@@ -151,15 +173,14 @@ export const authSlice = createSlice({
         state.isLoading = true
       })
       .addCase(getUser.fulfilled, (state, action) => {
-        state.isAuth = action.payload.success
         state.user = action.payload.data
-        state.isSuccess = action.payload.success
+        state.isAuth = action.payload.success
         state.isLoading = false
       })
       .addCase(getUser.rejected, (state) => {
-        state.isLoading = false
         state.user = null
         state.isAuth = false
+        state.isLoading = false
       })
       //Logout
       .addCase(logoutUser.pending, (state) => {
@@ -229,9 +250,39 @@ export const authSlice = createSlice({
         state.user = action.payload.data
         state.isSuccess = action.payload.success
         state.isLoading = false
-        state.message = 'Congratulations, you have been upgraded to premium member'
+        state.message = action.payload.message
       })
       .addCase(addPremium.rejected, (state, action) => {
+        state.isLoading = false
+        state.isError = true
+        state.message = action.payload
+      })
+      //Update Premium
+      .addCase(updatePremium.pending, (state) => {
+        state.isLoading = true
+      })
+      .addCase(updatePremium.fulfilled, (state, action) => {
+        state.user = action.payload.data
+        state.isSuccess = action.payload.success
+        state.isLoading = false
+        state.message = action.payload.message
+      })
+      .addCase(updatePremium.rejected, (state, action) => {
+        state.isLoading = false
+        state.isError = true
+        state.message = action.payload
+      })
+      //Cancel Premium
+      .addCase(cancelPremium.pending, (state) => {
+        state.isLoading = true
+      })
+      .addCase(cancelPremium.fulfilled, (state, action) => {
+        state.user = action.payload.data
+        state.isSuccess = action.payload.success
+        state.isLoading = false
+        state.message = action.payload.message
+      })
+      .addCase(cancelPremium.rejected, (state, action) => {
         state.isLoading = false
         state.isError = true
         state.message = action.payload

@@ -6,9 +6,9 @@ function Loading({ className }) {
   const keyId = useId()
   return (
     <motion.div key={keyId} variants={pageTransition} initial='hidden' animate='visible' exit='exit' className={className}>
-      <div className='loading w-8 h-8 rounded-full bg-primary'></div>
-      <div className='loading w-8 h-8 rounded-full bg-accent'></div>
-      <div className='loading w-8 h-8 rounded-full bg-secondary'></div>
+      <div className='loading-screen w-8 h-8 rounded-full bg-primary'></div>
+      <div className='loading-screen w-8 h-8 rounded-full bg-accent'></div>
+      <div className='loading-screen w-8 h-8 rounded-full bg-secondary'></div>
     </motion.div>
   )
 }

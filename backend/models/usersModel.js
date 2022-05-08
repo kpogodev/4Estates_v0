@@ -38,12 +38,23 @@ export const userSchema = mongoose.Schema(
       format: String,
       secure_url: String,
     },
-    subscription_status: {
-      type: String,
-      enum: ['APPROVAL_PENDING', 'APPROVED', 'ACTIVE', 'SUSPENDED', 'CANCELLED', 'EXPIRED', 'INACTIVE'],
-      default: 'INACTIVE',
+    is_premium: {
+      active: {
+        type: Boolean,
+        default: false,
+      },
+      expires: Date,
     },
-    subscription_id: String,
+    subscription: {
+      id: String,
+      plan_id: String,
+      paid_until: Date,
+      status: {
+        type: String,
+        enum: ['APPROVAL_PENDING', 'APPROVED', 'ACTIVE', 'SUSPENDED', 'CANCELLED', 'EXPIRED', 'INACTIVE'],
+        default: 'INACTIVE',
+      },
+    },
     resetPasswordToken: String,
     resetPasswordExpire: Date,
   },

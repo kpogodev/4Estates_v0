@@ -1,18 +1,22 @@
-import InputRadio from 'components/form/InputRadio'
+import { useState, useEffect, useCallback, useId } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { useState, useEffect, useCallback } from 'react'
+import { Link } from 'react-router-dom'
+import usePayPal from 'hooks/usePayPal'
 import { PayPalButton } from 'react-paypal-button-v2'
 import { toLocalCurrency } from 'utils/toLocalCurrency'
-import usePayPal from 'hooks/usePayPal'
 import { addPremium } from 'context/auth/authSlice'
+import { motion } from 'framer-motion'
+import { pageTransition } from 'utils/animationVariants'
+import InputRadio from 'components/form/InputRadio'
 import Spinner from 'components/shared/Spinner'
 
-function Subscribe({ unit_price, discounts }) {
+function Subscribe({ unit_price, discounts, allow_skip }) {
   const { sdkReady } = usePayPal()
   const [subscription, setSubscription] = useState('30d')
   const [plan, setPlan] = useState(process.env.REACT_APP_PAYPAL_PLAN_30)
 
   const dispatch = useDispatch()
+  const componentKey = useId()
 
   const applyDiscount = useCallback(
     (tier) => {
@@ -40,15 +44,11 @@ function Subscribe({ unit_price, discounts }) {
 
   const onSubscriptionApprove = async (_, actions) => {
     const subscriptionResult = await actions.subscription.get()
-    const data = {
-      subscription_id: subscriptionResult.id,
-      status: subscriptionResult.status,
-    }
-    dispatch(addPremium(data))
+    dispatch(addPremium(subscriptionResult))
   }
 
   return (
-    <div className='flex flex-col items-center gap-5'>
+    <motion.div key={componentKey} variants={pageTransition} initial='hidden' animate='visible' exit='exit' className='flex flex-col items-center gap-5'>
       <h2 className='text-4xl font-bold'>Premium Membership</h2>
       <p className='max-w-[80ch] text-center text-xl'>
         Consider becoming a <b>premium member</b>? You can get a 30 day free trial. You can cancel anytime.
@@ -106,8 +106,16 @@ function Subscribe({ unit_price, discounts }) {
             Awaitting PayPal... <Spinner className='w-10 h-10' />
           </p>
         )}
+        {allow_skip && (
+          <div className='flex flex-col items-center gap-2 mt-5'>
+            <p className='text-xl text-center'>Not ready yet? You can always subscribe to our Premium Membership later through your account settings!</p>
+            <Link className='btn btn-link text-xl' to='/dashboard'>
+              Skip for now
+            </Link>
+          </div>
+        )}
       </div>
-    </div>
+    </motion.div>
   )
 }
 
@@ -123,6 +131,7 @@ Subscribe.defaultProps = {
       discount: 0.25,
     },
   },
+  allow_skip: false,
 }
 
 export default Subscribe

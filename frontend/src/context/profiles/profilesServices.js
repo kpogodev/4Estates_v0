@@ -4,7 +4,7 @@ const API_URL = '/api/v1/profiles'
 
 const config = {
   headers: {
-    ContentType: 'application/json',
+    'Content-Type': 'application/json',
   },
 }
 

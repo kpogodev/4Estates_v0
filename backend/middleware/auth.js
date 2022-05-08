@@ -35,7 +35,7 @@ export const authorize = (...roles) => {
   return (req, res, next) => {
     if (!roles.includes(req.user.role)) {
       return next(
-        new ErrorResponse(`User with role of '${req.user.role}' - is not authorized to access this route`, 403)
+        new ErrorResponse(`User with role of '${req.user.subscription.id}' - is not authorized to access this route`, 403)
       );
     }
     next();

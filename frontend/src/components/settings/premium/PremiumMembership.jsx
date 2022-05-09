@@ -4,7 +4,11 @@ import PremiumStatus from './PremiumStatus'
 
 function PremiumMembership() {
   const { user } = useSelector((state) => state.auth)
-  return <div className='flex flex-col items-center gap-5'>{user.is_premium.active ? <PremiumStatus /> : <Subscribe />}</div>
+  return (
+    <div className='flex flex-col items-center gap-5'>
+      {user.is_premium.active && user.subscription.state !== 'EXPIRED' ? <PremiumStatus /> : <Subscribe />}
+    </div>
+  )
 }
 
 export default PremiumMembership

@@ -17,7 +17,7 @@ export const checkAuth = asyncHandler(async (req, res, next) => {
 // @route     POST /api/v1/auth/register
 // @access    Public
 export const registerUser = asyncHandler(async (req, res, next) => {
-  const { name, email, password, role } = req.body
+  const { name, email, password } = req.body
   const user = await UserModel.create({
     name,
     email,
@@ -42,51 +42,56 @@ export const loginUser = asyncHandler(async (req, res, next) => {
   if (!isMatch) return next(new ErrorResponse(`Invalid credentials`, 401))
 
   // Check subscription status
-  if (user.is_premium.active) {
-    const subscription = await getPayPalSubscriptionDetails(user.subscription.subscription_id)
+  if (!user.is_premium.active) return sendTokenResponse(res, 200, user)
+  const subscription = await getPayPalSubscriptionDetails(user.subscription.id)
 
-    if (subscription.status === 'ACTIVE') {
+  switch (subscription.status) {
+    case 'ACTIVE':
       user.is_premium = {
         active: true,
-        expires: req.body.billing_info.next_billing_time,
+        expires: subscription.billing_info.next_billing_time,
       }
-
       user.subscription = {
-        status: req.body.status,
-        paid_until: req.body.billing_info.next_billing_time,
+        id: subscription.id,
+        plan_id: subscription.plan_id,
+        status: subscription.status,
+        paid_until: subscription.billing_info.next_billing_time,
       }
-
       await user.save()
-    }
+      break
 
-    if (subscription.status === 'SUSPENDED') {
-      user.subscription.status = req.body.status
+    case 'SUSPENDED':
+      if (Date.now() > user.is_premium.expires) {
+        user.is_premium.active = false
+      }
+      user.subscription.status = subscription.status
       await user.save()
-    }
+      break
 
-    if (subscription.status === 'CANCELLED') {
+    case 'CANCELLED':
       if (Date.now() > user.is_premium.expires) {
         user.is_premium = {
           active: false,
-          expires: undefined,
         }
         user.subscription = {
           status: 'INACTIVE',
-          paid_until: undefined,
-          id: undefined,
-          plan_id: undefined,
         }
-
         await user.save()
       }
-
       user.subscription = {
-        status: req.body.status,
-        paid_until: undefined,
+        status: subscription.status,
       }
-
       await user.save()
-    }
+      break
+
+    case 'EXPIRED':
+      user.is_premium.active = false
+      user.subscription.status = 'EXPIRED'
+      await user.save()
+      break
+
+    default:
+      sendTokenResponse(res, 200, user)
   }
 
   sendTokenResponse(res, 200, user)
@@ -183,7 +188,7 @@ export const resetPassword = asyncHandler(async (req, res, next) => {
 })
 
 //Helper function
-function sendTokenResponse(res, statusCode, user, subscription = null) {
+function sendTokenResponse(res, statusCode, user) {
   const token = user.getSignedJwtToken()
 
   const options = {

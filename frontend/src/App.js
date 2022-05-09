@@ -1,12 +1,12 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify'
-import { AnimatePresence, motion } from 'framer-motion'
+import { AnimatePresence } from 'framer-motion'
 import 'react-toastify/dist/ReactToastify.css'
 //Components
 import Navbar from './components/layout/Navbar'
 import Footer from './components/layout/Footer'
 import PrivateRoute from './pages/PrivateRoute'
-
+import SVGSprite from 'assets/SVGSprite'
 //Pages
 import Home from './pages/Home'
 import Login from './pages/Login'
@@ -19,11 +19,10 @@ import AddProperty from './pages/AddProperty'
 import ManageProperty from './pages/ManageProperty'
 import PublishProperty from './pages/PublishProperty'
 import Settings from 'pages/Settings'
-
+import Rents from 'pages/Rents'
 // Hooks
 import useCheckAuth from './hooks/useCheckAuth'
 import useLoadGoogleServices from './hooks/useLoadGoogleServices'
-import usePayPal from 'hooks/usePayPal'
 
 function App() {
   useCheckAuth()
@@ -32,6 +31,7 @@ function App() {
   return (
     <Router>
       <div className='flex flex-col justify-between min-h-screen bg-[#fdfdfd]'>
+        <SVGSprite />
         <Navbar />
         <AnimatePresence exitBeforeEnter={true}>
           <main className='container flex flex-col mx-auto py-5 px-[15px] md:py-12 md:px-6'>
@@ -43,6 +43,7 @@ function App() {
               <Route path='/recover/' element={<Recover />} />
               <Route path='/reset-password/:token' element={<ResetPassword />} />
               <Route path='/*' element={<NotFound />} />
+              <Route path='/rent' element={<Rents />} />
               {/* PRIVATE ROUTES */}
               <Route path='/dashboard' element={<PrivateRoute />}>
                 <Route path='/dashboard' element={<Dashboard />} />

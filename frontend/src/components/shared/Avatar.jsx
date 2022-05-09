@@ -1,6 +1,6 @@
 function Avatar({ user }) {
   return (
-    <div className='w-10 rounded-full'>
+    <div className='w-10 h-10 rounded-full overflow-hidden'>
       {user?.avatar?.secure_url ? (
         <img src={user?.avatar?.secure_url} alt={user?.name} />
       ) : (

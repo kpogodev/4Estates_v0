@@ -32,7 +32,7 @@ function AddPropertyForm() {
       description: '',
       key_features: '',
       size: 0,
-      type: 'house',
+      type: 'detached',
     },
     validations: {
       address: {
@@ -229,7 +229,7 @@ function AddPropertyForm() {
             </label>
             <InputSelect
               name='type'
-              options={['house', 'flat', 'apartament', 'bungalow', 'land', 'commercial']}
+              options={['detached', 'semi-detached', 'flat', 'apartment', 'bungalow', 'land', 'commercial']}
               value={formData.type}
               handleChange={handleChange}
             />

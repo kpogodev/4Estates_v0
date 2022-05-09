@@ -4,7 +4,15 @@ function InputSelect({ name, value, options, handleChange, disabled, readOnly })
     <select name={name} className='select select-bordered' onChange={handleChange} value={value} disabled={disabled}>
       {options.map((option, index) => (
         <option key={index} value={option.toLowerCase()}>
-          {`${option.trim().charAt(0).toUpperCase()}${option.slice(1)}`}
+          {option.includes('-')
+            ? option
+                .split('-')
+                .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+                .join('-')
+            : option
+                .split(' ')
+                .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+                .join(' ')}
         </option>
       ))}
     </select>

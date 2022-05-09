@@ -10,10 +10,7 @@ const router = express.Router()
 
 router
   .route('/')
-  .get(
-    advancedQueries(PropertyModel, [{ path: 'publisher', select: 'name avatar' }, 'property', 'publisher_profile']),
-    getRentals
-  )
+  .get(advancedQueries(PropertyModel, [{ path: 'publisher', select: 'name avatar is_premium' }, 'property', 'publisher_profile']), getRentals)
   .post(protect, createRental)
 router.route('/:id').get(getRental).put(protect, updateRental).delete(protect, deleteRental)
 

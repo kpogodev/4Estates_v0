@@ -9,6 +9,17 @@ const initialState = {
   isError: false,
   message: '',
 }
+
+// Get rents
+export const getRents = createAsyncThunk('rents/get_rents', async (payload, thunkAPI) => {
+  try {
+    return await rentsService.getRents()
+  } catch (error) {
+    const message = error?.response?.data?.message ?? error.toString()
+    return thunkAPI.rejectWithValue(message)
+  }
+})
+
 // Add rental
 export const addRental = createAsyncThunk('rents/add_rental', async (payload, thunkAPI) => {
   try {
@@ -87,6 +98,19 @@ export const rentsSlice = createSlice({
         state.isSuccess = action.payload.success
       })
       .addCase(getRental.rejected, (state, action) => {
+        state.isLoading = false
+        state.isError = true
+        state.message = action.payload
+      })
+      .addCase(getRents.pending, (state) => {
+        state.isLoading = true
+      })
+      .addCase(getRents.fulfilled, (state, action) => {
+        state.isLoading = false
+        state.rents = action.payload.data
+        state.isSuccess = action.payload.success
+      })
+      .addCase(getRents.rejected, (state, action) => {
         state.isLoading = false
         state.isError = true
         state.message = action.payload

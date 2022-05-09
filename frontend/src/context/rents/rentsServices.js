@@ -1,7 +1,6 @@
 import axios from 'axios'
 
 const API_URL = '/api/v1/rentals'
-
 const config = {
   headers: {
     'Content-Type': 'application/json',
@@ -11,6 +10,12 @@ const config = {
 // Get rental
 const getRental = async (id) => {
   const { data } = await axios.get(`${API_URL}/${id}`)
+  return data
+}
+
+// Get rental
+const getRents = async (query) => {
+  const { data } = await axios.get(`${API_URL}`)
   return data
 }
 
@@ -29,7 +34,8 @@ const removeRental = async (id) => {
 const rentsServices = {
   addRental,
   getRental,
-  removeRental
+  getRents,
+  removeRental,
 }
 
 export default rentsServices

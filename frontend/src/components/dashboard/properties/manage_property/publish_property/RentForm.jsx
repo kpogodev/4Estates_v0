@@ -72,8 +72,8 @@ function RentForm({ propertyId, steps }) {
 
   useEffect(() => {
     if (isSuccess) {
-      navigate(`/manage-property/${propertyId}`)
       dispatch(resetSuccess())
+      navigate(`/manage-property/${propertyId}`)
     }
 
     if (isError) {

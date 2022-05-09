@@ -10,7 +10,7 @@ export const propertiesSchema = mongoose.Schema(
     type: {
       type: String,
       required: [true, 'Please select property type'],
-      enum: ['house', 'flat', 'apartament', 'bungalow', 'land', 'commercial'],
+      enum: ['detached', 'semi-detached', 'flat', 'apartment', 'bungalow', 'land', 'commercial'],
     },
     details: {
       description: {

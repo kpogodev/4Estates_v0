@@ -19,6 +19,14 @@ function RenewalInfo({ status, date }) {
     )
   }
 
+  if (status === 'EXPIRED') {
+    return (
+      <p className='text-lg my-5 xl:text-xl'>
+        Your subscription has <b>expired</b> on <span className='font-semibold'> {moment(date).format('Do MMMM YYYY')}</span>
+      </p>
+    )
+  }
+
   if (status === 'CANCELLED') {
     return (
       <p className='text-lg my-5 xl:text-xl'>

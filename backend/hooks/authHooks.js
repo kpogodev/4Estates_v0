@@ -24,15 +24,6 @@ export const getJwtToken = () => {
   }
 }
 
-// Sign JWT for Subscription
-export const getJwtTokenSubscription = () => {
-  userSchema.methods.getSignedJwtTokenSubscription = function (subscription) {
-    return jwt.sign({ subscription_id: subscription.id }, process.env.JWT_SECRET, {
-      expiresIn: process.env.NODE_ENV === 'development' ? '30d' : process.env.JWT_EXPIRE,
-    })
-  }
-}
-
 // Match user entered password to hased password in db
 export const matchUserPassword = () => {
   userSchema.methods.matchPassword = async function (enteredPassword) {

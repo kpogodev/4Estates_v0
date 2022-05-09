@@ -32,33 +32,36 @@ export const rentalsSchema = mongoose
       },
       tenancy_info: {
         time: Number,
-        blocks: [
-          {
-            _id: false,
-            id: {
-              type: String,
-              unique: true,
-            },
-            type: {
-              type: String,
-              required: [true, 'Type of the block is required'],
-            },
-            data: {
-              text: {
-                type: String,
-              },
-              level: {
-                type: Number,
-              },
-              style: {
-                type: String,
-              },
-              items: {
-                type: [String],
-              },
-            },
-          },
-        ],
+        // blocks: [
+        //   {
+        //     id: {
+        //       type: String,
+        //       index: true,
+        //       sparse: true,
+        //     },
+        //     type: {
+        //       type: String,
+        //     },
+        //     data: {
+        //       text: {
+        //         type: String,
+        //       },
+        //       level: {
+        //         type: Number,
+        //       },
+        //       style: {
+        //         type: String,
+        //       },
+        //       items: {
+        //         type: [String],
+        //       },
+        //     },
+        //   },
+        // ],
+        blocks: {
+          type: Array,
+          default: [],
+        },
         version: String,
       },
       rental_type: {

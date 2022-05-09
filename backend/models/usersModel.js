@@ -5,7 +5,6 @@ import {
   matchUserPassword,
   generateForgottenPasswordToken,
   initUserProfile,
-  getJwtTokenSubscription,
 } from '../hooks/authHooks.js'
 
 export const userSchema = mongoose.Schema(
@@ -64,7 +63,6 @@ export const userSchema = mongoose.Schema(
 //Hooks & Methods
 useEncryptPassword()
 getJwtToken()
-getJwtTokenSubscription()
 matchUserPassword()
 generateForgottenPasswordToken()
 initUserProfile()

@@ -13,6 +13,10 @@ function PremiumStatus() {
 
   const dispatch = useDispatch()
 
+  const handleModalToggle = useCallback(() => {
+    setModalOpen((prev) => !prev)
+  }, [])
+
   const handleSuspend = () => {
     dispatch(updatePremium('suspend'))
   }
@@ -24,10 +28,6 @@ function PremiumStatus() {
   const handleCancel = () => {
     dispatch(cancelPremium())
   }
-
-  const handleModalToggle = useCallback(() => {
-    setModalOpen((prev) => !prev)
-  }, [])
 
   useEffect(() => {
     if (isSuccess) {
@@ -58,9 +58,14 @@ function PremiumStatus() {
         <StatusBadge status={user.subscription.status} />
         <RenewalInfo
           status={user.subscription.status}
-          date={user.subscription.status !== 'CANCELLED' ? user.subscription.paid_until : user.is_premium.expires}
+          date={user.subscription.status !== 'CANCELLED' && user.subscription.status !== 'EXPIRED' ? user.subscription.paid_until : user.is_premium.expires}
         />
         <div className='btn-group'>
+          {user.subscription.status === 'EXPIRED' && (
+            <button className={`btn btn-success btn-sm lg:btn-md text-white hover:brightness-90${isLoading ? ' loading' : ''}`} onClick={handleReactivate}>
+              Renew
+            </button>
+          )}
           {user.subscription.status === 'ACTIVE' && (
             <button className={`btn btn-accent btn-sm lg:btn-md${isLoading ? ' loading' : ''}`} onClick={handleSuspend}>
               Suspend

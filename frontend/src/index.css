@@ -27,6 +27,7 @@ body {
   font-family: 'Saira Condensed', sans-serif;
 }
 
+/* Loading Screen */
 .loading-screen {
   transform: scale(0);
   animation: loadingAnim 1s ease-out infinite;
@@ -54,10 +55,18 @@ body {
   }
 }
 
+/* Swiper */
 .swiper-slide-thumb-active {
   border: 2px solid #fff;
 }
 
+/* Editor.js */
 .codex-editor__redactor {
   padding-bottom: 50px!important;
+}
+
+/* ComboBox */
+[data-suggested-value],
+[data-user-value] {
+  font-size: 16px;
 }

@@ -1,6 +1,6 @@
 import { useState, useEffect, forwardRef, useImperativeHandle } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Combobox, ComboboxInput, ComboboxPopover, ComboboxList, ComboboxOption } from '@reach/combobox'
+import { Combobox, ComboboxInput, ComboboxPopover, ComboboxList, ComboboxOption, ComboboxOptionText } from '@reach/combobox'
 import '@reach/combobox/styles.css'
 import usePlacesAutocomplete from 'use-places-autocomplete'
 import { updateProperty } from 'context/properties/propertiesSlice'
@@ -18,7 +18,7 @@ function AddressSearch({ editable }, ref) {
   const { ready, value, suggestions, setValue, clearSuggestions } = usePlacesAutocomplete({
     requestOptions: {
       componentRestrictions: {
-        country: ['uk'],
+        country: 'uk',
       },
     },
     defaultValue: property.location.formatted_address,
@@ -62,8 +62,13 @@ function AddressSearch({ editable }, ref) {
       </div>
       {editable && (
         <ComboboxPopover>
-          <ComboboxList>
-            {suggestions.status === 'OK' && suggestions.data.map(({ place_id, description }) => <ComboboxOption key={place_id} value={description} />)}
+          <ComboboxList className='text-2xl'>
+            {suggestions.status === 'OK' &&
+              suggestions.data.map(({ place_id, description }) => (
+                <ComboboxOption key={place_id} value={description}>
+                  <ComboboxOptionText />
+                </ComboboxOption>
+              ))}
           </ComboboxList>
         </ComboboxPopover>
       )}

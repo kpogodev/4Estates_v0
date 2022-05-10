@@ -2,11 +2,16 @@ import { useEffect, useCallback } from 'react'
 import ReactDOM from 'react-dom'
 
 const Modal = ({ children, isOpen, onClose, boxStyle }) => {
-  const onClickOut = (e) => !e.target.closest('.modal-box') && onClose()
-
-  const onEscDown = useCallback((e) => e.key === 'Escape' && onClose(), [onClose])
+  const onEscDown = useCallback(
+    (e) => {
+      if (isOpen && e.key === 'Escape') return onClose()
+    },
+    [onClose, isOpen]
+  )
 
   // Close on outside click
+  const onClickOut = (e) => !e.target.closest('.modal-box') && onClose()
+
   useEffect(() => {
     document.addEventListener('keydown', onEscDown)
 

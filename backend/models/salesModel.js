@@ -22,33 +22,10 @@ export const salesSchema = mongoose
       },
       additional_info: {
         time: Number,
-        blocks: [
-          {
-            _id: false,
-            id: {
-              type: String,
-              unique: true,
-            },
-            type: {
-              type: String,
-              required: [true, 'Type of the block is required'],
-            },
-            data: {
-              text: {
-                type: String,
-              },
-              level: {
-                type: Number,
-              },
-              style: {
-                type: String,
-              },
-              items: {
-                type: [String],
-              },
-            },
-          },
-        ],
+        blocks: {
+          type: Array,
+          default: [],
+        },
         version: String,
       },
     },

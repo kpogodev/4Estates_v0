@@ -32,32 +32,6 @@ export const rentalsSchema = mongoose
       },
       tenancy_info: {
         time: Number,
-        // blocks: [
-        //   {
-        //     id: {
-        //       type: String,
-        //       index: true,
-        //       sparse: true,
-        //     },
-        //     type: {
-        //       type: String,
-        //     },
-        //     data: {
-        //       text: {
-        //         type: String,
-        //       },
-        //       level: {
-        //         type: Number,
-        //       },
-        //       style: {
-        //         type: String,
-        //       },
-        //       items: {
-        //         type: [String],
-        //       },
-        //     },
-        //   },
-        // ],
         blocks: {
           type: Array,
           default: [],

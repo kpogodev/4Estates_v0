@@ -10,7 +10,7 @@
     "@editorjs/paragraph": "^2.8.0",
     "@editorjs/underline": "^1.0.0",
     "@reach/combobox": "^0.16.5",
-    "@react-google-maps/api": "^2.7.0",
+    "@react-google-maps/api": "^2.10.2",
     "@reduxjs/toolkit": "^1.7.2",
     "@testing-library/jest-dom": "^5.16.2",
     "@testing-library/react": "^12.1.3",

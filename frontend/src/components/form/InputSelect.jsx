@@ -1,18 +1,28 @@
 import PropTypes from 'prop-types'
-function InputSelect({ name, value, options, handleChange, disabled, readOnly }) {
+import { v4 as uuidv4 } from 'uuid'
+function InputSelect({ className, name, value, options, handleChange, disabled, readOnly, placeholderOption }) {
+  const formattedOption = (option) => {
+    if (typeof option === 'string') {
+      return option.includes('-')
+        ? option
+            .split('-')
+            .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+            .join('-')
+        : option
+            .split(' ')
+            .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+            .join(' ')
+    } else {
+      return option
+    }
+  }
+
   return (
-    <select name={name} className='select select-bordered' onChange={handleChange} value={value} disabled={disabled}>
-      {options.map((option, index) => (
-        <option key={index} value={option.toLowerCase()}>
-          {option.includes('-')
-            ? option
-                .split('-')
-                .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-                .join('-')
-            : option
-                .split(' ')
-                .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-                .join(' ')}
+    <select name={name} className={`select select-bordered ${className}`} onChange={handleChange} value={value} disabled={disabled}>
+      {placeholderOption && <option value={isNaN(value) ? 'default' : 0}>{placeholderOption}</option>}
+      {options.map((option) => (
+        <option key={uuidv4()} value={option.toString().toLowerCase()}>
+          {formattedOption(option)}
         </option>
       ))}
     </select>
@@ -21,13 +31,16 @@ function InputSelect({ name, value, options, handleChange, disabled, readOnly })
 
 InputSelect.defaultProps = {
   disabled: false,
+  className: '',
 }
 
 InputSelect.propTypes = {
+  className: PropTypes.string,
   name: PropTypes.string.isRequired,
-  value: PropTypes.string.isRequired,
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   options: PropTypes.array.isRequired,
   handleChange: PropTypes.func.isRequired,
+  placeholderOption: PropTypes.string,
   disabled: PropTypes.bool,
 }
 

@@ -3,13 +3,13 @@ import React from 'react'
 
 function CardContact({ data }) {
   return (
-    <div className='flex items-center gap-6 mt-auto'>
-      <a href={data?.publisher_profile?.contact?.website} target='_blank' rel='noreferrer'>
+    <div className='flex items-center mt-auto'>
+      <a className='mr-3' href={data?.publisher_profile?.contact?.website} target='_blank' rel='noreferrer'>
         <Avatar user={data.publisher} />
       </a>
       <a
         href={`tel:${data?.publisher_profile?.contact?.phone.replace(/(?<!^)\+|[^\d+]+/g, '')}`}
-        className='leading-none font-semibold text-lg hover:text-secondary focus-visible:text-secondary transition-colors'
+        className='leading-none font-semibold text-lg mr-6 hover:text-secondary focus-visible:text-secondary transition-colors'
       >
         <div className='flex items-center gap-2 md:hidden'>
           <svg className='w-5 h-5 fill-current'>

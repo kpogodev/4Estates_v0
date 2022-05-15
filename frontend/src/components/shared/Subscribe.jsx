@@ -56,7 +56,7 @@ function Subscribe({ unit_price, discounts, allow_skip }) {
       <div className='flex items-center gap-5 py-5'>
         <div className='indicator'>
           <span className='indicator-item indicator-bottom indicator-center badge badge-primary font-semibold'>Free Trial</span>
-          <div className='card shadow-md border p-5'>
+          <div className='card shadow-md border p-5 bg-base-100'>
             <label className='label flex flex-col gap-3 items-center cursor-pointer'>
               <span className='label-text text-center font-semibold text-xl'>30 Days</span>
               <span className='label-text text-center font-semibold text-4xl'>{toLocalCurrency('en-GB', unit_price, 'GBP')}</span>
@@ -66,7 +66,7 @@ function Subscribe({ unit_price, discounts, allow_skip }) {
         </div>
         <div className='indicator'>
           <span className='indicator-item indicator-bottom indicator-center badge badge-primary font-semibold'>Save {discounts.tier_1.discount * 100}%</span>
-          <div className='card shadow-md border p-5'>
+          <div className='card shadow-md border p-5 bg-base-100'>
             <label className='label flex flex-col gap-3 items-center cursor-pointer'>
               <span className='label-text text-center font-semibold text-xl'>90 Days</span>
               <span className='label-text text-center font-semibold text-4xl'>{toLocalCurrency('en-GB', applyDiscount(discounts.tier_1), 'GBP')}</span>
@@ -76,7 +76,7 @@ function Subscribe({ unit_price, discounts, allow_skip }) {
         </div>
         <div className='indicator'>
           <span className='indicator-item indicator-bottom indicator-center badge badge-primary font-semibold'>Save {discounts.tier_2.discount * 100}%</span>
-          <div className='card shadow-md border p-5'>
+          <div className='card shadow-md border p-5 bg-base-100'>
             <label className='label flex flex-col gap-3 items-center cursor-pointer'>
               <span className='label-text text-center font-semibold text-xl'>365 Days</span>
               <span className='label-text text-center font-semibold text-4xl'>{toLocalCurrency('en-GB', applyDiscount(discounts.tier_2), 'GBP')}</span>

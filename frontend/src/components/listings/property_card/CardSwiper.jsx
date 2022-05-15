@@ -1,13 +1,15 @@
 import { useState, useRef } from 'react'
 import { Swiper, SwiperSlide } from 'swiper/react'
-import { Navigation, EffectFade } from 'swiper'
+import { Navigation } from 'swiper'
+import no_image_src from 'assets/no-image.png'
 import 'swiper/css'
 import 'swiper/css/navigation'
 import 'swiper/css/effect-fade'
+import { v4 as uuidv4 } from 'uuid'
+import CardSwiperPagination from './CardSwiperPagination'
 
 function CardSwiper({ images }) {
   const [pagination, setPagination] = useState('')
-
   const swiperRef = useRef(null)
 
   const swiperConfig = {
@@ -29,12 +31,7 @@ function CardSwiper({ images }) {
 
   return (
     <>
-      <div className='badge badge-md flex items-center gap-2 absolute top-3 left-3 z-10'>
-        <svg className='w-4 h-4 fill-current'>
-          <use href='#svg-photo-camera' />
-        </svg>
-        <span>{pagination}</span>
-      </div>
+      {images.length > 0 && <CardSwiperPagination pagination={pagination} />}
       <Swiper
         className='w-full aspect-video md:mb-[76.5px] md:w-[270px] md:min-w-[270px] lg:w-[530px] lg:min-w-[530px] lg:max-h-[200px] bg-black'
         {...swiperConfig}
@@ -44,11 +41,17 @@ function CardSwiper({ images }) {
           '--swiper-pagination-color': '#fff',
         }}
       >
-        {images.map((img) => (
-          <SwiperSlide key={img?.cloudinary_id}>
-            <img className='w-full h-full object-cover' src={img?.secure_url} alt={img?.cloudinary_id} />
+        {images.length > 0 ? (
+          images.map((img) => (
+            <SwiperSlide key={img?.cloudinary_id}>
+              <img className='w-full h-full object-cover' src={img?.secure_url} alt={img?.cloudinary_id} />
+            </SwiperSlide>
+          ))
+        ) : (
+          <SwiperSlide key={uuidv4()}>
+            <img className='w-full h-full object-contain' src={no_image_src} alt='Placeholder' />
           </SwiperSlide>
-        ))}
+        )}
       </Swiper>
     </>
   )

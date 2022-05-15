@@ -13,7 +13,7 @@ const initialState = {
 // Get rents
 export const getRents = createAsyncThunk('rents/get_rents', async (payload, thunkAPI) => {
   try {
-    return await rentsService.getRents()
+    return await rentsService.getRents(payload)
   } catch (error) {
     const message = error?.response?.data?.message ?? error.toString()
     return thunkAPI.rejectWithValue(message)

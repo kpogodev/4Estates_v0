@@ -14,7 +14,11 @@ const backfaceVisibility = plugin(function ({ addUtilities }) {
 module.exports = {
   content: ['./src/**/*.{js,jsx,ts,tsx}'],
   theme: {
-    extend: {},
+    extend: {
+      boxShadow: {
+        custom: 'rgba(100, 100, 111, 0.2) 0px 7px 29px 0px',
+      },
+    },
   },
   plugins: [require('daisyui'), require('@tailwindcss/typography'), require('@tailwindcss/line-clamp'), backfaceVisibility],
   daisyui: {

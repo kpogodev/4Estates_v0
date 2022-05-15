@@ -23,6 +23,7 @@ import Rents from 'pages/Rents'
 // Hooks
 import useCheckAuth from './hooks/useCheckAuth'
 import useLoadGoogleServices from './hooks/useLoadGoogleServices'
+import React from 'react'
 
 function App() {
   useCheckAuth()
@@ -30,11 +31,11 @@ function App() {
 
   return (
     <Router>
-      <div className='flex flex-col justify-between min-h-screen bg-[#fdfdfd]'>
+      <div className='flex flex-col justify-between min-h-screen bg-base-200'>
         <SVGSprite />
         <Navbar />
         <AnimatePresence exitBeforeEnter={true}>
-          <main className='container flex flex-col mx-auto py-5 px-[15px] md:py-12 md:px-6'>
+          <main className='container flex flex-col mx-auto py-5 px-[15px] md:py-12 md:px-0'>
             <Routes>
               <Route path='/' element={<Home />} />
               <Route path='/login' element={<Login />} exact />

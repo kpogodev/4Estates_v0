@@ -1,7 +1,5 @@
 import ErrorResponse from '../utils/errorResponse.js'
-import geocoder from '../utils/geocoder.js'
 import PropertyModel from '../models/propertiesModel.js'
-import dot from 'dot-object'
 
 export const advancedQueries = (model, populate) => async (req, res, next) => {
   let query
@@ -10,7 +8,7 @@ export const advancedQueries = (model, populate) => async (req, res, next) => {
   const requestQuery = { ...req.query }
 
   //Fileds to exclude
-  const removeFields = ['select', 'sort', 'limit', 'page', 'address', 'radius', 'property_bedrooms', 'property_type']
+  const removeFields = ['select', 'sort', 'limit', 'page', 'lat', 'lng', 'radius', 'property_bedrooms', 'property_type']
 
   //Loop over removeFields and delete them from requestQuery
   removeFields.forEach((param) => delete requestQuery[param])
@@ -44,8 +42,10 @@ export const advancedQueries = (model, populate) => async (req, res, next) => {
   }
 
   //Special Queries for Rental and Sales
-  const { address, radius, property_bedrooms, property_type } = req.query
-  if ((model.modelName === 'Rental' || model.modelName === 'Sale') && ((address && radius) || property_bedrooms || property_type)) {
+  const { lat, lng, radius, property_bedrooms, property_type } = req.query
+  
+  if ((model.modelName === 'Rental' || model.modelName === 'Sale') && ((lat && lng && radius) || property_bedrooms || property_type)) {
+
     let propertyRequestQuery = {}
 
     if (property_bedrooms) {
@@ -63,19 +63,18 @@ export const advancedQueries = (model, populate) => async (req, res, next) => {
 
     let propertyQuery = PropertyModel.find(propertyRequestQuery)
 
-    if (address && radius) {
-      const loc = await geocoder.geocode(address.split('+').join(' '))
-      const earthRadius = 3963 // miles
+    if (lat && lng && radius) {
+      const earthRadius = 3963.2 // miles
       const formattedRadius = +radius / earthRadius
+
       propertyQuery = propertyQuery.find({
         location: {
-          $geoWithin: { $centerSphere: [[loc[0].latitude, loc[0].longitude], formattedRadius > 1 ? 1 : formattedRadius] },
+          $geoWithin: { $centerSphere: [[+lng, +lat], formattedRadius > 1 ? 1 : formattedRadius] },
         },
       })
     }
 
     const properties = await propertyQuery
-
     query = query.in(
       'property',
       properties.map((property) => property._id)
@@ -112,7 +111,7 @@ export const advancedQueries = (model, populate) => async (req, res, next) => {
   const results = await query
 
   // Error if resources not found
-  if (!results || results.length === 0) return next(new ErrorResponse('Resources not found', 404))
+  if (!results) return next(new ErrorResponse('Resources not found', 404))
 
   res.advancedResults = {
     success: true,

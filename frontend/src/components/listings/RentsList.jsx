@@ -5,7 +5,7 @@ function RentsList({ rents }) {
     <div className='w-full flex flex-col items-stretch gap-7'>
       {rents.map((rent) => (
         <PropertyCard key={rent._id} data={rent} type='rent' />
-      ))}
+      )).reverse()}
     </div>
   )
 }

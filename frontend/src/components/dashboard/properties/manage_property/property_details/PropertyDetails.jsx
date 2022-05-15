@@ -24,7 +24,7 @@ function PropertyDetails({ className }) {
       description: property.details.description ?? '',
       key_features: property.details.key_features.join(', ') ?? '',
       size: property.details.size ?? 0,
-      type: property.type ?? 'house',
+      type: property.type ?? '',
     },
     validations: {
       bathrooms: {
@@ -102,7 +102,7 @@ function PropertyDetails({ className }) {
           </label>
           <InputSelect
             name='type'
-            options={['house', 'flat', 'apartament', 'bungalow', 'land', 'commercial']}
+            options={['detached', 'semi-detached', 'terraced', 'flat', 'apartment', 'bungalow', 'land', 'commercial']}
             value={formData.type}
             handleChange={handleChange}
             disabled={!editable}

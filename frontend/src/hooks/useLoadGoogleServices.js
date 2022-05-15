@@ -7,7 +7,7 @@ const libraries = ['places']
 
 const useLoadGoogleServices = () => {
   //Load Google Services
-  const { isLoaded, loadError } = useLoadScript({
+  const { isLoaded } = useLoadScript({
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_API_KEY,
     libraries,
   })
@@ -15,10 +15,10 @@ const useLoadGoogleServices = () => {
   const dispatch = useDispatch()
 
   useEffect(() => {
-    if (isLoaded && !loadError) {
+    if (isLoaded) {
       dispatch(googleServicesLoaded())
     }
-  }, [isLoaded, loadError, dispatch])
+  }, [isLoaded, dispatch])
 }
 
 export default useLoadGoogleServices

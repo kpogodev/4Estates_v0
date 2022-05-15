@@ -14,7 +14,7 @@ export const getProperties = asyncHandler(async (req, res, next) => {
 // @route     GET /api/v1/properties/:id
 // @access    Public
 export const getProperty = asyncHandler(async (req, res, next) => {
-  const property = await PropertyModel.findById(req.params.id)
+  const property = await PropertyModel.findById(req.params.id )
 
   if (!property) return next(new ErrorResponse('Property not found', 404))
 

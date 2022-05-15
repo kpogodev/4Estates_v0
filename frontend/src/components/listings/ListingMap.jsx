@@ -1,59 +1,92 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
+import { useSearchParams } from 'react-router-dom'
 import { GoogleMap, Marker, MarkerClusterer, Circle } from '@react-google-maps/api'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import SkeletonItem from 'components/shared/SkeletonItem'
-import { motion } from 'framer-motion'
-import { simpleFadeInOut } from 'utils/animationVariants'
 import pin_icon from 'assets/pin-icon.svg'
 
-function ListingMap({ data, zone: { center, radius } }) {
+const defualtCenter = { lat: 54.05505643924039, lng: -3.9497236034734833 }
+const defaultZoom = 6
+
+function ListingMap({ data }) {
+  const [searchParams] = useSearchParams()
   const [markers, setMarkers] = useState([])
-  const [zoneCenter, setZoneCenter] = useState(null)
+  const [zoneCenter, setZoneCenter] = useState(defualtCenter)
   const [zoneRadius, setZoneRadius] = useState(null)
 
-  const mapRef = useRef(null)
-  const { googleServicesLoaded } = useSelector((state) => state.app)
+  const lat = +searchParams.get('lat')
+  const lng = +searchParams.get('lng')
+  const radius = +searchParams.get('radius')
 
+  const { googleServicesLoaded } = useSelector((state) => state.app)
+  const mapRef = useRef(null)
+  const circleRef = useRef(null)
+
+  // Google Maps Loaded
   const onLoad = useCallback((map) => {
     mapRef.current = map
   }, [])
 
+  // Circle Loaded
+  const onCircleLoad = useCallback((circle) => {
+    circleRef.current = circle
+    mapRef?.current?.fitBounds(circle?.getBounds())
+    mapRef?.current?.panToBounds(circle?.getBounds())
+  }, [])
+
+  // Google Fit Bounds
+  const onCircleChange = useCallback(() => {
+    const bounds = circleRef?.current?.getBounds()
+    mapRef?.current?.fitBounds(bounds)
+    mapRef?.current?.panToBounds(bounds)
+  }, [])
+
+  // Set Markers
   const handleSetMarkers = useCallback(() => {
     setMarkers(data.map((item) => ({ offer_id: item._id, coordinates: item.property.location.coordinates })))
   }, [data])
 
-  const handleSetZone = useCallback(() => {
+  // Set Zone Center
+  const handleSetZone = useCallback((center, radius) => {
     setZoneCenter(center)
     setZoneRadius(radius * 1609)
-  }, [center, radius])
+  }, [])
+
+  useEffect(() => {
+    if (lat && lng && radius) {
+      handleSetZone({ lat, lng }, radius)
+      mapRef.current?.panTo({ lat, lng })
+    } else {
+      handleSetZone(defualtCenter, null)
+      mapRef?.current?.panTo(defualtCenter)
+      mapRef?.current?.setZoom(defaultZoom)
+    }
+  }, [handleSetZone, lat, lng, radius])
 
   useEffect(() => {
     handleSetMarkers()
-    if (center && radius) {
-      handleSetZone()
-    }
-  }, [handleSetMarkers, handleSetZone])
+  }, [handleSetMarkers])
 
-  if (!googleServicesLoaded) return <SkeletonItem className='w-full h-[400px] bg-[#ccc] animate-pulse shadow-lg' />
+  if (!googleServicesLoaded) {
+    return <SkeletonItem className='w-full h-[400px] bg-[#ccc] animate-pulse shadow-lg mb-10' />
+  }
+
   return (
-    <div className='mb-10 border-4 border-gray-200 shadow-inner'>
+    <div className='col-span-2'>
       <GoogleMap
         mapContainerStyle={mapContainerStyle}
-        zoom={10}
-        center={{ lat: 53.049499, lng: -0.329219 }}
+        zoom={defaultZoom}
+        onLoad={onLoad}
+        center={defualtCenter}
         options={{
           mapId: '7a9d2899aa99bae5',
           disableDefaultUI: true,
           zoomControl: true,
           fullscreenControl: true,
         }}
-        onLoad={onLoad}
       >
         <>
-          <MarkerClusterer
-            imagePath='https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.png'
-            onLoad={(data) => console.log(data)}
-          >
+          <MarkerClusterer imagePath='https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.png'>
             {(clusterer) =>
               markers.map((marker) => (
                 <Marker
@@ -71,7 +104,26 @@ function ListingMap({ data, zone: { center, radius } }) {
               ))
             }
           </MarkerClusterer>
-          {zoneCenter && zoneRadius && <Circle center={zoneCenter} radius={zoneRadius} />}
+          {zoneCenter && zoneRadius && (
+            <Circle
+              center={zoneCenter}
+              radius={zoneRadius}
+              options={{
+                strokeColor: '#185ADB',
+                strokeOpacity: 0.3,
+                strokeWeight: 2,
+                clickable: false,
+                fillColor: '#185ADB',
+                fillOpacity: 0.1,
+                visible: true,
+                draggable: false,
+                editable: false,
+              }}
+              onCenterChanged={onCircleChange}
+              onRadiusChanged={onCircleChange}
+              onLoad={onCircleLoad}
+            />
+          )}
         </>
       </GoogleMap>
     </div>
@@ -80,7 +132,7 @@ function ListingMap({ data, zone: { center, radius } }) {
 
 const mapContainerStyle = {
   width: '100%',
-  aspectRatio: '3/1',
+  aspectRatio: '7/4',
 }
 
 export default ListingMap

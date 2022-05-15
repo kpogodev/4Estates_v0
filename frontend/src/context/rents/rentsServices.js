@@ -7,15 +7,15 @@ const config = {
   },
 }
 
-// Get rental
-const getRental = async (id) => {
-  const { data } = await axios.get(`${API_URL}/${id}`)
+// Get rents
+const getRents = async (queryString = null) => {
+  const { data } = await axios.get(`${API_URL}?${queryString}`)
   return data
 }
 
 // Get rental
-const getRents = async (query) => {
-  const { data } = await axios.get(`${API_URL}`)
+const getRental = async (id) => {
+  const { data } = await axios.get(`${API_URL}/${id}`)
   return data
 }
 

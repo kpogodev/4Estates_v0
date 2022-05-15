@@ -5,23 +5,22 @@ import 'swiper/css'
 import 'swiper/css/autoplay'
 import 'swiper/css/navigation'
 import 'swiper/css/pagination'
-import { handleSwiperProgress, handleSetTransition } from '../../utils/homeSwiper'
+import { handleSwiperProgress, handleSetTransition } from '../../../utils/homeSwiper'
 import { useDispatch, useSelector } from 'react-redux'
-import { getProperties } from '../../context/properties/propertiesSlice'
+import { getRents } from 'context/rents/rentsSlice'
 import HeroSwiperContent from './HeroSwiperContent'
 
 function HeroSwiper() {
   const dispatch = useDispatch()
 
-  const { properties } = useSelector((state) => state.properties)
+  const { rents } = useSelector((state) => state.rents)
 
   useEffect(() => {
-    if (properties.length === 0) {
-      const query = {
-        select: 'price,location,images,description',
-      }
-      dispatch(getProperties(query))
-    }
+    dispatch(
+      getRents({
+        select: 'price,property,createdAt',
+      })
+    )
   }, [dispatch])
 
   return (
@@ -37,11 +36,12 @@ function HeroSwiper() {
       onProgress={handleSwiperProgress}
       onSetTransition={handleSetTransition}
       onInit={(swiper) => swiper.slideNext()}
-      className={'!pb-8'}
+      className='!-z-[1]'
+
     >
-      {properties.map((property) => (
-        <SwiperSlide key={property._id} className='!w-[520px] !h-[340px] bg-white'>
-          {/* <HeroSwiperContent property={property} /> */}
+      {rents.map((rent) => (
+        <SwiperSlide key={rent._id} className='!w-[520px] !h-[340px] bg-white'>
+          <HeroSwiperContent price={rent.price} location={rent.property.location} images={rent.property.images} />
         </SwiperSlide>
       ))}
     </Swiper>

@@ -229,7 +229,7 @@ function AddPropertyForm() {
             </label>
             <InputSelect
               name='type'
-              options={['detached', 'semi-detached', 'flat', 'apartment', 'bungalow', 'land', 'commercial']}
+              options={['detached', 'semi-detached', 'terraced', 'flat', 'apartment', 'bungalow', 'land', 'commercial']}
               value={formData.type}
               handleChange={handleChange}
             />

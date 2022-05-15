@@ -8,7 +8,7 @@ export const useSetLocation = () => {
 
     this.location = {
       type: 'Point',
-      coordinates: [loc[0].latitude, loc[0].longitude],
+      coordinates: [loc[0].latitude, loc[0].longitude].reverse(),
       formatted_address: loc[0].formattedAddress,
       street: loc[0].streetName,
       city: loc[0].city,
@@ -28,7 +28,7 @@ export const useSetLocation = () => {
       this.set({
         location: {
           type: 'Point',
-          coordinates: [loc[0].latitude, loc[0].longitude],
+          coordinates: [loc[0].latitude, loc[0].longitude].reverse(),
           formatted_address: loc[0].formattedAddress,
           street: loc[0].streetName,
           city: loc[0].city,
@@ -41,5 +41,18 @@ export const useSetLocation = () => {
     }
 
     next()
+  })
+
+  //Reverse geocode location details
+  propertiesSchema.post('find', async function (doc) {
+    if (doc.length > 0) {
+      doc.forEach((property) => {
+        property.location.coordinates.reverse()
+      })
+    }
+  })
+
+  propertiesSchema.post('findOne', async function (doc) {
+    if (doc) doc.location.coordinates.reverse()
   })
 }

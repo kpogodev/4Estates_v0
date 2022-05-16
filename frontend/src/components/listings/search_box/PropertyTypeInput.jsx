@@ -23,7 +23,7 @@ function PropertyTypeInput() {
   }, [searchParams])
 
   return (
-    <div className='form-control min-w-[140px]'>
+    <div className='form-control max-w-[140px] w-full'>
       <label className='label py-0'>Property Type:</label>
       <InputSelect
         className='text-black'

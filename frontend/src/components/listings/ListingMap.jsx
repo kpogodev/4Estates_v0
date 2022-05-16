@@ -5,14 +5,14 @@ import { useSelector } from 'react-redux'
 import SkeletonItem from 'components/shared/SkeletonItem'
 import pin_icon from 'assets/pin-icon.svg'
 
-const defualtCenter = { lat: 54.05505643924039, lng: -3.9497236034734833 }
-const defaultZoom = 6
+const defualtCenter = { lat: 52.61234622571823, lng: -1.424856930199212 }
+const defaultZoom = 5.5
 
 function ListingMap({ data }) {
   const [searchParams] = useSearchParams()
   const [markers, setMarkers] = useState([])
-  const [zoneCenter, setZoneCenter] = useState(defualtCenter)
-  const [zoneRadius, setZoneRadius] = useState(null)
+  const [zoneCenter, setZoneCenter] = useState()
+  const [zoneRadius, setZoneRadius] = useState()
 
   const lat = +searchParams.get('lat')
   const lng = +searchParams.get('lng')
@@ -37,8 +37,10 @@ function ListingMap({ data }) {
   // Google Fit Bounds
   const onCircleChange = useCallback(() => {
     const bounds = circleRef?.current?.getBounds()
-    mapRef?.current?.fitBounds(bounds)
-    mapRef?.current?.panToBounds(bounds)
+    if (bounds) {
+      mapRef?.current?.fitBounds(bounds)
+      mapRef?.current?.panToBounds(bounds)
+    }
   }, [])
 
   // Set Markers
@@ -132,7 +134,8 @@ function ListingMap({ data }) {
 
 const mapContainerStyle = {
   width: '100%',
-  aspectRatio: '7/4',
+  height: '100%',
+  minHeight: '350px',
 }
 
 export default ListingMap

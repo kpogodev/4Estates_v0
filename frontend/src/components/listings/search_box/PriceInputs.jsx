@@ -57,8 +57,8 @@ function PriceInputs() {
   }, [searchParams])
 
   return (
-    <div className='flex gap-4'>
-      <div className='form-control min-w-[140px]'>
+    <div className='flex gap-4 max-w-[296px] w-full'>
+      <div className='form-control max-w-[140px] w-full'>
         <label className='label py-0'>Min Price:</label>
         <select name='min_price' className='select select-bordered text-black' value={minPrice} onChange={handleMinPriceChange}>
           <option value={0}>No min</option>
@@ -69,7 +69,7 @@ function PriceInputs() {
           ))}
         </select>
       </div>
-      <div className='form-control min-w-[140px]'>
+      <div className='form-control max-w-[140px] w-full'>
         <label className='label py-0'>Max Price:</label>
         <select name='max_price' className='select select-bordered text-black' value={maxPrice} onChange={handleMaxPriceChange}>
           <option value={0}>No max</option>

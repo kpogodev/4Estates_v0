@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import { Routes, Route, useLocation } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify'
 import { AnimatePresence } from 'framer-motion'
 import 'react-toastify/dist/ReactToastify.css'
@@ -26,48 +26,47 @@ import useLoadGoogleServices from './hooks/useLoadGoogleServices'
 import React from 'react'
 
 function App() {
+  const location = useLocation()
   useCheckAuth()
   useLoadGoogleServices()
 
   return (
-    <Router>
-      <div className='flex flex-col justify-between min-h-screen bg-base-200'>
-        <SVGSprite />
-        <Navbar />
-        <AnimatePresence exitBeforeEnter={true}>
-          <main className='container flex flex-col mx-auto py-5 px-[15px] md:py-12 md:px-0'>
-            <Routes>
-              <Route path='/' element={<Home />} />
-              <Route path='/login' element={<Login />} exact />
-              <Route path='/register' element={<Register />} exact />
-              <Route path='/notfound' element={<NotFound />} />
-              <Route path='/recover/' element={<Recover />} />
-              <Route path='/reset-password/:token' element={<ResetPassword />} />
-              <Route path='/*' element={<NotFound />} />
-              <Route path='/rent' element={<Rents />} />
-              {/* PRIVATE ROUTES */}
-              <Route path='/dashboard' element={<PrivateRoute />}>
-                <Route path='/dashboard' element={<Dashboard />} />
-              </Route>
-              <Route path='/add-property' element={<PrivateRoute />}>
-                <Route path='/add-property' element={<AddProperty />} />
-              </Route>
-              <Route path='/manage-property/:id' element={<PrivateRoute />}>
-                <Route path='/manage-property/:id' element={<ManageProperty />} />
-              </Route>
-              <Route path='/publish-property/:id' element={<PrivateRoute />}>
-                <Route path='/publish-property/:id' element={<PublishProperty />} />
-              </Route>
-              <Route path='/settings' element={<PrivateRoute />}>
-                <Route path='/settings' element={<Settings />} />
-              </Route>
-            </Routes>
-            <ToastContainer position='bottom-center' autoClose={5000} />
-          </main>
-        </AnimatePresence>
-        <Footer />
-      </div>
-    </Router>
+    <div className='flex flex-col justify-between min-h-screen bg-base-200'>
+      <SVGSprite />
+      <Navbar />
+      <AnimatePresence initial={false} exitBeforeEnter={true} >
+        <main className='container flex flex-col mx-auto py-5 px-[15px] md:py-12'>
+          <Routes location={location} key={location.pathname}>
+            <Route path='/' element={<Home />} />
+            <Route path='/login' element={<Login />} exact />
+            <Route path='/register' element={<Register />} exact />
+            <Route path='/notfound' element={<NotFound />} />
+            <Route path='/recover/' element={<Recover />} />
+            <Route path='/reset-password/:token' element={<ResetPassword />} />
+            <Route path='/*' element={<NotFound />} />
+            <Route path='/rent' element={<Rents />} />
+            {/* PRIVATE ROUTES */}
+            <Route path='/dashboard' element={<PrivateRoute />}>
+              <Route path='/dashboard' element={<Dashboard />} />
+            </Route>
+            <Route path='/add-property' element={<PrivateRoute />}>
+              <Route path='/add-property' element={<AddProperty />} />
+            </Route>
+            <Route path='/manage-property/:id' element={<PrivateRoute />}>
+              <Route path='/manage-property/:id' element={<ManageProperty />} />
+            </Route>
+            <Route path='/publish-property/:id' element={<PrivateRoute />}>
+              <Route path='/publish-property/:id' element={<PublishProperty />} />
+            </Route>
+            <Route path='/settings' element={<PrivateRoute />}>
+              <Route path='/settings' element={<Settings />} />
+            </Route>
+          </Routes>
+          <ToastContainer position='bottom-center' autoClose={5000} />
+        </main>
+      </AnimatePresence>
+      <Footer />
+    </div>
   )
 }
 

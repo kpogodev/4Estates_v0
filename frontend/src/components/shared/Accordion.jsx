@@ -6,7 +6,7 @@ function Accordion({ isOpen, setOpen, children }) {
   const accordionKey = useId()
   const accordionContentKey = useId()
   return (
-    <AnimatePresence initial={false}>
+    <AnimatePresence initial={false} exitBeforeEnter>
       {isOpen && (
         <motion.div
           key={accordionKey}

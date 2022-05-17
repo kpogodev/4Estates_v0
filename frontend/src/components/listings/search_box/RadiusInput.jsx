@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useSearchParams } from 'react-router-dom'
-import { v4 as uuidv4 } from 'uuid'
+import { nanoid } from '@reduxjs/toolkit'
 
 const radiusOptions = [0.25, 0.5, 1, 2, 3, 5, 10, 15, 20, 25]
 
@@ -37,7 +37,7 @@ function RadiusInput() {
       <label className='label py-0'>Radius:</label>
       <select name='radius' className={`select select-bordered text-black`} value={radius} onChange={onRadiusSelect} disabled={!coordinates_present}>
         {radiusOptions.map((option) => (
-          <option key={uuidv4()} value={option}>
+          <option key={nanoid()} value={option}>
             {`${option} ${option <= 1 ? 'mile' : 'miles'}`}
           </option>
         ))}

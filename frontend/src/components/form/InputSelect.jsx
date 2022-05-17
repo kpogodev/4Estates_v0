@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types'
-import { v4 as uuidv4 } from 'uuid'
+import {nanoid} from '@reduxjs/toolkit'
 function InputSelect({ className, name, value, options, handleChange, disabled, readOnly, placeholderOption }) {
   const formattedOption = (option) => {
     if (typeof option === 'string') {
@@ -21,7 +21,7 @@ function InputSelect({ className, name, value, options, handleChange, disabled, 
     <select name={name} className={`select select-bordered ${className}`} onChange={handleChange} value={value} disabled={disabled}>
       {placeholderOption && <option value={isNaN(value) ? 'default' : 0}>{placeholderOption}</option>}
       {options.map((option) => (
-        <option key={uuidv4()} value={option.toString().toLowerCase()}>
+        <option key={nanoid()} value={option.toString().toLowerCase()}>
           {formattedOption(option)}
         </option>
       ))}

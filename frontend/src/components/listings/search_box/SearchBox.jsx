@@ -41,13 +41,13 @@ function SearchBox() {
   }, [])
 
   return (
-    <div className='col-span-1 flex flex-col gap-5 p-4 md:p-6 rounded-md bg-accent shadow-custom sticky'>
+    <div className='col-span-1 flex flex-col gap-5 p-4 md:p-6 rounded-md bg-secondary text-secondary-content shadow-custom sticky top-0 left-0'>
       <h2 className='hidden lg:block text-2xl text-left'>Narrow your search results with some filters</h2>
       <div className='flex flex-col justify-start gap-3'>
         {googleServicesLoaded && <LocationInput />}
         {!matches && (
-          <button className='btn btn-primary' onClick={handleOpenAccordion}>
-            Show More Filters
+          <button className='btn btn-accent btn-sm md:btn-md' onClick={handleOpenAccordion}>
+            {accordionOpened ? 'Hide filters' : 'More filters'}
           </button>
         )}
         {matches ? <DekstopContent /> : <Accordion isOpen={accordionOpened}>{<MobileContent />}</Accordion>}

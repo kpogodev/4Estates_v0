@@ -9,6 +9,7 @@ import SearchBox from 'components/listings/search_box/SearchBox'
 import { pageTransition } from 'utils/animationVariants'
 
 function Rents() {
+  console.count('Rents page')
   const [searchParams] = useSearchParams()
   const { rents } = useSelector((state) => state.rents)
 

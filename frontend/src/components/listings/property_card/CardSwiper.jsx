@@ -5,7 +5,7 @@ import no_image_src from 'assets/no-image.png'
 import 'swiper/css'
 import 'swiper/css/navigation'
 import 'swiper/css/effect-fade'
-import { v4 as uuidv4 } from 'uuid'
+import { nanoid } from '@reduxjs/toolkit'
 import CardSwiperPagination from './CardSwiperPagination'
 
 function CardSwiper({ images }) {
@@ -48,7 +48,7 @@ function CardSwiper({ images }) {
             </SwiperSlide>
           ))
         ) : (
-          <SwiperSlide key={uuidv4()}>
+          <SwiperSlide key={nanoid()}>
             <img className='w-full h-full object-contain' src={no_image_src} alt='Placeholder' />
           </SwiperSlide>
         )}

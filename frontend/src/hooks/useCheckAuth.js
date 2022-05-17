@@ -4,18 +4,18 @@ import { getUser } from 'context/auth/authSlice'
 
 const useCheckAuth = () => {
   const dispatch = useDispatch()
-  const { isAuth, user, isLoading } = useSelector((state) => state.auth)
+  const { isAuth, user } = useSelector((state) => state.auth)
   const isMounted = useRef(true)
 
   useEffect(() => {
-    if (isMounted && !user) {
+    if (isMounted.current && !user) {
       dispatch(getUser())
     }
 
     return () => (isMounted.current = false)
   }, [isAuth, user, dispatch])
 
-  return { isLoading }
+  return { isAuth }
 }
 
 export default useCheckAuth

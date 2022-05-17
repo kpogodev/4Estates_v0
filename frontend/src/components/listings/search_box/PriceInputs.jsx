@@ -1,6 +1,6 @@
 import { useState, useMemo, useCallback, useEffect } from 'react'
 import { useSearchParams } from 'react-router-dom'
-import { v4 as uuidv4 } from 'uuid'
+import { nanoid } from '@reduxjs/toolkit'
 
 const range = [
   100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 1250, 1500, 1750, 2000, 2500, 3000, 3500, 4000, 5000, 6000, 7000, 8000, 9000, 10000, 12500, 15000, 17500,
@@ -63,7 +63,7 @@ function PriceInputs() {
         <select name='min_price' className='select select-bordered text-black' value={minPrice} onChange={handleMinPriceChange}>
           <option value={0}>No min</option>
           {minOptions.map((option) => (
-            <option key={uuidv4()} value={option}>
+            <option key={nanoid()} value={option}>
               {`${option} PCM`}
             </option>
           ))}
@@ -74,7 +74,7 @@ function PriceInputs() {
         <select name='max_price' className='select select-bordered text-black' value={maxPrice} onChange={handleMaxPriceChange}>
           <option value={0}>No max</option>
           {maxOptions.map((option) => (
-            <option key={uuidv4()} value={option}>
+            <option key={nanoid()} value={option}>
               {`${option} PCM`}
             </option>
           ))}

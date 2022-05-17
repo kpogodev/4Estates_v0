@@ -34,7 +34,7 @@ function App() {
     <div className='flex flex-col justify-between min-h-screen bg-base-200'>
       <SVGSprite />
       <Navbar />
-      <AnimatePresence initial={false} exitBeforeEnter={true} >
+      <AnimatePresence initial={false} exitBeforeEnter={true}>
         <main className='container flex flex-col mx-auto py-5 px-[15px] md:py-12'>
           <Routes location={location} key={location.pathname}>
             <Route path='/' element={<Home />} />

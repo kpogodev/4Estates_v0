@@ -36,8 +36,6 @@ function HeroSwiper() {
       onProgress={handleSwiperProgress}
       onSetTransition={handleSetTransition}
       onInit={(swiper) => swiper.slideNext()}
-      className='!-z-[1]'
-
     >
       {rents.map((rent) => (
         <SwiperSlide key={rent._id} className='!w-[520px] !h-[340px] bg-white'>

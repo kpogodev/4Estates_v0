@@ -1,4 +1,5 @@
 import moment from 'moment'
+import 'moment/locale/en-gb'
 
 function CardPropertyDetails({ property, addedOn, addedBy }) {
   return (
@@ -33,7 +34,7 @@ function CardPropertyDetails({ property, addedOn, addedBy }) {
       </div>
       <p className='hidden md:line-clamp-3 md:w-full mt-3'>{property.details.description}</p>
       <p className='text-sm text-gray-500 font-medium mt-3'>
-        Added on {moment(addedOn).format('L')} by {addedBy}
+        Added on {moment(addedOn).locale('en-gb').format('L')} by {addedBy}
       </p>
     </div>
   )

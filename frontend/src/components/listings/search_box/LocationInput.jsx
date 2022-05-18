@@ -35,7 +35,7 @@ function LocationInput() {
 
   const resetLocation = () => {
     let current = Object.fromEntries(searchParams.entries())
-    delete current.location && delete current.lat && delete current.lng
+    delete current.location && delete current.lat && delete current.lng && delete current.radius
     setSearchParams(current)
     setValue('', false)
   }

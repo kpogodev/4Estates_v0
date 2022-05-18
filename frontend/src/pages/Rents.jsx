@@ -16,7 +16,10 @@ function Rents() {
   const pageKey = useId()
   const dispatch = useDispatch()
 
+  useEffect(() => {}, [])
+
   useEffect(() => {
+    console.count('Get Rents')
     dispatch(getRents(searchParams.toString()))
   }, [dispatch, searchParams])
 

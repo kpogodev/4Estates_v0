@@ -9,11 +9,12 @@ const defualtCenter = { lat: 52.61234622571823, lng: -1.424856930199212 }
 const defaultZoom = 5.5
 
 function ListingMap({data}) {
-  const [searchParams] = useSearchParams()
   const [markers, setMarkers] = useState([])
   const [zoneCenter, setZoneCenter] = useState()
   const [zoneRadius, setZoneRadius] = useState()
 
+  
+  const [searchParams] = useSearchParams()
   const lat = +searchParams.get('lat')
   const lng = +searchParams.get('lng')
   const radius = +searchParams.get('radius')

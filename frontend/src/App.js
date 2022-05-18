@@ -21,13 +21,10 @@ import PublishProperty from './pages/PublishProperty'
 import Settings from 'pages/Settings'
 import Rents from 'pages/Rents'
 // Hooks
-import useCheckAuth from './hooks/useCheckAuth'
 import useLoadGoogleServices from './hooks/useLoadGoogleServices'
-import React from 'react'
 
 function App() {
   const location = useLocation()
-  useCheckAuth()
   useLoadGoogleServices()
 
   return (

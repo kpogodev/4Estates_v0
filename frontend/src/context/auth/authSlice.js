@@ -5,7 +5,7 @@ const initialState = {
   user: null,
   isAuth: false,
   isSuccess: false,
-  isLoading: true,
+  isLoading: false,
   isError: false,
   message: '',
 }
@@ -173,8 +173,6 @@ export const authSlice = createSlice({
         state.isLoading = false
       })
       .addCase(getUser.rejected, (state) => {
-        state.user = null
-        state.isAuth = false
         state.isLoading = false
       })
       //Logout

@@ -16,11 +16,11 @@ function CardSwiper({ images }) {
     slidesPerView: 1,
     modules: [Navigation],
     navigation: true,
-    loop: true,
+    loop: images.length >= 2,
     spaceBetween: 2,
     breakpoints: {
       1024: {
-        slidesPerView: 2,
+        slidesPerView: images.length >= 2 ? 2 : 1,
       },
     },
     onInit: ({ realIndex }) => setPagination(`${realIndex + 1} / ${images.length}`),

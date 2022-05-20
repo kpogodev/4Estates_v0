@@ -79,8 +79,8 @@ function Navbar() {
                 </Link>
               </li>
               <li>
-                <Link to='/settings' onClick={(e) => e.target.blur()}>
-                  Settings
+                <Link to='/account' onClick={(e) => e.target.blur()}>
+                  My Account
                 </Link>
               </li>
               <li>

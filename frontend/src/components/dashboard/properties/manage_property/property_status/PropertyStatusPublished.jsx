@@ -1,5 +1,6 @@
 import { useState, useCallback, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
+import { useParams } from 'react-router-dom'
 import {
   getRental,
   removeRental,
@@ -24,8 +25,7 @@ import PropertyPublishedSale from './PropertyPublishedSale'
 import Modal from 'components/layout/Modal'
 import { MdDeleteForever } from 'react-icons/md'
 
-function PropertyStatusPublished({ propertyId }) {
-  console.count('PropertyStatusPublished')
+function PropertyStatusPublished() {
   const [modalOpen, setModalOpen] = useState(false)
 
   const rental = useSelector(selectRental)
@@ -37,6 +37,7 @@ function PropertyStatusPublished({ propertyId }) {
   const salesIsError = useSelector(selectSalesIsError)
 
   const dispatch = useDispatch()
+  const { id: propertyId } = useParams()
 
   const handleModalToggle = useCallback(() => {
     setModalOpen((prev) => !prev)
@@ -68,8 +69,8 @@ function PropertyStatusPublished({ propertyId }) {
 
   useEffect(() => {
     if (rentsIsSuccess) dispatch(resetRentsSuccess())
-    if (salesIsSuccess) dispatch(resetSalesSuccess())
     if (rentsIsError) dispatch(resetRentsError())
+    if (salesIsSuccess) dispatch(resetSalesSuccess())
     if (salesIsError) dispatch(resetSalesError())
   }, [dispatch, rentsIsSuccess, salesIsSuccess, rentsIsError, salesIsError])
 

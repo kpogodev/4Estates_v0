@@ -87,14 +87,14 @@ function ManageProperty() {
       ) : (
         <>
           <div className='col-span-4 flex flex-col gap-10'>
-            <PropertyStatus propertyId={property._id} isPublished={property.is_published} />
+            <PropertyStatus isPublished={property.is_published} />
             <PropertyDetails className='row-span-2' />
           </div>
           <div className='flex flex-col col-span-8 gap-10'>
             <PropertySlider className='max-h-[600px] bg-black shadow-lg aspect-[9.9/6]' />
             <PropertySliderUpload className='row-span-1' />
             <PropertyLocation />
-            <PropertyDelete propertyId={property._id} />
+            <PropertyDelete />
           </div>
         </>
       )}

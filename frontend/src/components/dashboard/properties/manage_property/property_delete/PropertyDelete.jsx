@@ -1,20 +1,22 @@
 import { useState, useCallback } from 'react'
+import { useParams } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { MdWarning, MdDeleteForever } from 'react-icons/md'
 import Modal from 'components/layout/Modal'
 import { deleteProperty } from 'context/properties/propertiesSlice'
 
-function PropertyDelete({ propertyId }) {
+function PropertyDelete() {
   const [modalOpen, setModalOpen] = useState(false)
 
   const dispatch = useDispatch()
+  const { id } = useParams()
 
   const handleModalToggle = useCallback(() => {
     setModalOpen((prev) => !prev)
   }, [])
 
   const handleRemove = () => {
-    dispatch(deleteProperty(propertyId))
+    dispatch(deleteProperty(id))
   }
 
   return (

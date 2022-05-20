@@ -15,12 +15,14 @@ export const getRentals = asyncHandler(async (req, res, next) => {
 // @route     GET /api/v1/rentals/:id
 // @access    Public
 export const getRental = asyncHandler(async (req, res, next) => {
+  //Find by document ID
   let rental = await RentalModel.findById(req.params.id).populate([
     { path: 'publisher', select: 'name avatar' },
     { path: 'publisher_profile', select: '-observed' },
     'property',
   ])
 
+  // Find by property ObjectID reference
   if (!rental) {
     rental = await RentalModel.findOne({ property: req.params.id }).populate([
       { path: 'publisher', select: 'name avatar' },

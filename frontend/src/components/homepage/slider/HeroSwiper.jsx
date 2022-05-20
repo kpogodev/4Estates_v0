@@ -7,21 +7,22 @@ import 'swiper/css/navigation'
 import 'swiper/css/pagination'
 import { handleSwiperProgress, handleSetTransition } from '../../../utils/homeSwiper'
 import { useDispatch, useSelector } from 'react-redux'
-import { getRents, selectAllRents } from 'context/rents/rentsSlice'
+import { getRents, selectAllRents, selectRentsIsSuccess, resetSuccess } from 'context/rents/rentsSlice'
 import HeroSwiperContent from './HeroSwiperContent'
 
 function HeroSwiper() {
   const dispatch = useDispatch()
 
   const rents = useSelector(selectAllRents)
+  const rentsIsSuccess = useSelector(selectRentsIsSuccess)
 
   useEffect(() => {
-    dispatch(
-      getRents({
-        select: 'price,property,createdAt',
-      })
-    )
+    dispatch(getRents({ select: 'price,property,createdAt' }))
   }, [dispatch])
+
+  useEffect(() => {
+    rentsIsSuccess && dispatch(resetSuccess())
+  }, [rentsIsSuccess, dispatch])
 
   return (
     <Swiper

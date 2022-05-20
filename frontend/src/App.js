@@ -18,7 +18,7 @@ import Dashboard from './pages/Dashboard'
 import AddProperty from './pages/AddProperty'
 import ManageProperty from './pages/ManageProperty'
 import PublishProperty from './pages/PublishProperty'
-import Settings from 'pages/Settings'
+import Account from 'pages/Account'
 import Rents from 'pages/Rents'
 // Hooks
 import useLoadGoogleServices from './hooks/useLoadGoogleServices'
@@ -55,8 +55,8 @@ function App() {
             <Route path='/publish-property/:id' element={<PrivateRoute />}>
               <Route path='/publish-property/:id' element={<PublishProperty />} />
             </Route>
-            <Route path='/settings' element={<PrivateRoute />}>
-              <Route path='/settings' element={<Settings />} />
+            <Route path='/account' element={<PrivateRoute />}>
+              <Route path='/account' element={<Account />} />
             </Route>
           </Routes>
           <ToastContainer position='bottom-center' autoClose={5000} />

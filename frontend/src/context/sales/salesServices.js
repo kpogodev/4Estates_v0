@@ -8,6 +8,12 @@ const config = {
   },
 }
 
+// Get rents
+const getSales = async (queryString = null) => {
+  const { data } = await axios.get(`${API_URL}?${queryString}`)
+  return data
+}
+
 // Get rental
 const getSale = async (id) => {
   const { data } = await axios.get(`${API_URL}/${id}`)
@@ -27,8 +33,9 @@ const removeSale = async (id) => {
 }
 
 const rentsServices = {
-  addSale,
+  getSales,
   getSale,
+  addSale,
   removeSale,
 }
 

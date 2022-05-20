@@ -21,20 +21,20 @@ export const getRents = createAsyncThunk('rents/get_rents', async (payload, thun
   }
 })
 
-// Add rental
-export const addRental = createAsyncThunk('rents/add_rental', async (payload, thunkAPI) => {
+// Get rental
+export const getRental = createAsyncThunk('rents/get_rental', async (payload, thunkAPI) => {
   try {
-    return await rentsService.addRental(payload)
+    return await rentsService.getRental(payload)
   } catch (error) {
     const message = error?.response?.data?.message ?? error.toString()
     return thunkAPI.rejectWithValue(message)
   }
 })
 
-// Get rental
-export const getRental = createAsyncThunk('rents/get_rental', async (payload, thunkAPI) => {
+// Add rental
+export const addRental = createAsyncThunk('rents/add_rental', async (payload, thunkAPI) => {
   try {
-    return await rentsService.getRental(payload)
+    return await rentsService.addRental(payload)
   } catch (error) {
     const message = error?.response?.data?.message ?? error.toString()
     return thunkAPI.rejectWithValue(message)

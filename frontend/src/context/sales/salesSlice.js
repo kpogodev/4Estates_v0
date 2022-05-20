@@ -3,16 +3,18 @@ import salesService from './salesServices'
 
 const initialState = {
   sales: [],
+  sales_count: 0,
   sale: null,
   isLoading: false,
   isSuccess: false,
   isError: false,
   message: '',
 }
-// Add sale
-export const addSale = createAsyncThunk('sales/add_sale', async (payload, thunkAPI) => {
+
+// Get rents
+export const getSales = createAsyncThunk('rents/get_sales', async (payload, thunkAPI) => {
   try {
-    return await salesService.addSale(payload)
+    return await salesService.getSales(payload)
   } catch (error) {
     const message = error?.response?.data?.message ?? error.toString()
     return thunkAPI.rejectWithValue(message)
@@ -23,6 +25,16 @@ export const addSale = createAsyncThunk('sales/add_sale', async (payload, thunkA
 export const getSale = createAsyncThunk('sales/get_sale', async (payload, thunkAPI) => {
   try {
     return await salesService.getSale(payload)
+  } catch (error) {
+    const message = error?.response?.data?.message ?? error.toString()
+    return thunkAPI.rejectWithValue(message)
+  }
+})
+
+// Add sale
+export const addSale = createAsyncThunk('sales/add_sale', async (payload, thunkAPI) => {
+  try {
+    return await salesService.addSale(payload)
   } catch (error) {
     const message = error?.response?.data?.message ?? error.toString()
     return thunkAPI.rejectWithValue(message)
@@ -106,6 +118,15 @@ export const salesSlice = createSlice({
       })
   },
 })
+
+// Selectors
+export const selectAllSales = (state) => state.sales.sales
+export const selectSalesCount = (state) => state.sales.sales_count
+export const selectSalesIsError = (state) => state.sales.isError
+export const selectSalesIsLoading = (state) => state.sales.isLoading
+export const selectSalesIsSuccess = (state) => state.sales.isSuccess
+export const selectSalesMessage = (state) => state.sales.message
+export const selectSale = (state) => state.sales.sale
 
 export const { reset, resetError, resetSuccess, resetSale } = salesSlice.actions
 export default salesSlice.reducer

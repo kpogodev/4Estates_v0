@@ -2,7 +2,7 @@ import { useState, useCallback, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
-import { resetError, resetSuccess, addSale } from 'context/sales/salesSlice'
+import { resetError, resetSuccess, addSale, selectSalesIsError, selectSalesIsSuccess, selectSalesMessage } from 'context/sales/salesSlice'
 import FormStepsControls from './FormStepsControls'
 import useForm from 'hooks/useForm'
 import PublishFinanceDetails from './PublishFinanceDetails'
@@ -14,7 +14,10 @@ function SaleForm({ propertyId, steps }) {
   const [formFilled, setFormFilled] = useState(false)
   const [step, setStep] = useState(1)
 
-  const { isSuccess, isError, message } = useSelector((state) => state.sales)
+  const isSuccess = useSelector(selectSalesIsSuccess)
+  const isError = useSelector(selectSalesIsError)
+  const message = useSelector(selectSalesMessage)
+
   const dispatch = useDispatch()
   const navigate = useNavigate()
 

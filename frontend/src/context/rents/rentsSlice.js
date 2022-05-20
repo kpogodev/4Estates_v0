@@ -3,6 +3,7 @@ import rentsService from './rentsServices'
 
 const initialState = {
   rents: [],
+  rents_count: 0,
   rental: null,
   isLoading: false,
   isSuccess: false,
@@ -106,8 +107,9 @@ export const rentsSlice = createSlice({
         state.isLoading = true
       })
       .addCase(getRents.fulfilled, (state, action) => {
-        state.isLoading = false
         state.rents = action.payload.data
+        state.rents_count = action.payload.count
+        state.isLoading = false
         state.isSuccess = action.payload.success
       })
       .addCase(getRents.rejected, (state, action) => {
@@ -130,6 +132,19 @@ export const rentsSlice = createSlice({
       })
   },
 })
+
+// Selectors
+export const selectAllRents = (state) => state.rents.rents
+export const selectRentsCount = (state) => state.rents.rents_count
+export const selectRentsIsError = (state) => state.rents.isError
+export const selectRentsIsLoading = (state) => state.rents.isLoading
+export const selectRentsIsSuccess = (state) => state.rents.isSuccess
+export const selectRentsMessage = (state) => state.rents.message
+export const selectRental = (state) => state.rents.rental
+
+export const selectRentsMarkers = (state) => {
+  return state.rents.rents.map((item) => ({ offer_id: item._id, coordinates: item.property.location.coordinates }))
+}
 
 export const { reset, resetError, resetSuccess, resetRental } = rentsSlice.actions
 export default rentsSlice.reducer

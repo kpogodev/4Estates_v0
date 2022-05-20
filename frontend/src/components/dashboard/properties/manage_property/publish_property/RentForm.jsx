@@ -11,14 +11,17 @@ import PublishFinanceDetails from './PublishFinanceDetails'
 import PublishOptionalInfo from './PublishOptionalInfo'
 import RentFormConfirmation from './RentFormConfirmation'
 import useForm from 'hooks/useForm'
-import { addRental } from 'context/rents/rentsSlice'
+import { addRental, selectRentsIsError, selectRentsMessage, selectRentsIsSuccess } from 'context/rents/rentsSlice'
 import MultiStepFormIndicator from 'components/form/MultiStepFormIndicator'
 
 function RentForm({ propertyId, steps }) {
   const [formFilled, setFormFilled] = useState(false)
   const [step, setStep] = useState(1)
 
-  const { isSuccess, isError, message } = useSelector((state) => state.rents)
+  const isSuccess = useSelector(selectRentsIsSuccess)
+  const isError = useSelector(selectRentsIsError)
+  const message = useSelector(selectRentsMessage)
+
   const dispatch = useDispatch()
   const navigate = useNavigate()
 

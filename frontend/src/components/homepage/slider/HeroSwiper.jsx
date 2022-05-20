@@ -7,13 +7,13 @@ import 'swiper/css/navigation'
 import 'swiper/css/pagination'
 import { handleSwiperProgress, handleSetTransition } from '../../../utils/homeSwiper'
 import { useDispatch, useSelector } from 'react-redux'
-import { getRents } from 'context/rents/rentsSlice'
+import { getRents, selectAllRents } from 'context/rents/rentsSlice'
 import HeroSwiperContent from './HeroSwiperContent'
 
 function HeroSwiper() {
   const dispatch = useDispatch()
 
-  const { rents } = useSelector((state) => state.rents)
+  const rents = useSelector(selectAllRents)
 
   useEffect(() => {
     dispatch(

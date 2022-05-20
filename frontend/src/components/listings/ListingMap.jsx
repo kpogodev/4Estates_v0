@@ -2,24 +2,25 @@ import { useState, useEffect, useRef, useCallback } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { GoogleMap, Marker, MarkerClusterer, Circle } from '@react-google-maps/api'
 import { useSelector } from 'react-redux'
+import { selectRentsMarkers } from 'context/rents/rentsSlice'
 import SkeletonItem from 'components/shared/SkeletonItem'
 import pin_icon from 'assets/pin-icon.svg'
 
 const defualtCenter = { lat: 52.61234622571823, lng: -1.424856930199212 }
 const defaultZoom = 5.5
 
-function ListingMap({data}) {
-  const [markers, setMarkers] = useState([])
+function ListingMap() {
   const [zoneCenter, setZoneCenter] = useState()
   const [zoneRadius, setZoneRadius] = useState()
 
-  
+  const { googleServicesLoaded } = useSelector((state) => state.app)
+  const markers = useSelector(selectRentsMarkers)
+
   const [searchParams] = useSearchParams()
   const lat = +searchParams.get('lat')
   const lng = +searchParams.get('lng')
   const radius = +searchParams.get('radius')
 
-  const { googleServicesLoaded } = useSelector((state) => state.app)
   const mapRef = useRef(null)
   const circleRef = useRef(null)
 
@@ -44,11 +45,6 @@ function ListingMap({data}) {
     }
   }, [])
 
-  // Set Markers
-  const handleSetMarkers = useCallback(() => {
-    setMarkers(data.map((item) => ({ offer_id: item._id, coordinates: item.property.location.coordinates })))
-  }, [data])
-
   // Set Zone Center
   const handleSetZone = useCallback((center, radius) => {
     setZoneCenter(center)
@@ -66,9 +62,6 @@ function ListingMap({data}) {
     }
   }, [handleSetZone, lat, lng, radius])
 
-  useEffect(() => {
-    handleSetMarkers()
-  }, [handleSetMarkers])
 
   if (!googleServicesLoaded) {
     return <SkeletonItem className='w-full h-[400px] bg-[#ccc] animate-pulse shadow-lg mb-10' />

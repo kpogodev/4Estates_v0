@@ -43,9 +43,8 @@ export const advancedQueries = (model, populate) => async (req, res, next) => {
 
   //Special Queries for Rental and Sales
   const { lat, lng, radius, property_bedrooms, property_type } = req.query
-  
-  if ((model.modelName === 'Rental' || model.modelName === 'Sale') && ((lat && lng && radius) || property_bedrooms || property_type)) {
 
+  if ((model.modelName === 'Rental' || model.modelName === 'Sale') && ((lat && lng && radius) || property_bedrooms || property_type)) {
     let propertyRequestQuery = {}
 
     if (property_bedrooms) {
@@ -91,7 +90,9 @@ export const advancedQueries = (model, populate) => async (req, res, next) => {
   query = query.skip(startIndex).limit(limit)
 
   //Pagination result
-  const pagination = {}
+  const pagination = {
+    total,
+  }
 
   if (endIndex < total) {
     pagination.next = {

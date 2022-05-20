@@ -1,6 +1,14 @@
 import { useState, useCallback, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import * as rentsContext from 'context/rents/rentsSlice'
+import {
+  getRental,
+  removeRental,
+  selectRental,
+  selectRentsIsError,
+  selectRentsIsSuccess,
+  resetError,
+  resetSuccess,
+} from 'context/rents/rentsSlice'
 import * as salesContext from 'context/sales/salesSlice'
 import { setPropertyIsPublished } from 'context/properties/propertiesSlice'
 import PropertyPublishedRent from './PropertyPublishedRent'
@@ -11,7 +19,10 @@ import { MdDeleteForever } from 'react-icons/md'
 function PropertyStatusPublished({ propertyId }) {
   const [modalOpen, setModalOpen] = useState(false)
 
-  const rents = useSelector((state) => state.rents)
+  const rental = useSelector(selectRental)
+  const rentsIsSuccess = useSelector(selectRentsIsSuccess)
+  const rentsIsError = useSelector(selectRentsIsError)
+
   const sales = useSelector((state) => state.sales)
 
   const dispatch = useDispatch()
@@ -21,30 +32,24 @@ function PropertyStatusPublished({ propertyId }) {
   }, [])
 
   const handleRemove = () => {
-    if (rents.rental) {
-      dispatch(rentsContext.removeRental(rents.rental._id))
-    }
+    rental && dispatch(removeRental(rental._id))
+
     if (sales.sale) {
       dispatch(salesContext.removeSale(sales.sale._id))
     }
   }
 
   useEffect(() => {
-    dispatch(rentsContext.getRental(propertyId))
+    dispatch(getRental(propertyId))
     dispatch(salesContext.getSale(propertyId))
-
-    return () => {
-      dispatch(rentsContext.resetRental())
-      dispatch(salesContext.resetSale())
-    }
   }, [dispatch, propertyId])
 
   useEffect(() => {
-    if (rents.isSuccess && !rents.rental) {
+    if (rentsIsSuccess && !rental) {
       setModalOpen(false)
       dispatch(setPropertyIsPublished(false))
     }
-  }, [rents.isSuccess, rents.rental, dispatch, handleModalToggle])
+  }, [rentsIsSuccess, rental, dispatch, handleModalToggle])
 
   useEffect(() => {
     if (sales.isSuccess && !sales.sale) {
@@ -54,15 +59,15 @@ function PropertyStatusPublished({ propertyId }) {
   }, [sales.isSuccess, sales.sale, dispatch, handleModalToggle])
 
   useEffect(() => {
-    if (rents.isSuccess) dispatch(rentsContext.resetSuccess())
+    if (rentsIsSuccess) dispatch(resetSuccess())
     if (sales.isSuccess) dispatch(salesContext.resetSuccess())
-    if (rents.isError) dispatch(rentsContext.resetError())
+    if (rentsIsError) dispatch(resetError())
     if (sales.isError) dispatch(salesContext.resetError())
-  }, [dispatch, rents.isSuccess, sales.isSuccess, rents.isError, sales.isError])
+  }, [dispatch, rentsIsSuccess, sales.isSuccess, rentsIsError, sales.isError])
 
   return (
     <div className='w-full'>
-      {rents.rental && <PropertyPublishedRent rental={rents.rental} />}
+      {rental && <PropertyPublishedRent rental={rental} />}
       {sales.sale && <PropertyPublishedSale sale={sales.sale} />}
       <button className='btn btn-error btn-outline btn-sm flex items-center gap-1 ml-auto text-lg capitalize' onClick={handleModalToggle}>
         <MdDeleteForever className='w-6 h-6 pointer-events-none' />

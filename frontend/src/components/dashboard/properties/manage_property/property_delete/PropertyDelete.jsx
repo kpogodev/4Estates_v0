@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { MdWarning, MdDeleteForever } from 'react-icons/md'
 import Modal from 'components/shared/Modal'
-import { deleteProperty } from 'context/properties/propertiesSlice'
+import { deleteProperty } from 'redux/properties/propertiesSlice'
 
 function PropertyDelete() {
   const [modalOpen, setModalOpen] = useState(false)

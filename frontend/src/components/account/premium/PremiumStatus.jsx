@@ -1,6 +1,6 @@
 import { useState, useCallback, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { updatePremium, cancelPremium, resetSuccess, resetError } from 'context/auth/authSlice'
+import { updatePremium, cancelPremium, resetSuccess, resetError } from 'redux/auth/authSlice'
 import { toast } from 'react-toastify'
 import diamond_icon from 'assets/diamond-icon.svg'
 import StatusBadge from './StatusBadge'

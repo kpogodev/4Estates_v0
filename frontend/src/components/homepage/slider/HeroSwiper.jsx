@@ -7,7 +7,7 @@ import 'swiper/css/navigation'
 import 'swiper/css/pagination'
 import { handleSwiperProgress, handleSetTransition } from '../../../utils/homeSwiper'
 import { useDispatch, useSelector } from 'react-redux'
-import { getRents, selectAllRents, selectRentsIsSuccess, resetSuccess } from 'context/rents/rentsSlice'
+import { getRents, selectAllRents, selectRentsIsSuccess, resetSuccess } from 'redux/rents/rentsSlice'
 import HeroSwiperContent from './HeroSwiperContent'
 
 function HeroSwiper() {

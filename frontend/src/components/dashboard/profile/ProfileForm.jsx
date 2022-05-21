@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { updateProfile, resetSuccess, resetError } from 'context/profiles/profilesSlice'
+import { updateProfile, resetSuccess, resetError } from 'redux/profiles/profilesSlice'
 import { toast } from 'react-toastify'
 import SkeletonItem from 'components/shared/SkeletonItem'
 import ProfileFormActions from './ProfileFormActions'

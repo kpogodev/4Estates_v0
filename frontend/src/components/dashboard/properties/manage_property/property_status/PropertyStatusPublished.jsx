@@ -9,7 +9,7 @@ import {
   selectRentsIsSuccess,
   resetError as resetRentsError,
   resetSuccess as resetRentsSuccess,
-} from 'context/rents/rentsSlice'
+} from 'redux/rents/rentsSlice'
 import {
   getSale,
   removeSale,
@@ -18,8 +18,8 @@ import {
   selectSalesIsSuccess,
   resetError as resetSalesError,
   resetSuccess as resetSalesSuccess,
-} from 'context/sales/salesSlice'
-import { setPropertyIsPublished } from 'context/properties/propertiesSlice'
+} from 'redux/sales/salesSlice'
+import { setPropertyIsPublished } from 'redux/properties/propertiesSlice'
 import PropertyPublishedRent from './PropertyPublishedRent'
 import PropertyPublishedSale from './PropertyPublishedSale'
 import Modal from 'components/shared/Modal'

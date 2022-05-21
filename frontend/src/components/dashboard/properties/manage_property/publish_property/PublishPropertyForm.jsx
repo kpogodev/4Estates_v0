@@ -1,7 +1,7 @@
 import { useState, useCallback, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { Link, useParams } from 'react-router-dom'
-import { getProperty, resetProperty, selectProperty } from 'context/properties/propertiesSlice'
+import { getProperty, resetProperty, selectProperty } from 'redux/properties/propertiesSlice'
 import Loading from 'components/shared/Loading'
 import PublishPropertyType from './PublishPropertyType'
 import RentForm from './RentForm'

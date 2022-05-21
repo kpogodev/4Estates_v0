@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import { useState, useCallback, useEffect, useRef } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { updateProperty, deletePropertyImage, selectProperty, selectPropertiesIsSuccess } from 'context/properties/propertiesSlice'
+import { updateProperty, deletePropertyImage, selectProperty, selectPropertiesIsSuccess } from 'redux/properties/propertiesSlice'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Navigation, Thumbs, EffectFade } from 'swiper'
 import { MdDeleteForever, MdPublishedWithChanges } from 'react-icons/md'

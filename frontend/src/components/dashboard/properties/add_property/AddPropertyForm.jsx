@@ -10,7 +10,7 @@ import {
   selectPropertiesIsSuccess,
   selectPropertiesIsError,
   selectPropertiesMessage,
-} from 'context/properties/propertiesSlice'
+} from 'redux/properties/propertiesSlice'
 import useForm from 'hooks/useForm'
 import InputSelect from 'components/form/InputSelect'
 import InputTextarea from 'components/form/InputTextarea'

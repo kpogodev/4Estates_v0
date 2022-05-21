@@ -21,7 +21,7 @@ import {
   selectPropertiesIsSuccess,
   selectPropertiesIsError,
   selectPropertiesMessage,
-} from 'context/properties/propertiesSlice'
+} from 'redux/properties/propertiesSlice'
 
 function ManageProperty() {
   const { matches } = useMediaQuery('(min-width: 1024px)')

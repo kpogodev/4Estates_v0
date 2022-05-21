@@ -2,14 +2,13 @@ import { useEffect, useId } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useSearchParams } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { getRents, selectAllRents } from 'context/rents/rentsSlice'
+import { getRents, selectAllRents } from 'redux/rents/rentsSlice'
 import RentsList from 'components/listings/RentsList'
 import ListingMap from 'components/listings/ListingMap'
 import SearchBox from 'components/listings/search_box/SearchBox'
 import { pageTransition } from 'utils/animationVariants'
 
 function Rents() {
-  console.count('Rents page')
   const [searchParams] = useSearchParams()
   const rents = useSelector(selectAllRents)
 
@@ -17,7 +16,6 @@ function Rents() {
   const dispatch = useDispatch()
 
   useEffect(() => {
-    console.count('Get Rents')
     dispatch(getRents(searchParams.toString()))
   }, [dispatch, searchParams])
 

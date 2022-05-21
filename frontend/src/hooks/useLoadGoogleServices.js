@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { useLoadScript } from '@react-google-maps/api'
-import { googleServicesLoaded } from '../context/app/appSlice'
+import { googleServicesLoaded } from '../redux/app/appSlice'
 import { useDispatch } from 'react-redux'
 
 const libraries = ['places']

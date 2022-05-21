@@ -1,10 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit'
-import propertiesReducer from 'context/properties/propertiesSlice'
-import authReducer from 'context/auth/authSlice'
-import profilesReducer from 'context/profiles/profilesSlice'
-import appReducer from 'context/app/appSlice'
-import rentsReducer from 'context/rents/rentsSlice'
-import salesReducer from 'context/sales/salesSlice'
+import propertiesReducer from 'redux/properties/propertiesSlice'
+import authReducer from 'redux/auth/authSlice'
+import profilesReducer from 'redux/profiles/profilesSlice'
+import appReducer from 'redux/app/appSlice'
+import rentsReducer from 'redux/rents/rentsSlice'
+import salesReducer from 'redux/sales/salesSlice'
 
 export const store = configureStore({
   reducer: {

@@ -1,7 +1,7 @@
 import { useState, useEffect, forwardRef, useImperativeHandle, useId } from 'react'
 import { GoogleMap, Marker } from '@react-google-maps/api'
 import { useDispatch, useSelector } from 'react-redux'
-import { updateProperty, selectProperty } from 'context/properties/propertiesSlice'
+import { updateProperty, selectProperty } from 'redux/properties/propertiesSlice'
 import { BiInfoCircle } from 'react-icons/bi'
 import SkeletonItem from 'components/shared/SkeletonItem'
 import { motion } from 'framer-motion'

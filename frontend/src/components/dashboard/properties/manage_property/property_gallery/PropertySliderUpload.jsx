@@ -10,7 +10,7 @@ import {
   selectPropertiesIsLoading,
   selectPropertiesIsError,
   selectUploadProgress,
-} from 'context/properties/propertiesSlice'
+} from 'redux/properties/propertiesSlice'
 import DropBoxProgress from './DropBoxProgress'
 import { MdUpload } from 'react-icons/md'
 

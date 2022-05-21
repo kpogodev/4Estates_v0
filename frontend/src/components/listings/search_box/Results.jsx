@@ -1,5 +1,5 @@
 import { useSelector } from 'react-redux'
-import { selectRentsCount } from 'context/rents/rentsSlice'
+import { selectRentsCount } from 'redux/rents/rentsSlice'
 import { motion, AnimatePresence } from 'framer-motion'
 import { nanoid } from '@reduxjs/toolkit'
 

@@ -2,7 +2,7 @@ import { useState, useEffect, useRef, useCallback } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { GoogleMap, Marker, MarkerClusterer, Circle } from '@react-google-maps/api'
 import { useSelector } from 'react-redux'
-import { selectRentsMarkers } from 'context/rents/rentsSlice'
+import { selectRentsMarkers } from 'redux/rents/rentsSlice'
 import SkeletonItem from 'components/shared/SkeletonItem'
 import pin_icon from 'assets/pin-icon.svg'
 

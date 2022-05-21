@@ -5,6 +5,7 @@ const initialState = {
   properties: [],
   myProperties: [],
   property: null,
+  properties_count: 0,
   uploadProgress: 0,
   isSuccess: false,
   isLoading: false,
@@ -92,6 +93,8 @@ export const propertiesSlice = createSlice({
       state.properties = []
       state.myProperties = []
       state.property = null
+      state.properties_count = 0
+      state.uploadProgress = 0
       state.isSuccess = false
       state.isLoading = false
       state.isError = false
@@ -123,10 +126,10 @@ export const propertiesSlice = createSlice({
       })
       .addCase(getProperties.fulfilled, (state, action) => {
         state.properties = action.payload.data
+        state.properties_count = action.payload.count
         state.isLoading = false
       })
       .addCase(getProperties.rejected, (state, action) => {
-        state.properties = []
         state.isLoading = false
         state.isError = true
         state.message = action.payload
@@ -139,7 +142,6 @@ export const propertiesSlice = createSlice({
         state.isLoading = false
       })
       .addCase(getProperty.rejected, (state, action) => {
-        state.property = null
         state.isLoading = false
         state.isError = true
         state.message = action.payload
@@ -149,10 +151,10 @@ export const propertiesSlice = createSlice({
       })
       .addCase(getMyProperties.fulfilled, (state, action) => {
         state.myProperties = action.payload.data
+        state.properties_count = action.payload.count
         state.isLoading = false
       })
-      .addCase(getMyProperties.rejected, (state, action) => {
-        state.myProperties = []
+      .addCase(getMyProperties.rejected, (state) => {
         state.isLoading = false
       })
       .addCase(addProperty.pending, (state) => {
@@ -176,12 +178,28 @@ export const propertiesSlice = createSlice({
       })
       .addCase(updateProperty.fulfilled, (state, action) => {
         state.property = action.payload.data
+        state.myProperties = state.myProperties.map((property) => (property._id === action.payload.data._id ? action.payload.data : property))
         state.isSuccess = action.payload.success
         state.isLoading = false
         state.message = `Property details have been updated`
       })
       .addCase(updateProperty.rejected, (state, action) => {
         state.property = null
+        state.isLoading = false
+        state.isError = true
+        state.message = action.payload
+      })
+      .addCase(deleteProperty.pending, (state) => {
+        state.isLoading = true
+      })
+      .addCase(deleteProperty.fulfilled, (state, action) => {
+        state.property = null
+        state.isSuccess = action.payload.success
+        state.myProperties = state.myProperties.filter((property) => property.id !== action.payload.data.id)
+        state.isLoading = false
+        state.message = `Your property has been deleted`
+      })
+      .addCase(deleteProperty.rejected, (state, action) => {
         state.isLoading = false
         state.isError = true
         state.message = action.payload
@@ -197,7 +215,6 @@ export const propertiesSlice = createSlice({
         state.message = `Your images have been uploaded`
       })
       .addCase(uploadPropertyImages.rejected, (state, action) => {
-        state.property = null
         state.isLoading = false
         state.isError = true
         state.message = action.payload
@@ -216,22 +233,18 @@ export const propertiesSlice = createSlice({
         state.isError = true
         state.message = action.payload
       })
-      .addCase(deleteProperty.pending, (state) => {
-        state.isLoading = true
-      })
-      .addCase(deleteProperty.fulfilled, (state, action) => {
-        state.property = null
-        state.isSuccess = action.payload.success
-        state.isLoading = false
-        state.message = `Your property has been deleted`
-      })
-      .addCase(deleteProperty.rejected, (state, action) => {
-        state.isLoading = false
-        state.isError = true
-        state.message = action.payload
-      })
   },
 })
+
+export const selectAllProperties = (state) => state.properties.sales
+export const selectProperty = (state) => state.properties.property
+export const selectMyProperties = (state) => state.properties.myProperties
+export const selectPropertiesCount = (state) => state.properties.properties_count
+export const selectPropertiesIsError = (state) => state.properties.isError
+export const selectPropertiesIsLoading = (state) => state.properties.isLoading
+export const selectPropertiesIsSuccess = (state) => state.properties.isSuccess
+export const selectPropertiesMessage = (state) => state.properties.message
+export const selectUploadProgress = (state) => state.properties.uploadProgress
 
 export const { reset, resetError, resetSuccess, resetProperty, setUploadProgress, setPropertyIsPublished } = propertiesSlice.actions
 export default propertiesSlice.reducer

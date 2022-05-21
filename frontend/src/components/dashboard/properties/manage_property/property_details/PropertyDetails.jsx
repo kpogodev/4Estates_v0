@@ -6,25 +6,24 @@ import InputTextarea from 'components/form/InputTextarea'
 import InputNumber from 'components/form/InputNumber'
 import EditableActions from 'components/shared/EditableActions'
 import NoneEditableActions from 'components/shared/NoneEditableActions'
-import { updateProperty } from 'context/properties/propertiesSlice'
+import { updateProperty, selectProperty } from 'context/properties/propertiesSlice'
 
 function PropertyDetails({ className }) {
   const [fieldsDisabled, setFieldsDisabled] = useState(false)
   const [editable, setEditable] = useState(false)
-  const [hasBeenEdited, setHasBeenEdited] = useState(false)
 
-  const { isSuccess, isError, property } = useSelector((state) => state.properties)
+  const property = useSelector(selectProperty)
   const dispatch = useDispatch()
 
   // useForm Hook
   const { formData, isValid, handleChange, handleSubmit, handleReset } = useForm({
     initialFormData: {
-      bathrooms: property.details.bathrooms ?? 0,
-      bedrooms: property.details.bedrooms ?? 0,
-      description: property.details.description ?? '',
-      key_features: property.details.key_features.join(', ') ?? '',
-      size: property.details.size ?? 0,
-      type: property.type ?? '',
+      bathrooms: property?.details?.bathrooms ?? 0,
+      bedrooms: property?.details?.bedrooms ?? 0,
+      description: property.details?.description ?? '',
+      key_features: property?.details?.key_features.join(', ') ?? '',
+      size: property?.details?.size ?? 0,
+      type: property?.type ?? '',
     },
     validations: {
       bathrooms: {
@@ -68,11 +67,9 @@ function PropertyDetails({ className }) {
         delete newFormData.details.bedrooms
         delete newFormData.details.bathrooms
         dispatch(updateProperty({ data: newFormData, id: property._id }))
-        setHasBeenEdited(true)
         setEditable(false)
       } else {
         dispatch(updateProperty({ data: newFormData, id: property._id }))
-        setHasBeenEdited(true)
         setEditable(false)
       }
     },
@@ -82,12 +79,6 @@ function PropertyDetails({ className }) {
   useEffect(() => {
     formData.type === 'commercial' || formData.type === 'land' ? setFieldsDisabled(true) : setFieldsDisabled(false)
   }, [formData.type])
-
-  useEffect(() => {
-    if (isSuccess || isError) {
-      setHasBeenEdited(false)
-    }
-  }, [isSuccess, isError])
 
   return (
     <div className={`${className}`}>

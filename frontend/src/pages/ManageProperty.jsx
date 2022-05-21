@@ -6,19 +6,31 @@ import { motion } from 'framer-motion'
 import { pageTransition } from 'utils/animationVariants'
 import Loading from 'components/shared/Loading'
 import useMediaQuery from 'hooks/useMediaQuery'
-import { getProperty, resetError, resetSuccess, resetProperty } from 'context/properties/propertiesSlice'
 import PropertySlider from 'components/dashboard/properties/manage_property/property_gallery/PropertySlider'
 import PropertySliderUpload from 'components/dashboard/properties/manage_property/property_gallery/PropertySliderUpload'
 import PropertyDetails from 'components/dashboard/properties/manage_property/property_details/PropertyDetails'
 import PropertyLocation from 'components/dashboard/properties/manage_property/property_location/PropertyLocation'
 import PropertyStatus from 'components/dashboard/properties/manage_property/property_status/PropertyStatus'
 import PropertyDelete from 'components/dashboard/properties/manage_property/property_delete/PropertyDelete'
+import {
+  getProperty,
+  resetError,
+  resetSuccess,
+  resetProperty,
+  selectProperty,
+  selectPropertiesIsSuccess,
+  selectPropertiesIsError,
+  selectPropertiesMessage,
+} from 'context/properties/propertiesSlice'
 
 function ManageProperty() {
   const { matches } = useMediaQuery('(min-width: 1024px)')
   const pageId = useId()
 
-  const { property, message, isSuccess, isError } = useSelector((state) => state.properties)
+  const property = useSelector(selectProperty)
+  const isSuccess = useSelector(selectPropertiesIsSuccess)
+  const isError = useSelector(selectPropertiesIsError)
+  const message = useSelector(selectPropertiesMessage)
   const dispatch = useDispatch()
 
   const params = useParams()

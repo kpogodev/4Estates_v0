@@ -1,7 +1,16 @@
 import { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { addProperty, resetError, resetSuccess } from 'context/properties/propertiesSlice'
+import {
+  addProperty,
+  resetError,
+  resetSuccess,
+  selectProperty,
+  selectPropertiesIsLoading,
+  selectPropertiesIsSuccess,
+  selectPropertiesIsError,
+  selectPropertiesMessage,
+} from 'context/properties/propertiesSlice'
 import useForm from 'hooks/useForm'
 import InputSelect from 'components/form/InputSelect'
 import InputTextarea from 'components/form/InputTextarea'
@@ -20,7 +29,13 @@ function AddPropertyForm() {
 
   //From Redxu State
   const dispatch = useDispatch()
-  const { property, isLoading, isSuccess, isError, message } = useSelector((state) => state.properties)
+
+  const property = useSelector(selectProperty)
+  const isLoading = useSelector(selectPropertiesIsLoading)
+  const isSuccess = useSelector(selectPropertiesIsSuccess)
+  const isError = useSelector(selectPropertiesIsError)
+  const message = useSelector(selectPropertiesMessage)
+
   const { googleServicesLoaded } = useSelector((state) => state.app)
 
   // useForm Hook

@@ -1,7 +1,7 @@
 import { useState, useEffect, forwardRef, useImperativeHandle, useId } from 'react'
 import { GoogleMap, Marker } from '@react-google-maps/api'
 import { useDispatch, useSelector } from 'react-redux'
-import { updateProperty } from 'context/properties/propertiesSlice'
+import { updateProperty, selectProperty } from 'context/properties/propertiesSlice'
 import { BiInfoCircle } from 'react-icons/bi'
 import SkeletonItem from 'components/shared/SkeletonItem'
 import { motion } from 'framer-motion'
@@ -10,8 +10,7 @@ import { simpleFadeInOut } from 'utils/animationVariants'
 function PropertyMap({ editable }, ref) {
   const animKey = useId()
 
-  //Redux
-  const { property } = useSelector((state) => state.properties)
+  const property = useSelector(selectProperty)
   const { googleServicesLoaded } = useSelector((state) => state.app)
   const dispatch = useDispatch()
 

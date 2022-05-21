@@ -1,7 +1,7 @@
+import PropTypes from 'prop-types'
 import { useState, useCallback, useEffect, useRef } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { updateProperty, deletePropertyImage } from 'context/properties/propertiesSlice'
-import PropTypes from 'prop-types'
+import { updateProperty, deletePropertyImage, selectProperty, selectPropertiesIsSuccess } from 'context/properties/propertiesSlice'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Navigation, Thumbs, EffectFade } from 'swiper'
 import { MdDeleteForever, MdPublishedWithChanges } from 'react-icons/md'
@@ -17,7 +17,8 @@ function PropertySlider({ className }) {
   const sliderRef = useRef(null)
   const thumbsRef = useRef(null)
 
-  const { property, isSuccess } = useSelector((state) => state.properties)
+  const property = useSelector(selectProperty)
+  const isSuccess = useSelector(selectPropertiesIsSuccess)
 
   const dispatch = useDispatch()
 

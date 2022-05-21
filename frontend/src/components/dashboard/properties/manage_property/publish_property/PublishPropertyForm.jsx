@@ -1,8 +1,7 @@
 import { useState, useCallback, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { Link, useParams } from 'react-router-dom'
-import { motion } from 'framer-motion'
-import { getProperty, resetProperty } from 'context/properties/propertiesSlice'
+import { getProperty, resetProperty, selectProperty } from 'context/properties/propertiesSlice'
 import Loading from 'components/shared/Loading'
 import PublishPropertyType from './PublishPropertyType'
 import RentForm from './RentForm'
@@ -11,6 +10,7 @@ import SaleForm from './SaleForm'
 function PublishPropertyForm() {
   const [listingType, setListingType] = useState(null)
 
+  const property = useSelector(selectProperty)
   const dispatch = useDispatch()
   const params = useParams()
 
@@ -19,8 +19,6 @@ function PublishPropertyForm() {
 
     return () => dispatch(resetProperty())
   }, [dispatch, params.id])
-
-  const { property } = useSelector((state) => state.properties)
 
   const handleListingTypeChange = useCallback((e) => {
     setListingType(e.target.value)

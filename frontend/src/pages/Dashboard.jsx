@@ -3,14 +3,14 @@ import { motion } from 'framer-motion'
 import { pageTransition } from 'utils/animationVariants'
 import PropertiesPanel from 'components/dashboard/properties/my_properties/PropertiesPanel'
 import { getMyProfile } from 'context/profiles/profilesSlice'
-import { getMyProperties } from 'context/properties/propertiesSlice'
+import { getMyProperties, selectMyProperties } from 'context/properties/propertiesSlice'
 import { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import Loading from 'components/shared/Loading'
 
 function Dashboard() {
   const { user } = useSelector((state) => state.auth)
-  const { myProperties } = useSelector((state) => state.properties)
+  const myProperties = useSelector(selectMyProperties)
   const { profile } = useSelector((state) => state.profiles)
 
   const dispatch = useDispatch()
@@ -26,7 +26,7 @@ function Dashboard() {
     )
   }, [user._id, dispatch])
 
-  if(!myProperties || !profile || !user) return <Loading />
+  if (!myProperties || !profile || !user) return <Loading />
 
   return (
     <motion.div className='flex flex-col gap-5 xl:grid xl:grid-cols-3 lg:gap-10' variants={pageTransition} initial='hidden' animate='visible' exit='exit'>

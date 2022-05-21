@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { IoAddCircle } from 'react-icons/io5'
+import { selectMyProperties } from 'context/properties/propertiesSlice'
 import ViewSwitcher from 'components/shared/ViewSwitcher'
 import useMediaQuery from 'hooks/useMediaQuery'
 import PropertiesGrid from './PropertiesGrid'
@@ -10,8 +11,8 @@ import PropertiesSwiper from './PropertiesSwiper'
 
 function PropertiesPanel() {
   const [listType, setListType] = useState('grid')
-  const { myProperties } = useSelector((state) => state.properties)
 
+  const myProperties = useSelector(selectMyProperties)
   const { matches } = useMediaQuery('(min-width: 768px)')
 
   const propertiesList = () => {

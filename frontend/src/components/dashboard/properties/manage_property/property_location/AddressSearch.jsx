@@ -3,12 +3,11 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Combobox, ComboboxInput, ComboboxPopover, ComboboxList, ComboboxOption, ComboboxOptionText } from '@reach/combobox'
 import '@reach/combobox/styles.css'
 import usePlacesAutocomplete from 'use-places-autocomplete'
-import { updateProperty } from 'context/properties/propertiesSlice'
+import { updateProperty, selectProperty } from 'context/properties/propertiesSlice'
 import SkeletonItem from 'components/shared/SkeletonItem'
 
 function AddressSearch({ editable }, ref) {
-  //Redux
-  const { property } = useSelector((state) => state.properties)
+  const property = useSelector(selectProperty)
   const { googleServicesLoaded } = useSelector((state) => state.app)
   const dispatch = useDispatch()
 

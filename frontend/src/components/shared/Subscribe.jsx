@@ -109,7 +109,7 @@ function Subscribe({ unit_price, discounts, allow_skip }) {
         {allow_skip && (
           <div className='flex flex-col items-center gap-2 mt-5'>
             <p className='text-xl text-center'>Not ready yet? You can always subscribe to our Premium Membership later through your account settings!</p>
-            <Link className='btn btn-link text-xl' to='/user/dashboard'>
+            <Link className='btn btn-link text-xl' to='/user'>
               Skip for now
             </Link>
           </div>

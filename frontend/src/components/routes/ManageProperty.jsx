@@ -59,7 +59,7 @@ function ManageProperty() {
 
   useEffect(() => {
     if (isSuccess && !property) {
-      navigate('/user/dashboard')
+      navigate('/user')
     }
   }, [isSuccess, property, navigate])
 
@@ -79,7 +79,7 @@ function ManageProperty() {
           Manage Property
           <span className='!block text-lg text-gray-500 font-medium'>{property.location.formatted_address}</span>
         </h2>
-        <Link to='/user/dashboard' className='btn btn-link px-0'>
+        <Link to='/user' className='btn btn-link px-0'>
           Back to Dashboard
         </Link>
       </div>

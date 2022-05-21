@@ -8,7 +8,7 @@ function AddProperty() {
     <motion.div variants={pageTransition} initial='hidden' animate='visible' exit='exit'>
       <div className='max-w-screen-lg flex justify-between items-center py-4 lg:p-8 mx-auto'>
         <h2 className='font-bold text-4xl'>Add Property</h2>
-        <Link className='btn btn-link px-0' to='/user/dashboard'>
+        <Link className='btn btn-link px-0' to='/user'>
           Go back to Dashbaord
         </Link>
       </div>

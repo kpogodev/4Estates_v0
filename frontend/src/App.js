@@ -1,4 +1,6 @@
 import { Routes, Route, useLocation } from 'react-router-dom'
+import Layout from 'components/layout/Layout'
+import useLoadGoogleServices from './hooks/useLoadGoogleServices'
 
 //Routes
 import Account from 'components/routes/Account'
@@ -14,9 +16,7 @@ import Recover from './components/routes/Recover'
 import Register from './components/routes/Register'
 import Rents from 'components/routes/Rents'
 import ResetPassword from './components/routes/ResetPassword'
-// Hooks
-import useLoadGoogleServices from './hooks/useLoadGoogleServices'
-import Layout from 'components/layout/Layout'
+
 
 function App() {
   const location = useLocation()
@@ -35,9 +35,9 @@ function App() {
         <Route path='rent' element={<Rents />} />
         {/* PRIVATE ROUTES */}
         <Route path='user' element={<PrivateRoute />}>
+          <Route index element={<Dashboard />} />
           <Route path='account' element={<Account />} />
           <Route path='add-property' element={<AddProperty />} />
-          <Route path='dashboard' element={<Dashboard />} />
           <Route path='manage-property/:id' element={<ManageProperty />} />
           <Route path='publish-property/:id' element={<PublishProperty />} />
         </Route>

@@ -1,6 +1,6 @@
-import ProfilePanel from 'components/dashboard/profile/ProfilePanel'
 import { motion } from 'framer-motion'
 import { pageTransition } from 'utils/animationVariants'
+import ProfilePanel from 'components/dashboard/profile/ProfilePanel'
 import PropertiesPanel from 'components/dashboard/properties/my_properties/PropertiesPanel'
 import { getMyProfile } from 'context/profiles/profilesSlice'
 import { getMyProperties, selectMyProperties } from 'context/properties/propertiesSlice'

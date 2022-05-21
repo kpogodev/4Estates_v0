@@ -266,7 +266,7 @@ function AddPropertyForm() {
           </div>
           <div className='flex gap-5 ml-auto mt-auto'>
             {property?._id && showGoToBtn && (
-              <Link to={`/manage-property/${property._id}`} className='btn btn-ghost'>
+              <Link to={`/user/manage-property/${property._id}`} className='btn btn-ghost'>
                 Go To Property
               </Link>
             )}

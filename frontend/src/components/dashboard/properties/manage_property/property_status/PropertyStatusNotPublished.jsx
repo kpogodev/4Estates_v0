@@ -6,7 +6,7 @@ function PropertyStatusNotPublished() {
   return (
     <div className='flex items-center gap-4'>
       <span className='badge badge-lg'>Not Published</span>
-      <Link to={`/publish-property/${propertyId}`} className='btn btn-link px-0'>
+      <Link to={`/user/publish-property/${propertyId}`} className='btn btn-link px-0'>
         Publish This Property
       </Link>
     </div>

@@ -39,7 +39,7 @@ function PropertiesPanel() {
       <div className='card-body gap-12 pb-12'>
         <div className='flex justify-between items-center flex-wrap gap-4'>
           <h2 className='text-2xl md:text-3xl lg:text-4xl font-bold'>My Properties</h2>
-          <Link className='btn btn-outline btn-primary btn-sm lg:btn-md' to='/add-property'>
+          <Link className='btn btn-outline btn-primary btn-sm lg:btn-md' to='/user/add-property'>
             <IoAddCircle className='text-xl lg:text-2xl' />
             <span className='font-semibold text-lg lg:text-xl'>Add New</span>
           </Link>

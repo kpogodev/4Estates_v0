@@ -32,7 +32,7 @@ function PublishPropertyForm() {
         <h2 className='block text-left font-bold text-2xl xl:text-4xl xl:py-4'>
           Publish Property<span className='!block text-lg text-gray-500 font-medium'>{property.location.formatted_address}</span>
         </h2>
-        <Link to={`/manage-property/${property._id}`} className='btn btn-link px-0'>
+        <Link to={`/user/manage-property/${property._id}`} className='btn btn-link px-0'>
           Back to Property
         </Link>
       </div>

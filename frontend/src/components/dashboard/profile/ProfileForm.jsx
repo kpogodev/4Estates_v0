@@ -1,6 +1,15 @@
 import { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { updateProfile, resetSuccess, resetError } from 'redux/profiles/profilesSlice'
+import {
+  updateProfile,
+  resetSuccess,
+  resetError,
+  selectProfile,
+  selectProfileIsLoading,
+  selectProfileIsError,
+  selectProfileMessage,
+  selectProfileIsSuccess,
+} from 'redux/profiles/profilesSlice'
 import { toast } from 'react-toastify'
 import SkeletonItem from 'components/shared/SkeletonItem'
 import ProfileFormActions from './ProfileFormActions'
@@ -8,9 +17,14 @@ import InputField from 'components/form/InputField'
 import useForm from 'hooks/useForm'
 
 function ProfileForm() {
-  const { profile, isLoading, isSuccess, isError, message } = useSelector((state) => state.profiles)
   const [editable, setEditable] = useState(false)
   const [hasBeenEdited, setHasBeenEdited] = useState(false)
+
+  const profile = useSelector(selectProfile)
+  const isLoading = useSelector(selectProfileIsLoading)
+  const isSuccess = useSelector(selectProfileIsSuccess)
+  const isError = useSelector(selectProfileIsError)
+  const message = useSelector(selectProfileMessage)
 
   const dispatch = useDispatch()
 
@@ -78,19 +92,17 @@ function ProfileForm() {
   })
 
   useEffect(() => {
-    if (isSuccess) {
-      dispatch(resetSuccess())
-    }
-
     if (isSuccess && hasBeenEdited) {
       toast.success('Profile updated successfully!')
+      setHasBeenEdited(false)
+      dispatch(resetSuccess())
     }
 
     if (isError) {
       toast.error(message)
       dispatch(resetError())
     }
-  })
+  }, [isSuccess, isError, message, hasBeenEdited, dispatch])
 
   if (isLoading)
     return (

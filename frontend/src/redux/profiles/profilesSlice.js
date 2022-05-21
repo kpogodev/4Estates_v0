@@ -80,5 +80,11 @@ export const profilesSlice = createSlice({
   },
 })
 
+export const selectProfile = (state) => state.profiles.profile
+export const selectProfileIsLoading = (state) => state.profiles.isLoading
+export const selectProfileIsSuccess = (state) => state.profiles.isSuccess
+export const selectProfileIsError = (state) => state.profiles.isError
+export const selectProfileMessage = (state) => state.profiles.message
+
 export const { reset, resetError, resetSuccess } = profilesSlice.actions
 export default profilesSlice.reducer

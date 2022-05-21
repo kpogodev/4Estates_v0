@@ -1,6 +1,16 @@
 import { useState, useCallback, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { updatePremium, cancelPremium, resetSuccess, resetError } from 'redux/auth/authSlice'
+import {
+  updatePremium,
+  cancelPremium,
+  resetSuccess,
+  resetError,
+  selectUser,
+  selectIsSuccess,
+  selectIsLoading,
+  selectIsError,
+  selectMessage,
+} from 'redux/auth/authSlice'
 import { toast } from 'react-toastify'
 import diamond_icon from 'assets/diamond-icon.svg'
 import StatusBadge from './StatusBadge'
@@ -9,7 +19,12 @@ import Modal from 'components/shared/Modal'
 
 function PremiumStatus() {
   const [modalOpen, setModalOpen] = useState(false)
-  const { user, isLoading, isSuccess, isError, message } = useSelector((state) => state.auth)
+
+  const user = useSelector(selectUser)
+  const isLoading = useSelector(selectIsLoading)
+  const isSuccess = useSelector(selectIsSuccess)
+  const isError = useSelector(selectIsError)
+  const message = useSelector(selectMessage)
 
   const dispatch = useDispatch()
 

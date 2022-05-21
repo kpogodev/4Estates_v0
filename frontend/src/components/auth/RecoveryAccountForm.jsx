@@ -2,12 +2,18 @@ import { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { MdAlternateEmail } from 'react-icons/md'
 import { toast } from 'react-toastify'
-import { recoverPassword, reset } from 'redux/auth/authSlice'
+import { recoverPassword, reset, selectIsSuccess, selectIsError, selectIsLoading, selectMessage } from 'redux/auth/authSlice'
 import useForm from 'hooks/useForm'
 import Spinner from 'components/shared/Spinner'
 import InputField from 'components/form/InputField'
 
 function RecoveryAccountForm({ setWasSent }) {
+  const isLoading = useSelector(selectIsLoading)
+  const isSuccess = useSelector(selectIsSuccess)
+  const isError = useSelector(selectIsError)
+  const message = useSelector(selectMessage)
+  const dispatch = useDispatch()
+
   const { formData, isValid, handleChange, handleSubmit } = useForm({
     initialFormData: {
       email: '',
@@ -27,9 +33,6 @@ function RecoveryAccountForm({ setWasSent }) {
     onSubmit: (data) => dispatch(recoverPassword(data.email)),
   })
 
-  const dispatch = useDispatch()
-  const { isSuccess, isError, isLoading, message } = useSelector((state) => state.auth)
-
   useEffect(() => {
     if (isError) {
       toast.error(message)
@@ -41,7 +44,6 @@ function RecoveryAccountForm({ setWasSent }) {
     }
 
     dispatch(reset())
-    // eslint-disable-next-line
   }, [message, isError, isSuccess, setWasSent, dispatch])
 
   return (

@@ -1,15 +1,17 @@
 import { Link } from 'react-router-dom'
 import { FaBars } from 'react-icons/fa'
 import { useSelector, useDispatch } from 'react-redux'
-import { logoutUser } from 'redux/auth/authSlice'
+import { logoutUser, selectIsAuth, selectUser, selectIsLoading } from 'redux/auth/authSlice'
 import { reset as resetProfile } from 'redux/profiles/profilesSlice'
 import Spinner from 'components/shared/Spinner'
 import Avatar from 'components/shared/Avatar'
 import diamond_icon from 'assets/diamond-icon.svg'
 
 function Navbar() {
+  const user = useSelector(selectUser)
+  const isLoading = useSelector(selectIsLoading)
+  const isAuth = useSelector(selectIsAuth)
   const dispatch = useDispatch()
-  const { user, isAuth, isLoading } = useSelector((state) => state.auth)
 
   const onLogout = () => {
     dispatch(logoutUser())

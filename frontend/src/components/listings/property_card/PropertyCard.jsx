@@ -1,15 +1,16 @@
 import { useId } from 'react'
 import { useSelector } from 'react-redux'
+import { motion } from 'framer-motion'
+import { selectIsAuth } from 'redux/auth/authSlice'
 import CardHeader from './CardHeader'
 import CardPropertyDetails from './CardPropertyDetails'
 import CardSwiper from './CardSwiper'
 import CardContact from './CardContact'
 import CardLikeButton from './CardLikeButton'
-import { motion } from 'framer-motion'
 
 function PropertyCard({ data, type }) {
   const cardKey = useId()
-  const { isAuth } = useSelector((state) => state.auth)
+  const isAuth = useSelector(selectIsAuth)
   return (
     <motion.div
       className='relative card md:card-side bg-white shadow-lg rounded-lg lg:rounded-md max-w-5xl'

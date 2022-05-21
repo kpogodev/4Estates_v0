@@ -4,12 +4,13 @@ import ProfilePanel from 'components/dashboard/profile/ProfilePanel'
 import PropertiesPanel from 'components/dashboard/properties/my_properties/PropertiesPanel'
 import { getMyProfile, selectProfile } from 'redux/profiles/profilesSlice'
 import { getMyProperties, selectMyProperties } from 'redux/properties/propertiesSlice'
+import { selectUser } from 'redux/auth/authSlice'
 import { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import Loading from 'components/shared/Loading'
 
 function Dashboard() {
-  const { user } = useSelector((state) => state.auth)
+  const user = useSelector(selectUser)
   const myProperties = useSelector(selectMyProperties)
   const profile = useSelector(selectProfile)
 

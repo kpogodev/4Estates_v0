@@ -2,18 +2,20 @@ import { useEffect } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { useSelector, useDispatch } from 'react-redux'
+import { MdAlternateEmail, MdPassword } from 'react-icons/md'
+import { loginUser, reset, selectIsAuth, selectIsError, selectIsLoading, selectMessage } from 'redux/auth/authSlice'
+import useForm from 'hooks/useForm'
 import InputField from 'components/form/InputField'
 import Spinner from 'components/shared/Spinner'
-import { MdAlternateEmail, MdPassword } from 'react-icons/md'
-import { loginUser, reset } from 'redux/auth/authSlice'
-import useForm from 'hooks/useForm'
 
 function LoginForm() {
   const navigate = useNavigate()
   const dispatch = useDispatch()
 
-  // From Redux State
-  const { isAuth, isError, message, isLoading } = useSelector((state) => state.auth)
+  const isAuth = useSelector(selectIsAuth)
+  const isError = useSelector(selectIsError)
+  const message = useSelector(selectMessage)
+  const isLoading = useSelector(selectIsLoading)
 
   // useForm Hook
   const { formData, isValid, handleChange, handleSubmit } = useForm({

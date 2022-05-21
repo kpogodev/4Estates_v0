@@ -2,7 +2,7 @@ import moment from 'moment'
 import { toLocalCurrency } from 'utils/toLocalCurrency'
 import { useState, useCallback } from 'react'
 import { GrDocumentTxt } from 'react-icons/gr'
-import Modal from 'components/layout/Modal'
+import Modal from 'components/shared/Modal'
 import DisplayRichText from 'components/shared/DisplayRichText'
 
 function PropertyPublishedRent({ rental }) {

@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback, useId } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
 import usePayPal from 'hooks/usePayPal'
 import { PayPalButton } from 'react-paypal-button-v2'

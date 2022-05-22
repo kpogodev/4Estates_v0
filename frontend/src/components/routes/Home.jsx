@@ -3,7 +3,7 @@ import SearchBox from 'components/homepage/search/SearchBox'
 import Hero from 'components/shared/Hero'
 import { motion } from 'framer-motion'
 import { pageTransition } from 'utils/animationVariants'
-import { useEffect } from 'react'
+
 
 function Home() {
   return (

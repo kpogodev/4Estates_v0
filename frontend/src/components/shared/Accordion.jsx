@@ -1,8 +1,7 @@
 import { motion, AnimatePresence } from 'framer-motion'
-import { duration } from 'moment'
 import { useId } from 'react'
 
-function Accordion({ isOpen, setOpen, children }) {
+function Accordion({ isOpen, children }) {
   const accordionKey = useId()
   const accordionContentKey = useId()
   return (

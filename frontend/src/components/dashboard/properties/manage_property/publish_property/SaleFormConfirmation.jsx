@@ -1,7 +1,6 @@
 import { useId } from 'react'
 import { motion } from 'framer-motion'
 import { formContentChange } from 'utils/animationVariants'
-import moment from 'moment'
 import GoToStepButton from './GoToStepButton'
 
 function SaleFormConfirmation({ formData, isValid, goToStep }) {

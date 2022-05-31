@@ -7,7 +7,7 @@ import { toLocalCurrency } from 'utils/toLocalCurrency'
 import { addPremium } from 'redux/auth/authSlice'
 import { motion } from 'framer-motion'
 import { pageTransition } from 'utils/animationVariants'
-import InputRadio from 'components/form/InputRadio'
+import InputRadio from 'components/inputs/InputRadio'
 import Spinner from 'components/shared/Spinner'
 
 function Subscribe({ unit_price, discounts, allow_skip }) {
@@ -36,7 +36,7 @@ function Subscribe({ unit_price, discounts, allow_skip }) {
       default:
         return
     }
-  }, [subscription, unit_price, applyDiscount, discounts.tier_1, discounts.tier_2])
+  }, [subscription])
 
   const onSubscriptionChange = (e) => {
     setSubscription(e.target.value)

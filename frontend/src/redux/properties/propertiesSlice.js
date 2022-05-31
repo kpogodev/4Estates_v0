@@ -3,7 +3,7 @@ import propertiesService from './propertiesService'
 
 const initialState = {
   properties: [],
-  myProperties: [],
+  my_properties: [],
   property: null,
   properties_count: 0,
   uploadProgress: 0,
@@ -91,7 +91,7 @@ export const propertiesSlice = createSlice({
   reducers: {
     reset: (state) => {
       state.properties = []
-      state.myProperties = []
+      state.my_properties = []
       state.property = null
       state.properties_count = 0
       state.uploadProgress = 0
@@ -150,7 +150,7 @@ export const propertiesSlice = createSlice({
         state.isLoading = true
       })
       .addCase(getMyProperties.fulfilled, (state, action) => {
-        state.myProperties = action.payload.data
+        state.my_properties = action.payload.data
         state.properties_count = action.payload.count
         state.isLoading = false
       })
@@ -238,7 +238,7 @@ export const propertiesSlice = createSlice({
 
 export const selectAllProperties = (state) => state.properties.sales
 export const selectProperty = (state) => state.properties.property
-export const selectMyProperties = (state) => state.properties.myProperties
+export const selectMyProperties = (state) => state.properties.my_properties
 export const selectPropertiesCount = (state) => state.properties.properties_count
 export const selectPropertiesIsError = (state) => state.properties.isError
 export const selectPropertiesIsLoading = (state) => state.properties.isLoading

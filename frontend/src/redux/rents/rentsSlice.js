@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
+import { createSlice, createAsyncThunk, createSelector } from '@reduxjs/toolkit'
 import rentsService from './rentsServices'
 
 const initialState = {
@@ -143,8 +143,18 @@ export const selectRentsMessage = (state) => state.rents.message
 export const selectRental = (state) => state.rents.rental
 
 export const selectRentsMarkers = (state) => {
-  return state.rents.rents.map((item) => ({ offer_id: item._id, coordinates: item.property.location.coordinates }))
+  return state.rents.rents.map((item) => ({ id: item._id, coordinates: item.property.location.coordinates }))
 }
+
+export const selectRentsByPremiumAndDate = (state) => {
+  const rentsByDate = state.rents.rents.slice().sort((a, b) => b.createdAt.localeCompare(a.createdAt))
+  return rentsByDate.slice().sort((a, b) => b.publisher.is_premium.active - a.publisher.is_premium.active)
+}
+
+export const selectRentsSorted = createSelector([selectAllRents], (rents) => {
+  const rentsByDate = rents.slice().sort((a, b) => b.createdAt.localeCompare(a.createdAt))
+  return rentsByDate.slice().sort((a, b) => b.publisher.is_premium.active - a.publisher.is_premium.active)
+})
 
 export const { reset, resetError, resetSuccess, resetRental } = rentsSlice.actions
 export default rentsSlice.reducer

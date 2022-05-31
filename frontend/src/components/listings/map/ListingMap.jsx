@@ -62,7 +62,6 @@ function ListingMap() {
     }
   }, [handleSetZone, lat, lng, radius])
 
-
   if (!googleServicesLoaded) {
     return <SkeletonItem className='w-full h-[400px] bg-[#ccc] animate-pulse shadow-lg mb-10' />
   }

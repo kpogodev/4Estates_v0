@@ -16,7 +16,6 @@ function PublishPropertyForm() {
 
   useEffect(() => {
     dispatch(getProperty(params.id))
-
     return () => dispatch(resetProperty())
   }, [dispatch, params.id])
 

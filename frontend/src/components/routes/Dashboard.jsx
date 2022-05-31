@@ -30,10 +30,12 @@ function Dashboard() {
   if (!myProperties || !profile || !user) return <Loading />
 
   return (
-    <motion.div className='flex flex-col gap-5 xl:grid xl:grid-cols-3 lg:gap-10' variants={pageTransition} initial='hidden' animate='visible' exit='exit'>
-      <ProfilePanel />
-      <div className='flex flex-col gap-5 lg:gap-10 col-span-2'>
-        <PropertiesPanel />
+    <motion.div className='container flex flex-col mx-auto py-5 md:py-12 px-3' variants={pageTransition} initial='hidden' animate='visible' exit='exit'>
+      <div className='flex flex-col gap-5 xl:grid xl:grid-cols-3 lg:gap-10'>
+        <ProfilePanel />
+        <div className='flex flex-col gap-5 lg:gap-10 col-span-2'>
+          <PropertiesPanel />
+        </div>
       </div>
     </motion.div>
   )

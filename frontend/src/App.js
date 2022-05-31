@@ -17,7 +17,6 @@ import Register from './components/routes/Register'
 import Rents from 'components/routes/Rents'
 import ResetPassword from './components/routes/ResetPassword'
 
-
 function App() {
   const location = useLocation()
   useLoadGoogleServices()

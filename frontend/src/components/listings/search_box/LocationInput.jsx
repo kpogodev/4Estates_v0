@@ -60,7 +60,7 @@ function LocationInput() {
             <IoCloseCircleSharp className='text-2xl text-gray-500 hover:text-error transition-colors' />
           </button>
         )}
-        <ComboboxPopover>
+        <ComboboxPopover className='z-50'>
           <ComboboxList className='text-2xl'>
             {suggestions.status === 'OK' &&
               suggestions.data.map(({ place_id, description }) => (

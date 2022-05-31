@@ -7,7 +7,7 @@ import { pageTransition } from 'utils/animationVariants'
 
 function Home() {
   return (
-    <motion.div variants={pageTransition} initial='hidden' animate='visible' exit='exit'>
+    <motion.div variants={pageTransition} initial='hidden' animate='visible' exit='exit' className='px-3'>
       <Hero>
         <HeroSwiper />
         <SearchBox />

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
-import InputSelect from 'components/form/InputSelect'
+import InputSelect from 'components/inputs/InputSelect'
 
 function PropertyTypeInput() {
   const [propertyType, setPropertyType] = useState('default')

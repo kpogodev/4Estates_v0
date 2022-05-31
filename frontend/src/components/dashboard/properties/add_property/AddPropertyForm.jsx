@@ -12,9 +12,9 @@ import {
   selectPropertiesMessage,
 } from 'redux/properties/propertiesSlice'
 import useForm from 'hooks/useForm'
-import InputSelect from 'components/form/InputSelect'
-import InputTextarea from 'components/form/InputTextarea'
-import InputNumber from 'components/form/InputNumber'
+import InputSelect from 'components/inputs/InputSelect'
+import InputTextarea from 'components/inputs/InputTextarea'
+import InputNumber from 'components/inputs/InputNumber'
 import Spinner from 'components/shared/Spinner'
 import Loading from 'components/shared/Loading'
 import { toast } from 'react-toastify'

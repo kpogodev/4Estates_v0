@@ -1,6 +1,6 @@
 import { useState, useMemo, useCallback, useEffect } from 'react'
 import { useSearchParams } from 'react-router-dom'
-import InputSelect from 'components/form/InputSelect'
+import InputSelect from 'components/inputs/InputSelect'
 
 const range = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 

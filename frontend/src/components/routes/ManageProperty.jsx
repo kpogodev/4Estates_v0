@@ -72,7 +72,7 @@ function ManageProperty() {
       initial='hidden'
       animate='visible'
       exit='exit'
-      className='w-full flex flex-col lg:grid lg:grid-cols-12 gap-8 lg:gap-10'
+      className='w-full flex flex-col lg:grid lg:grid-cols-12 gap-8 lg:gap-10 px-3'
     >
       <div className='col-span-12 flex justify-between items-center gap-x-20 flex-wrap'>
         <h2 className='block text-left font-bold text-2xl xl:text-4xl xl:py-4'>

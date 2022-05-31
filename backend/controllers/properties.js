@@ -1,6 +1,7 @@
 import ErrorResponse from '../utils/errorResponse.js'
 import asyncHandler from 'express-async-handler'
 import PropertyModel from '../models/propertiesModel.js'
+import RentalModel from '../models/rentalsModel.js'
 import { imageMultiUpload, imagesDelete, imageDelete } from '../hooks/uploaderHooks.js'
 
 // @desc      Get all properties
@@ -14,7 +15,7 @@ export const getProperties = asyncHandler(async (req, res, next) => {
 // @route     GET /api/v1/properties/:id
 // @access    Public
 export const getProperty = asyncHandler(async (req, res, next) => {
-  const property = await PropertyModel.findById(req.params.id )
+  const property = await PropertyModel.findById(req.params.id)
 
   if (!property) return next(new ErrorResponse('Property not found', 404))
 
@@ -106,3 +107,4 @@ export const deletePropertyImage = asyncHandler(async (req, res, next) => {
 
   res.json({ success: true, data: property })
 })
+

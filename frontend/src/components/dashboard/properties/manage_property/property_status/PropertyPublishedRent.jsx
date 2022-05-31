@@ -26,7 +26,7 @@ function PropertyPublishedRent({ rental }) {
           Monthly Rent: <span className='font-semibold'>{toLocalCurrency('en-GB', rental?.price, 'GBP')}</span>
         </p>
         <p>
-          Deposit: <span className='font-semibold'>{toLocalCurrency('en-GB', rental?.deposit, 'GBP')}</span>
+          Deposit: <span className='font-semibold'>{toLocalCurrency('en-GB', rental?.deposit ?? 0, 'GBP')}</span>
         </p>
         <p>
           Contract: <span className='font-semibold'>{`${rental?.rental_type.charAt(0).toUpperCase()}${rental?.rental_type.slice(1)}`} Term</span>

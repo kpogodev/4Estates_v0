@@ -1,7 +1,7 @@
 import { useId } from 'react'
 import { Link } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
-import InputField from 'components/form/InputField'
+import InputField from 'components/inputs/InputField'
 import { MdAlternateEmail, MdPassword, MdAccountCircle } from 'react-icons/md'
 import { registerUser } from 'redux/auth/authSlice'
 import useForm from 'hooks/useForm'

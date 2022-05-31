@@ -1,4 +1,4 @@
-import InputNumber from 'components/form/InputNumber'
+import InputNumber from 'components/inputs/InputNumber'
 import finance_icon from 'assets/finance-icon.svg'
 import { motion } from 'framer-motion'
 import { useId } from 'react'

@@ -19,7 +19,7 @@ function CardSwiper({ images }) {
     loop: images.length >= 2,
     spaceBetween: 2,
     breakpoints: {
-      1024: {
+      1536: {
         slidesPerView: images.length >= 2 ? 2 : 1,
       },
     },
@@ -33,7 +33,7 @@ function CardSwiper({ images }) {
     <>
       {images.length > 0 && <CardSwiperPagination pagination={pagination} />}
       <Swiper
-        className='w-full aspect-video md:mb-[76.5px] md:w-[270px] md:min-w-[270px] lg:w-[530px] lg:min-w-[530px] lg:max-h-[200px] bg-black'
+        className='w-full aspect-video md:mb-[76.5px] md:w-[270px] md:min-w-[270px] 2xl:w-[530px] 2xl:min-w-[530px] lg:max-h-[200px] bg-black'
         {...swiperConfig}
         style={{
           '--swiper-navigation-size': '24px',

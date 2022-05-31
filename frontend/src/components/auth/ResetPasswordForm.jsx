@@ -5,7 +5,7 @@ import { useParams } from 'react-router-dom'
 import { MdPassword } from 'react-icons/md'
 import { resetPassword, reset, selectIsSuccess, selectIsError, selectIsLoading, selectMessage } from 'redux/auth/authSlice'
 import useForm from 'hooks/useForm'
-import InputField from 'components/form/InputField'
+import InputField from 'components/inputs/InputField'
 import Spinner from 'components/shared/Spinner'
 
 function ResetPasswordForm() {

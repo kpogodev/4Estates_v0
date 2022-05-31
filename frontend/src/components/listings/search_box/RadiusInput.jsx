@@ -8,16 +8,15 @@ function RadiusInput() {
   const [radius, setRadius] = useState(2)
   const [searchParams, setSearchParams] = useSearchParams()
 
-
   const onRadiusSelect = (e) => {
     setRadius(e.target.value)
     setSearchParams({ ...Object.fromEntries(searchParams.entries()), radius: e.target.value })
   }
 
   const coordinates_present = searchParams.get('lat') && searchParams.get('lng') ? true : false
-  
+
   useEffect(() => {
-    if (!searchParams.get('radius') & coordinates_present) {
+    if (!searchParams.get('radius') && coordinates_present) {
       setSearchParams({ ...Object.fromEntries(searchParams.entries()), radius: 2 })
     }
 
@@ -41,3 +40,5 @@ function RadiusInput() {
 }
 
 export default RadiusInput
+
+

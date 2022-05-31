@@ -29,9 +29,11 @@ function Register() {
     }
   }, [isError, message, isSuccess, dispatch])
   return (
-    <motion.div key={pageKey} className='w-full max-w-md mx-auto' variants={pageTransition} initial='hidden' animate='visible' exit='exit'>
-      {!isAuth && <RegisterFrom />}
-      {isAuth && !user?.is_premium.active && <Subscribe allow_skip={true} />}
+    <motion.div key={pageKey} className='w-full px-3' variants={pageTransition} initial='hidden' animate='visible' exit='exit'>
+      <div className='w-full max-w-md mx-auto'>
+        {!isAuth && <RegisterFrom />}
+        {isAuth && !user?.is_premium.active && <Subscribe allow_skip={true} />}
+      </div>
     </motion.div>
   )
 }

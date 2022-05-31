@@ -1,4 +1,4 @@
-import InputRadio from 'components/form/InputRadio'
+import InputRadio from 'components/inputs/InputRadio'
 import furniture_icon from 'assets/furniture-icon.svg'
 import { motion } from 'framer-motion'
 import { useId } from 'react'

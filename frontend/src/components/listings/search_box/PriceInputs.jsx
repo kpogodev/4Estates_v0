@@ -52,7 +52,7 @@ function PriceInputs() {
   )
 
   useEffect(() => {
-    searchParams.get('pricee[gte]') && setMinPrice(+searchParams.get('price[gte]'))
+    searchParams.get('price[gte]') && setMinPrice(+searchParams.get('price[gte]'))
     searchParams.get('price[lte]') && setMaxPrice(+searchParams.get('price[lte]'))
   }, [searchParams])
 

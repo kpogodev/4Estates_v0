@@ -13,7 +13,7 @@ import {
 import { toast } from 'react-toastify'
 import SkeletonItem from 'components/shared/SkeletonItem'
 import ProfileFormActions from './ProfileFormActions'
-import InputField from 'components/form/InputField'
+import InputField from 'components/inputs/InputField'
 import useForm from 'hooks/useForm'
 
 function ProfileForm() {

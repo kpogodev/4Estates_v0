@@ -12,7 +12,7 @@ import PublishOptionalInfo from './PublishOptionalInfo'
 import RentFormConfirmation from './RentFormConfirmation'
 import useForm from 'hooks/useForm'
 import { addRental, selectRentsIsError, selectRentsMessage, selectRentsIsSuccess } from 'redux/rents/rentsSlice'
-import MultiStepFormIndicator from 'components/form/MultiStepFormIndicator'
+import MultiStepFormIndicator from 'components/dashboard/properties/manage_property/publish_property/MultiStepFormIndicator'
 
 function RentForm({ propertyId, steps }) {
   const [formFilled, setFormFilled] = useState(false)
@@ -76,7 +76,7 @@ function RentForm({ propertyId, steps }) {
   useEffect(() => {
     if (isSuccess) {
       dispatch(resetSuccess())
-      navigate(`/manage-property/${propertyId}`)
+      navigate(`/user/manage-property/${propertyId}`)
     }
 
     if (isError) {

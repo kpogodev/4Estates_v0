@@ -5,7 +5,7 @@ import { toast } from 'react-toastify'
 import { recoverPassword, reset, selectIsSuccess, selectIsError, selectIsLoading, selectMessage } from 'redux/auth/authSlice'
 import useForm from 'hooks/useForm'
 import Spinner from 'components/shared/Spinner'
-import InputField from 'components/form/InputField'
+import InputField from 'components/inputs/InputField'
 
 function RecoveryAccountForm({ setWasSent }) {
   const isLoading = useSelector(selectIsLoading)

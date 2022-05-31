@@ -8,7 +8,7 @@ import useForm from 'hooks/useForm'
 import PublishFinanceDetails from './PublishFinanceDetails'
 import SaleFormConfirmation from './SaleFormConfirmation'
 import PublishOptionalInfo from './PublishOptionalInfo'
-import MultiStepFormIndicator from 'components/form/MultiStepFormIndicator'
+import MultiStepFormIndicator from 'components/dashboard/properties/manage_property/publish_property/MultiStepFormIndicator'
 
 function SaleForm({ propertyId, steps }) {
   const [formFilled, setFormFilled] = useState(false)
@@ -60,7 +60,7 @@ function SaleForm({ propertyId, steps }) {
 
   useEffect(() => {
     if (isSuccess) {
-      navigate(`/manage-property/${propertyId}`)
+      navigate(`/user/manage-property/${propertyId}`)
       dispatch(resetSuccess())
     }
 

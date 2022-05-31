@@ -6,7 +6,7 @@ import PublishPropertyForm from 'components/dashboard/properties/manage_property
 function PublishProperty() {
   const keyId = useId()
   return (
-    <motion.div key={keyId} variants={pageTransition} initial='hidden' animate='visible' exit='exit'>
+    <motion.div key={keyId} variants={pageTransition} initial='hidden' animate='visible' exit='exit' className='px-3'>
       <PublishPropertyForm />
     </motion.div>
   )

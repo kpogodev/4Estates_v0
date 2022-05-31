@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { MdAlternateEmail, MdPassword } from 'react-icons/md'
 import { loginUser, reset, selectIsAuth, selectIsError, selectIsLoading, selectMessage } from 'redux/auth/authSlice'
 import useForm from 'hooks/useForm'
-import InputField from 'components/form/InputField'
+import InputField from 'components/inputs/InputField'
 import Spinner from 'components/shared/Spinner'
 
 function LoginForm() {

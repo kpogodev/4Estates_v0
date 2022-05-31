@@ -11,7 +11,7 @@ function Layout() {
     <div className='flex flex-col justify-between min-h-screen bg-base-200'>
       <SVGSprite />
       <Navbar />
-      <main className='container flex flex-col mx-auto py-5 px-[15px] md:py-12'>
+      <main className='container flex flex-col mx-auto py-5 md:py-12'>
         <AnimatePresence exitBeforeEnter>
           <Outlet />
         </AnimatePresence>

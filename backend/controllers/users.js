@@ -1,5 +1,4 @@
 import asyncHandler from 'express-async-handler'
-import cookie from 'cookie'
 import UserModel from '../models/usersModel.js'
 import ErrorResponse from '../utils/errorResponse.js'
 import { imageSingleUpload } from '../hooks/uploaderHooks.js'
@@ -57,28 +56,22 @@ export const updatePremium = asyncHandler(async (req, res, next) => {
   if (!user.subscription.id) return new ErrorResponse(`User does not have a subscription`, 400)
   if (req.body.action !== 'suspend' && req.body.action !== 'reactivate') return new ErrorResponse(`Invalid action`, 400)
 
-  if (req.body.action === 'suspend') {
-    const resSuspend = await suspendPayPalSubscription(user.subscription.id)
-
-    if (resSuspend.status === 204) {
+  switch (req.body.action) {
+    case 'suspend':
+      const resSuspend = await suspendPayPalSubscription(user.subscription.id)
+      if (resSuspend.status !== 204) return new ErrorResponse(`Could not suspend subscription`, 400)
       user.subscription.status = 'SUSPENDED'
       await user.save()
-
       return res.status(200).json({ success: true, data: user, message: 'Your subscription has been suspended' })
-    }
-  }
 
-  if (req.body.action === 'reactivate') {
-    const resActivate = await reactivatePayPalSubscription(user.subscription.id)
-
-    if (resActivate.status === 204) {
+    case 'reactivate':
+      const resActivate = await reactivatePayPalSubscription(user.subscription.id)
+      if (resActivate.status !== 204) return new ErrorResponse(`Could not reactivate subscription`, 400)
       const renewedSubscription = await getPayPalSubscriptionDetails(user.subscription.id)
       user.subscription.status = renewedSubscription.status
       user.subscription.paid_until = renewedSubscription.billing_info.next_billing_time
       await user.save()
-
       return res.status(200).json({ success: true, data: user, message: 'Your subscription has been reactivated' })
-    }
   }
 })
 
@@ -90,14 +83,15 @@ export const deletePremium = asyncHandler(async (req, res, next) => {
 
   const resCancel = await cancelPayPalSubscription(user.subscription.id)
 
-  if (resCancel.status === 204) {
-    user.subscription = {
-      status: 'CANCELLED',
-      paid_until: undefined,
-      plan_id: undefined,
-    }
-    await user.save()
+  if (resCancel.status !== 204) return new ErrorResponse(`Could not cancel subscription`, 400)
 
-    return res.status(200).json({ success: true, data: user, message: 'Your subscription has been cancelled' })
+  user.subscription = {
+    ...user.subscription,
+    paid_until: undefined,
+    status: 'CANCELLED',
+    plan_id: undefined,
   }
+  await user.save()
+
+  return res.status(200).json({ success: true, data: user, message: 'Your subscription has been cancelled' })
 })

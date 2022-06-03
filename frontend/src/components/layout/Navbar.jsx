@@ -19,7 +19,7 @@ function Navbar() {
   }
 
   return (
-    <div className='navbar bg-primary'>
+    <div className='navbar bg-primary z-[100]'>
       <div className='navbar-start'>
         <div className='dropdown'>
           <label className='btn btn-ghost btn-circle lg:hidden text-base-100' tabIndex={0}>

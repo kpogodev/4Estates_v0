@@ -33,7 +33,7 @@ function CardSwiper({ images }) {
     <>
       {images.length > 0 && <CardSwiperPagination pagination={pagination} />}
       <Swiper
-        className='w-full aspect-video md:mb-[76.5px] md:w-[270px] md:min-w-[270px] 2xl:w-[530px] 2xl:min-w-[530px] lg:max-h-[200px] bg-black'
+        className='w-full h-[250px] md:h-[270px] md:mb-[76.5px] md:w-[270px] md:min-w-[270px] 2xl:w-[530px] 2xl:min-w-[530px] lg:max-h-[200px] bg-black'
         {...swiperConfig}
         style={{
           '--swiper-navigation-size': '24px',

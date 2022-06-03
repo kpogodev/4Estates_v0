@@ -31,7 +31,7 @@ function Dashboard() {
 
   return (
     <motion.div className='container flex flex-col mx-auto py-5 md:py-12 px-3' variants={pageTransition} initial='hidden' animate='visible' exit='exit'>
-      <div className='flex flex-col gap-5 xl:grid xl:grid-cols-3 lg:gap-10'>
+      <div className='flex flex-col gap-5 xl:grid xl:grid-cols-3 xl:items-start lg:gap-10'>
         <ProfilePanel />
         <div className='flex flex-col gap-5 lg:gap-10 col-span-2'>
           <PropertiesPanel />

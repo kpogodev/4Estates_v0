@@ -87,9 +87,9 @@ export const deletePremium = asyncHandler(async (req, res, next) => {
 
   user.subscription = {
     ...user.subscription,
+    plan_id: undefined,
     paid_until: undefined,
     status: 'CANCELLED',
-    plan_id: undefined,
   }
   await user.save()
 

@@ -2,7 +2,7 @@ import { useEffect, useId } from 'react'
 import { motion } from 'framer-motion'
 import { useDispatch } from 'react-redux'
 import { useSearchParams } from 'react-router-dom'
-import { getRents } from 'redux/rents/rentsSlice'
+import { getRents, resetRents } from 'redux/rents/rentsSlice'
 import RentsList from 'components/listings/lists/RentsList'
 import ListingMap from 'components/listings/map/ListingMap'
 import SearchBox from 'components/listings/search_box/SearchBox'
@@ -13,24 +13,27 @@ function Rents() {
   const dispatch = useDispatch()
   const pageKey = useId()
 
+  const location_present = searchParams.get('lng') && searchParams.get('lat') && searchParams.get('radius')
+
   useEffect(() => {
-    if (searchParams.get('lng') && searchParams.get('lat') && searchParams.get('radius')) {
-      dispatch(getRents(`${searchParams.toString()}&limit=50`))
+    if (location_present) {
+      dispatch(getRents(searchParams.toString()))
     }
-  }, [dispatch, searchParams])
+
+    return () => {
+      dispatch(resetRents())
+    }
+  }, [dispatch, location_present, searchParams])
 
   return (
-    <motion.div
-      key={pageKey}
-      initial='hidden'
-      animate='visible'
-      exit='exit'
-      variants={pageTransition}
-      className='flex flex-col lg:grid lg:grid-cols-3 gap-x-5 lg:px-3'
-    >
-      <ListingMap />
+    <motion.div key={pageKey} initial='hidden' animate='visible' exit='exit' variants={pageTransition} className=''>
       <SearchBox />
-      <RentsList />
+      <div className='container flex flex-col mx-auto py-5 md:py-12 px-3'>
+        <div className='flex flex-col lg:grid lg:grid-cols-3 gap-x-5 lg:px-3'>
+          <ListingMap />
+          <RentsList />
+        </div>
+      </div>
     </motion.div>
   )
 }

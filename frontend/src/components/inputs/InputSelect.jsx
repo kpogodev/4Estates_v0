@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types'
 import {nanoid} from '@reduxjs/toolkit'
 function InputSelect({ className, name, value, options, handleChange, disabled, readOnly, placeholderOption }) {
+
   const formattedOption = (option) => {
     if (typeof option === 'string') {
       return option.includes('-')

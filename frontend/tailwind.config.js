@@ -20,7 +20,16 @@ module.exports = {
       },
     },
   },
-  plugins: [require('daisyui'), require('@tailwindcss/typography'), require('@tailwindcss/line-clamp'), backfaceVisibility],
+  plugins: [
+    require('daisyui'),
+    require('@tailwindcss/typography'),
+    require('@tailwindcss/line-clamp'),
+    require('@tailwindcss/aspect-ratio'),
+    backfaceVisibility,
+  ],
+  corePlugins: {
+    aspectRatio: false,
+  },
   daisyui: {
     themes: [
       {

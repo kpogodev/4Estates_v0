@@ -144,7 +144,7 @@ function AddPropertyForm() {
   if (!googleServicesLoaded) return <Loading />
 
   return (
-    <form className='max-w-screen-lg mx-auto' onSubmit={handleSubmit} noValidate>
+    <form className='w-full max-w-screen-lg mx-auto' onSubmit={handleSubmit} noValidate>
       <div className='grid md:grid-cols-2 lg:p-8 pt-0 gap-x-10 gap-y-4'>
         {/* col-1 */}
         <div className='flex flex-col gap-y-4'>

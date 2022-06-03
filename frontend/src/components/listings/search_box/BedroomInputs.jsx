@@ -54,11 +54,11 @@ function BedroomInputs() {
   }, [searchParams])
 
   return (
-    <div className='flex gap-4 max-w-[296px] w-full'>
-      <div className='form-control max-w-[140px] w-full'>
-        <label className='label py-0'>Min Bedrooms:</label>
+    <div className='flex gap-2 flex-grow-0'>
+      <div className='form-control w-full'>
+        <label className='label py-0 text-sm'>Min Bedrooms:</label>
         <InputSelect
-          className='text-black'
+          className='text-black select-sm min-w-[100px]'
           name='min_bedrooms'
           value={minBedrooms}
           handleChange={handleMinBedroomsChange}
@@ -66,10 +66,10 @@ function BedroomInputs() {
           placeholderOption='No min'
         />
       </div>
-      <div className='form-control max-w-[140px] w-full'>
-        <label className='label py-0'>Max Bedrooms:</label>
+      <div className='form-control w-full'>
+        <label className='label py-0 text-sm'>Max Bedrooms:</label>
         <InputSelect
-          className='text-black'
+          className='text-black select-sm min-w-[100px]'
           name='max_bedrooms'
           value={maxBedrooms}
           handleChange={handleMaxBedroomsChange}

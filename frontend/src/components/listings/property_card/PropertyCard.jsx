@@ -35,6 +35,7 @@ function PropertyCard({ data, type }) {
       initial='hidden'
       animate='show'
       exit='hidden'
+      data-offer-id={data._id}
     >
       <CardSwiper images={data.property.images} />
       <CardHeader type={type} price={data.price} is_premium={data.publisher.is_premium.active} />

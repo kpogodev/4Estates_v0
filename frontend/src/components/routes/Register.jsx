@@ -29,7 +29,14 @@ function Register() {
     }
   }, [isError, message, isSuccess, dispatch])
   return (
-    <motion.div key={pageKey} className='w-full px-3' variants={pageTransition} initial='hidden' animate='visible' exit='exit'>
+    <motion.div
+      key={pageKey}
+      className='container flex flex-col mx-auto py-5 md:py-12 px-3'
+      variants={pageTransition}
+      initial='hidden'
+      animate='visible'
+      exit='exit'
+    >
       <div className='w-full max-w-md mx-auto'>
         {!isAuth && <RegisterFrom />}
         {isAuth && !user?.is_premium.active && <Subscribe allow_skip={true} />}

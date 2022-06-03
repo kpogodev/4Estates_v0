@@ -74,6 +74,10 @@ export const rentsSlice = createSlice({
     resetRental: (state) => {
       state.rental = null
     },
+    resetRents: (state) => {
+      state.rents = []
+      state.rents_count = 0
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -151,10 +155,13 @@ export const selectRentsByPremiumAndDate = (state) => {
   return rentsByDate.slice().sort((a, b) => b.publisher.is_premium.active - a.publisher.is_premium.active)
 }
 
+//Memoized Selectors
+export const selectRentByMarker = createSelector([selectAllRents, (state, id) => id], (rents, id) => rents.find((rent) => rent._id === id))
+
 export const selectRentsSorted = createSelector([selectAllRents], (rents) => {
   const rentsByDate = rents.slice().sort((a, b) => b.createdAt.localeCompare(a.createdAt))
   return rentsByDate.slice().sort((a, b) => b.publisher.is_premium.active - a.publisher.is_premium.active)
 })
 
-export const { reset, resetError, resetSuccess, resetRental } = rentsSlice.actions
+export const { reset, resetError, resetSuccess, resetRental, resetRents } = rentsSlice.actions
 export default rentsSlice.reducer

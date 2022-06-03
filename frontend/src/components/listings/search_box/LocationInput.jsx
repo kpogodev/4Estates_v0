@@ -41,15 +41,15 @@ function LocationInput() {
   }
 
   // If connecting to Google API failed
-  if (!ready) return <SkeletonItem className='w-full h-[50px] shadow-lg bg-[#ccc] animate-pulse' />
+  if (!ready) return <SkeletonItem className='w-[200px] h-[50px] shadow-lg bg-[#ccc] animate-pulse' />
 
   return (
-    <div className='form-control flex-grow'>
-      <label className='label py-0'>Location:</label>
+    <div className='form-control sm:w-[250px]'>
+      <label className='label py-0 text-sm'>Location:</label>
       <Combobox className='relative' onSelect={onAddressSelect}>
         <ComboboxInput
           name='address'
-          className='input input-bordered w-full text-gray-900 font-semibold'
+          className='input input-sm input-bordered w-full text-gray-900 font-semibold'
           value={value}
           onChange={(e) => setValue(e.target.value)}
           placeholder='e.g. London, UK...'

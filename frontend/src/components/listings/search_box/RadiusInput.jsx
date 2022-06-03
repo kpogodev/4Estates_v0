@@ -26,9 +26,9 @@ function RadiusInput() {
   }, [searchParams, coordinates_present, setSearchParams])
 
   return (
-    <div className='form-control max-w-[140px] w-full'>
-      <label className='label py-0'>Radius:</label>
-      <select name='radius' className={`select select-bordered text-black`} value={radius} onChange={onRadiusSelect} disabled={!coordinates_present}>
+    <div className='form-control'>
+      <label className='label py-0 text-sm'>Radius:</label>
+      <select name='radius' className={`select select-bordered select-sm text-black`} value={radius} onChange={onRadiusSelect} disabled={!coordinates_present}>
         {radiusOptions.map((option) => (
           <option key={nanoid()} value={option}>
             {`${option} ${option <= 1 ? 'mile' : 'miles'}`}

@@ -1,20 +1,23 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
 import { useSearchParams } from 'react-router-dom'
-import { GoogleMap, Marker, MarkerClusterer, Circle } from '@react-google-maps/api'
+import { GoogleMap, Marker, MarkerClusterer, Circle, InfoWindow } from '@react-google-maps/api'
 import { useSelector } from 'react-redux'
-import { selectRentsMarkers } from 'redux/rents/rentsSlice'
+import { selectRentsMarkers, selectRentByMarker } from 'redux/rents/rentsSlice'
 import SkeletonItem from 'components/shared/SkeletonItem'
 import pin_icon from 'assets/pin-icon.svg'
+import InfoWindowContent from './InfoWindowContent'
 
 const defualtCenter = { lat: 52.61234622571823, lng: -1.424856930199212 }
 const defaultZoom = 5.5
 
 function ListingMap() {
-  const [zoneCenter, setZoneCenter] = useState()
-  const [zoneRadius, setZoneRadius] = useState()
+  const [zoneCenter, setZoneCenter] = useState(null)
+  const [zoneRadius, setZoneRadius] = useState(null)
+  const [selectedMarker, setSelectedMarker] = useState(null)
 
   const { googleServicesLoaded } = useSelector((state) => state.app)
   const markers = useSelector(selectRentsMarkers)
+  const rentOfferByMarker = useSelector((state) => selectRentByMarker(state, selectedMarker?.id))
 
   const [searchParams] = useSearchParams()
   const lat = +searchParams.get('lat')
@@ -51,6 +54,11 @@ function ListingMap() {
     setZoneRadius(radius * 1609)
   }, [])
 
+  // Set Selected Marker
+  const handleSetSelectedMarker = useCallback((marker) => {
+    setSelectedMarker(marker)
+  }, [])
+
   useEffect(() => {
     if (lat && lng && radius) {
       handleSetZone({ lat, lng }, radius)
@@ -67,9 +75,16 @@ function ListingMap() {
   }
 
   return (
-    <div className='col-span-2'>
+    <div className='col-span-3 aspect-w-4 aspect-h-3 md:aspect-w-6 md:aspect-h-2'>
       <GoogleMap
-        mapContainerStyle={mapContainerStyle}
+        className='shadow-lg'
+        mapContainerStyle={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          width: '100%',
+          height: '100%',
+        }}
         zoom={defaultZoom}
         onLoad={onLoad}
         center={defualtCenter}
@@ -81,11 +96,15 @@ function ListingMap() {
         }}
       >
         <>
-          <MarkerClusterer imagePath='https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.png'>
+          <MarkerClusterer
+            imagePath='https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.png'
+            defaultZoomOnClick
+            gridSize={30}
+          >
             {(clusterer) =>
               markers.map((marker) => (
                 <Marker
-                  key={marker.offer_id}
+                  key={marker.id}
                   position={{ lat: marker?.coordinates[0], lng: marker?.coordinates[1] }}
                   clusterer={clusterer}
                   icon={{
@@ -95,7 +114,14 @@ function ListingMap() {
                       height: 50,
                     },
                   }}
-                />
+                  onClick={() => handleSetSelectedMarker(marker)}
+                >
+                  {selectedMarker?.id === marker.id ? (
+                    <InfoWindow>
+                      <InfoWindowContent offer={rentOfferByMarker} />
+                    </InfoWindow>
+                  ) : null}
+                </Marker>
               ))
             }
           </MarkerClusterer>
@@ -123,12 +149,6 @@ function ListingMap() {
       </GoogleMap>
     </div>
   )
-}
-
-const mapContainerStyle = {
-  width: '100%',
-  height: '100%',
-  minHeight: '350px',
 }
 
 export default ListingMap

@@ -2,7 +2,7 @@ import PremiumMembership from 'components/account/premium/PremiumMembership'
 
 function Account() {
   return (
-    <div className='w-full px-3'>
+    <div className='container flex flex-col mx-auto py-5 md:py-12 px-3'>
       <PremiumMembership />
     </div>
   )

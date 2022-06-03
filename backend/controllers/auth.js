@@ -78,9 +78,9 @@ export const loginUser = asyncHandler(async (req, res, next) => {
         }
         await user.save()
       }
-      user.subscription = {
-        status: subscription.status,
-      }
+
+      user.subscription.status = subscription.status
+
       await user.save()
       break
 

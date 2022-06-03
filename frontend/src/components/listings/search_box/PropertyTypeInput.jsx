@@ -23,10 +23,10 @@ function PropertyTypeInput() {
   }, [searchParams])
 
   return (
-    <div className='form-control max-w-[140px] w-full'>
-      <label className='label py-0'>Property Type:</label>
+    <div className='relative form-control'>
+      <label className='label py-0 text-sm'>Property Type:</label>
       <InputSelect
-        className='text-black'
+        className='text-black select-sm'
         name='property_type'
         value={propertyType}
         handleChange={handlePropertyTypeChange}

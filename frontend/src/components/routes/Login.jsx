@@ -5,7 +5,7 @@ import LoginForm from 'components/auth/LoginForm'
 
 function Login() {
   return (
-    <motion.div className='w-full mx-auto px-3' variants={pageTransition} initial='hidden' animate='visible' exit='exit'>
+    <motion.div className='container flex flex-col mx-auto py-5 md:py-12 px-3' variants={pageTransition} initial='hidden' animate='visible' exit='exit'>
       <div className='w-full max-w-md mx-auto '>
         <h1 className='text-6xl font-bold'>Sign In</h1>
         <p className='text-xl mt-2'>

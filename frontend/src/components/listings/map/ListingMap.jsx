@@ -26,6 +26,7 @@ function ListingMap() {
 
   const mapRef = useRef(null)
   const circleRef = useRef(null)
+  const infoWindowRef = useRef(null)
 
   // Google Maps Loaded
   const onLoad = useCallback((map) => {
@@ -38,6 +39,12 @@ function ListingMap() {
     mapRef?.current?.fitBounds(circle?.getBounds())
     mapRef?.current?.panToBounds(circle?.getBounds())
   }, [])
+
+  // InfoWindow Loaded
+  const onInfoWindowLoad = useCallback((infoWindow) => {
+    infoWindowRef.current = infoWindow
+    console.count('InfoWindow Loaded')
+  })
 
   // Google Fit Bounds
   const onCircleChange = useCallback(() => {
@@ -115,16 +122,20 @@ function ListingMap() {
                     },
                   }}
                   onClick={() => handleSetSelectedMarker(marker)}
-                >
-                  {selectedMarker?.id === marker.id ? (
-                    <InfoWindow>
-                      <InfoWindowContent offer={rentOfferByMarker} />
-                    </InfoWindow>
-                  ) : null}
-                </Marker>
+                />
               ))
             }
           </MarkerClusterer>
+          {selectedMarker && (
+            <InfoWindow
+              position={{ lat: +selectedMarker.coordinates[0], lng: +selectedMarker.coordinates[1] }}
+              onCloseClick={() => setSelectedMarker(null)}
+              onLoad={onInfoWindowLoad}
+              onUnmount={() => (infoWindowRef.current = null)}
+            >
+              <InfoWindowContent offer={rentOfferByMarker} infoWindow={infoWindowRef} setSelectedMarker={setSelectedMarker} />
+            </InfoWindow>
+          )}
           {zoneCenter && zoneRadius && (
             <Circle
               center={zoneCenter}

@@ -2,10 +2,11 @@ import { useState, useEffect, useRef, useCallback } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { GoogleMap, Marker, MarkerClusterer, Circle, InfoWindow } from '@react-google-maps/api'
 import { useSelector } from 'react-redux'
-import { selectRentsMarkers, selectRentByMarker } from 'redux/rents/rentsSlice'
+import { selectRentsMarkers, selectRentByMarker, selectRentsIsLoading } from 'redux/rents/rentsSlice'
 import SkeletonItem from 'components/shared/SkeletonItem'
 import pin_icon from 'assets/pin-icon.svg'
 import InfoWindowContent from './InfoWindowContent'
+import ListingMapPlaceholder from './ListingMapPlaceholder'
 
 const defualtCenter = { lat: 52.61234622571823, lng: -1.424856930199212 }
 const defaultZoom = 5.5
@@ -18,6 +19,7 @@ function ListingMap() {
   const { googleServicesLoaded } = useSelector((state) => state.app)
   const markers = useSelector(selectRentsMarkers)
   const rentOfferByMarker = useSelector((state) => selectRentByMarker(state, selectedMarker?.id))
+  const loadingMarkers = useSelector(selectRentsIsLoading)
 
   const [searchParams] = useSearchParams()
   const lat = +searchParams.get('lat')
@@ -43,8 +45,7 @@ function ListingMap() {
   // InfoWindow Loaded
   const onInfoWindowLoad = useCallback((infoWindow) => {
     infoWindowRef.current = infoWindow
-    console.count('InfoWindow Loaded')
-  })
+  }, [])
 
   // Google Fit Bounds
   const onCircleChange = useCallback(() => {
@@ -66,6 +67,11 @@ function ListingMap() {
     setSelectedMarker(marker)
   }, [])
 
+  // Clear Selected Marker
+  const handleClearSelectedMarker = useCallback(() => {
+    setSelectedMarker(null)
+  }, [])
+
   useEffect(() => {
     if (lat && lng && radius) {
       handleSetZone({ lat, lng }, radius)
@@ -77,8 +83,8 @@ function ListingMap() {
     }
   }, [handleSetZone, lat, lng, radius])
 
-  if (!googleServicesLoaded) {
-    return <SkeletonItem className='w-full h-[400px] bg-[#ccc] animate-pulse shadow-lg mb-10' />
+  if (!googleServicesLoaded || (!markers.length && !loadingMarkers)) {
+    return <ListingMapPlaceholder />
   }
 
   return (
@@ -122,18 +128,24 @@ function ListingMap() {
                     },
                   }}
                   onClick={() => handleSetSelectedMarker(marker)}
-                />
+                ></Marker>
               ))
             }
           </MarkerClusterer>
-          {selectedMarker && (
+          {selectedMarker && rentOfferByMarker && (
             <InfoWindow
               position={{ lat: +selectedMarker.coordinates[0], lng: +selectedMarker.coordinates[1] }}
-              onCloseClick={() => setSelectedMarker(null)}
+              options={{
+                pixelOffset: {
+                  width: 0,
+                  height: -30,
+                },
+              }}
+              onCloseClick={handleClearSelectedMarker}
               onLoad={onInfoWindowLoad}
               onUnmount={() => (infoWindowRef.current = null)}
             >
-              <InfoWindowContent offer={rentOfferByMarker} infoWindow={infoWindowRef} setSelectedMarker={setSelectedMarker} />
+              <InfoWindowContent offer={rentOfferByMarker} infoWindow={infoWindowRef} clearSelectedMarker={handleClearSelectedMarker} />
             </InfoWindow>
           )}
           {zoneCenter && zoneRadius && (

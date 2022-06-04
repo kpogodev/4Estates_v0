@@ -87,7 +87,7 @@ function ManageProperty() {
         {matches ? (
           <>
             <div className='flex flex-col col-span-8 gap-10'>
-              <PropertySlider className='max-h-[600px] bg-black shadow-lg aspect-[9.9/6]' />
+              <PropertySlider className='max-h-[600px] bg-black shadow-lg aspect-w-10 aspect-h-6' />
               <PropertySliderUpload className='row-span-1' />
               <PropertyLocation />
               <PropertyDelete />
@@ -104,7 +104,7 @@ function ManageProperty() {
               <PropertyDetails className='row-span-2' />
             </div>
             <div className='flex flex-col col-span-8 gap-10'>
-              <PropertySlider className='max-h-[600px] bg-black shadow-lg aspect-[9.9/6]' />
+              <PropertySlider className='max-h-[600px] bg-black shadow-lg aspect-w-10 aspect-h-6' />
               <PropertySliderUpload className='row-span-1' />
               <PropertyLocation />
               <PropertyDelete />

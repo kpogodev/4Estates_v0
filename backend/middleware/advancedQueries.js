@@ -85,16 +85,16 @@ export const advancedQueries = (model, populate) => async (req, res, next) => {
   const limit = +req.query.limit || 25
   const startIndex = (page - 1) * limit
   const endIndex = page * limit
-  const total = await model.estimatedDocumentCount()
+  const total_results = await query.clone().countDocuments()
 
   query = query.skip(startIndex).limit(limit)
 
   //Pagination result
   const pagination = {
-    total,
+    total_results,
   }
 
-  if (endIndex < total) {
+  if (endIndex < total_results) {
     pagination.next = {
       page: page + 1,
       limit,

@@ -8,7 +8,7 @@ const CardHeader = ({ type, price, is_premium }) => {
 
   return (
     <div
-      className={`relative md:absolute  w-full p-3 flex flex-col items-start md:left-0 md:bottom-0 md:border-r md:max-w-[270px] 2xl:max-w-[530px] ${variableStyleBackground}`}
+      className={`relative md:absolute w-full p-3 flex flex-col items-start md:left-0 md:bottom-0 md:border-r md:max-w-[270px] 2xl:max-w-[530px] ${variableStyleBackground}`}
     >
       {type === 'rent' ? (
         <>

@@ -156,7 +156,7 @@ export const selectRentsByPremiumAndDate = (state) => {
 }
 
 //Memoized Selectors
-export const selectRentByMarker = createSelector([selectAllRents, (state, id) => id], (rents, id) => rents.find((rent) => rent._id === id))
+export const selectRentByMarker = createSelector([selectAllRents, (_, id) => id], (rents, id) => rents.find((rent) => rent._id === id))
 
 export const selectRentsSorted = createSelector([selectAllRents], (rents) => {
   const rentsByDate = rents.slice().sort((a, b) => b.createdAt.localeCompare(a.createdAt))

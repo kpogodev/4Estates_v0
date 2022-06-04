@@ -78,7 +78,7 @@ function PropertySlider({ className }) {
 
   return (
     <div
-      className={`relative ${className} overflow-hidden`}
+      className={`${className} relative overflow-hidden`}
       tabIndex={0}
       onMouseEnter={showThumbs}
       onMouseLeave={hideThumbs}
@@ -90,7 +90,7 @@ function PropertySlider({ className }) {
           '--swiper-navigation-color': '#fff',
           '--swiper-pagination-color': '#fff',
         }}
-        className='w-full h-full col-span-8'
+        className='col-span-8 !absolute'
         {...swiperConfig}
       >
         {property?.images.map((img, index) => (
@@ -122,7 +122,7 @@ function PropertySlider({ className }) {
         ))}
       </Swiper>
       <div
-        className={`w-full min-h-[60px] p-5 absolute left-0 bottom-0 z-10 bg-gradient-to-t from-[rgba(0,0,0,0.5)] to-transparent transition-all ${
+        className={`w-full min-h-[60px] h-fit p-5 absolute left-0 bottom-0 top-auto right-auto z-10 bg-gradient-to-t from-[rgba(0,0,0,0.5)] to-transparent transition-all ${
           show ? 'translate-y-0 opacity-1' : 'translate-y-[100%] opacity-0'
         }`}
       >

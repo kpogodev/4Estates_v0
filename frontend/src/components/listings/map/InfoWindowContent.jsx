@@ -1,12 +1,12 @@
 import { toLocalCurrency } from 'utils/toLocalCurrency'
 
-function InfoWindowContent({ offer: { property, price, _id }, infoWindow, setSelectedMarker }) {
+function InfoWindowContent({ offer: { property, price, _id }, infoWindow, clearSelectedMarker }) {
   const handleScrollTo = () => {
     const element = document.querySelector(`[data-offer-id="${_id}"]`) ?? null
     if (!element) return
     element.scrollIntoView({ behavior: 'smooth', block: 'center' })
     infoWindow.current.close()
-    setSelectedMarker(null)
+    clearSelectedMarker()
   }
 
   return (

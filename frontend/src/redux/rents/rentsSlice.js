@@ -4,6 +4,7 @@ import rentsService from './rentsServices'
 const initialState = {
   rents: [],
   rents_count: 0,
+  rents_total: 0,
   rental: null,
   isLoading: false,
   isSuccess: false,
@@ -76,6 +77,7 @@ export const rentsSlice = createSlice({
     },
     resetRents: (state) => {
       state.rents = []
+      state.rents_total = 0
       state.rents_count = 0
     },
   },
@@ -113,6 +115,7 @@ export const rentsSlice = createSlice({
       .addCase(getRents.fulfilled, (state, action) => {
         state.rents = action.payload.data
         state.rents_count = action.payload.count
+        state.rents_total = action.payload?.pagination?.total_results
         state.isLoading = false
         state.isSuccess = action.payload.success
       })
@@ -140,6 +143,7 @@ export const rentsSlice = createSlice({
 // Selectors
 export const selectAllRents = (state) => state.rents.rents
 export const selectRentsCount = (state) => state.rents.rents_count
+export const selectRentsTotal = (state) => state.rents.rents_total
 export const selectRentsIsError = (state) => state.rents.isError
 export const selectRentsIsLoading = (state) => state.rents.isLoading
 export const selectRentsIsSuccess = (state) => state.rents.isSuccess

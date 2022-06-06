@@ -9,13 +9,14 @@ function BedroomInputs() {
   const [maxBedrooms, setMaxBedrooms] = useState(0)
 
   const [searchParams, setSearchParams] = useSearchParams()
+  const property_type = searchParams.get('property_type') ?? null
 
   const minOptions = useMemo(() => {
-    return maxBedrooms > 0 ? range.filter((num) => num < maxBedrooms) : range
+    return maxBedrooms > 0 ? range.filter((num) => num <= maxBedrooms) : range
   }, [maxBedrooms])
 
   const maxOptions = useMemo(() => {
-    return range.filter((num) => num > minBedrooms)
+    return range.filter((num) => num >= minBedrooms)
   }, [minBedrooms])
 
   const handleMinBedroomsChange = useCallback(
@@ -64,6 +65,7 @@ function BedroomInputs() {
           handleChange={handleMinBedroomsChange}
           options={minOptions}
           placeholderOption='No min'
+          disabled={property_type === 'commercial' || property_type === 'land'}
         />
       </div>
       <div className='form-control w-full'>
@@ -75,6 +77,7 @@ function BedroomInputs() {
           handleChange={handleMaxBedroomsChange}
           options={maxOptions}
           placeholderOption='No max'
+          disabled={property_type === 'commercial' || property_type === 'land'}
         />
       </div>
     </div>

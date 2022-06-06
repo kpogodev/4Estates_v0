@@ -15,6 +15,13 @@ function PropertyTypeInput() {
       return setSearchParams(current)
     }
 
+    if (e.target.value === 'commercial' || e.target.value === 'land') {
+      let current = Object.fromEntries(searchParams.entries())
+      current['property_bedrooms[lte]'] && delete current['property_bedrooms[lte]']
+      current['property_bedrooms[gte]'] && delete current['property_bedrooms[gte]']
+      return setSearchParams({ ...current, property_type: e.target.value })
+    }
+
     setSearchParams({ ...Object.fromEntries(searchParams.entries()), property_type: e.target.value })
   }
 

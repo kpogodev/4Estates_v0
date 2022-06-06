@@ -82,7 +82,7 @@ export const advancedQueries = (model, populate) => async (req, res, next) => {
 
   // Pagination
   const page = +req.query.page || 1
-  const limit = +req.query.limit || 25
+  const limit = +req.query.limit || 999999
   const startIndex = (page - 1) * limit
   const endIndex = page * limit
   const total_results = await query.clone().countDocuments()

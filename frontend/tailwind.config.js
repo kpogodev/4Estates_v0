@@ -17,6 +17,7 @@ module.exports = {
     extend: {
       boxShadow: {
         custom: 'rgba(100, 100, 111, 0.2) 0px 7px 29px 0px',
+        'custom-color': 'rgba(24, 90, 219, 0.3) 0px 5px 29px 0px',
       },
     },
   },

@@ -5,6 +5,7 @@ function InfoWindowContent({ offer: { property, price, _id }, infoWindow, clearS
     const element = document.querySelector(`[data-offer-id="${_id}"]`) ?? null
     if (!element) return
     element.scrollIntoView({ behavior: 'smooth', block: 'center' })
+    element.focus()
     infoWindow.current.close()
     clearSelectedMarker()
   }

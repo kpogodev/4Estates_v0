@@ -49,7 +49,7 @@ function LocationInput() {
       <Combobox className='relative' onSelect={onAddressSelect}>
         <ComboboxInput
           name='address'
-          className='input input-sm input-bordered w-full text-gray-900 font-semibold'
+          className='input input-sm input-bordered w-full text-gray-900 font-semibold pr-[30px]'
           value={value}
           onChange={(e) => setValue(e.target.value)}
           placeholder='e.g. London, UK...'

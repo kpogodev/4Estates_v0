@@ -2,7 +2,6 @@ import ErrorResponse from '../utils/errorResponse.js'
 import asyncHandler from 'express-async-handler'
 import RentalModel from '../models/rentalsModel.js'
 import SaleModel from '../models/salesModel.js'
-import ProfileModel from '../models/profilesModel.js'
 
 // @desc      Get all rentals
 // @route     GET /api/v1/rentals
@@ -46,10 +45,6 @@ export const createRental = asyncHandler(async (req, res, next) => {
 
   const rental = await RentalModel.create(req.body)
 
-  const profile = await ProfileModel.findOne({ user: req.user.id })
-  profile.rents.push(rental._id)
-  await profile.save({ validateBeforeSave: false })
-
   res.status(201).json({ success: true, data: rental })
 })
 
@@ -85,10 +80,6 @@ export const deleteRental = asyncHandler(async (req, res, next) => {
   if (rental.publisher.toString() !== req.user.id) {
     return next(new ErrorResponse(`User with id ${req.user.id} is not authorized to delete this property`, 401))
   }
-
-  let profile = await ProfileModel.findOne({ user: req.user.id })
-  profile.rents = profile.rents.filter((rent) => rent.toString() !== req.params.id)
-  await profile.save({ validateBeforeSave: false })
 
   rental.remove()
   res.status(200).json({ success: true, data: {} })

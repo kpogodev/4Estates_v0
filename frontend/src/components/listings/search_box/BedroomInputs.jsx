@@ -10,6 +10,7 @@ function BedroomInputs() {
 
   const [searchParams, setSearchParams] = useSearchParams()
   const property_type = searchParams.get('property_type') ?? null
+  const location_present = searchParams.get('lng') && searchParams.get('lat') && searchParams.get('radius') ? true : false
 
   const minOptions = useMemo(() => {
     return maxBedrooms > 0 ? range.filter((num) => num <= maxBedrooms) : range
@@ -50,9 +51,11 @@ function BedroomInputs() {
   )
 
   useEffect(() => {
-    searchParams.get('property_bedrooms[gte]') && setMinBedrooms(+searchParams.get('property_bedrooms[gte]'))
-    searchParams.get('property_bedrooms[lte]') && setMaxBedrooms(+searchParams.get('property_bedrooms[lte]'))
-  }, [searchParams])
+    if (location_present) {
+      searchParams.get('property_bedrooms[gte]') && setMinBedrooms(+searchParams.get('property_bedrooms[gte]'))
+      searchParams.get('property_bedrooms[lte]') && setMaxBedrooms(+searchParams.get('property_bedrooms[lte]'))
+    }
+  }, [searchParams, location_present, setMinBedrooms, setMaxBedrooms])
 
   return (
     <div className='flex gap-2 flex-grow-0'>
@@ -65,7 +68,7 @@ function BedroomInputs() {
           handleChange={handleMinBedroomsChange}
           options={minOptions}
           placeholderOption='No min'
-          disabled={property_type === 'commercial' || property_type === 'land'}
+          disabled={property_type === 'commercial' || property_type === 'land' || !location_present}
         />
       </div>
       <div className='form-control w-full'>
@@ -77,7 +80,7 @@ function BedroomInputs() {
           handleChange={handleMaxBedroomsChange}
           options={maxOptions}
           placeholderOption='No max'
-          disabled={property_type === 'commercial' || property_type === 'land'}
+          disabled={property_type === 'commercial' || property_type === 'land' || !location_present}
         />
       </div>
     </div>

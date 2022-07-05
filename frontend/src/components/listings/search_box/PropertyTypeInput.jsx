@@ -6,6 +6,8 @@ function PropertyTypeInput() {
   const [propertyType, setPropertyType] = useState('default')
   const [searchParams, setSearchParams] = useSearchParams()
 
+  const location_present = searchParams.get('lng') && searchParams.get('lat') && searchParams.get('radius') ? true : false
+
   const handlePropertyTypeChange = (e) => {
     setPropertyType(e.target.value)
 
@@ -26,8 +28,10 @@ function PropertyTypeInput() {
   }
 
   useEffect(() => {
-    searchParams.get('property_type') && setPropertyType(searchParams.get('property_type'))
-  }, [searchParams])
+    if (location_present) {
+      searchParams.get('property_type') && setPropertyType(searchParams.get('property_type'))
+    }
+  }, [searchParams, location_present, setPropertyType])
 
   return (
     <div className='relative form-control'>
@@ -39,6 +43,7 @@ function PropertyTypeInput() {
         handleChange={handlePropertyTypeChange}
         options={['detached', 'semi-detached', 'terraced', 'flat', 'apartment', 'bungalow', 'land', 'commercial']}
         placeholderOption='All'
+        disabled={!location_present}
       />
     </div>
   )

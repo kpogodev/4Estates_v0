@@ -11,7 +11,7 @@ import {
   selectProfileIsSuccess,
 } from 'redux/profiles/profilesSlice'
 import { toast } from 'react-toastify'
-import SkeletonItem from 'components/shared/SkeletonItem'
+import SkeletonItem from 'components/common/SkeletonItem'
 import ProfileFormActions from './ProfileFormActions'
 import InputField from 'components/inputs/InputField'
 import useForm from 'hooks/useForm'

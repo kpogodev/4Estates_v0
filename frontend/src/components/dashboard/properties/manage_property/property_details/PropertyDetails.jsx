@@ -4,8 +4,8 @@ import useForm from 'hooks/useForm'
 import InputSelect from 'components/inputs/InputSelect'
 import InputTextarea from 'components/inputs/InputTextarea'
 import InputNumber from 'components/inputs/InputNumber'
-import EditableActions from 'components/shared/EditableActions'
-import NoneEditableActions from 'components/shared/NoneEditableActions'
+import EditableActions from 'components/common/EditableActions'
+import NoneEditableActions from 'components/common/NoneEditableActions'
 import { updateProperty, selectProperty } from 'redux/properties/propertiesSlice'
 
 function PropertyDetails({ className }) {

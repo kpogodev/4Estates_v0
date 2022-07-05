@@ -2,9 +2,11 @@ import { useState, useEffect } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { nanoid } from '@reduxjs/toolkit'
 import RelatedBedroomsLink from './RelatedBedroomsLink'
+import RelatedPropertyTypeLink from './RelatedPropertyTypeLink'
 
 function RelatedSearch() {
   const [relatedBedrooms, setRelatedBedrooms] = useState([])
+  const [relatedPropertyTypes, setRelatedPropertyTypes] = useState([])
 
   const [searchParams] = useSearchParams()
   const location_present = searchParams.get('lng') && searchParams.get('lat') && searchParams.get('radius') ? true : false
@@ -25,6 +27,39 @@ function RelatedSearch() {
     }
   }, [minBedrooms, location_present, property_type])
 
+  useEffect(() => {
+    if (location_present && property_type) {
+      switch (property_type) {
+        case 'detached':
+          setRelatedPropertyTypes(['semi-detached', 'terraced', 'bungalow'])
+          break
+        case 'semi-detached':
+          setRelatedPropertyTypes(['detached', 'terraced', 'bungalow'])
+          break
+        case 'terraced':
+          setRelatedPropertyTypes(['detached', 'semi-detached', 'bungalow'])
+          break
+        case 'bungalow':
+          setRelatedPropertyTypes(['detached', 'semi-detached', 'terraced'])
+          break
+        case 'flat':
+          setRelatedPropertyTypes(['apartment'])
+          break
+        case 'apartment':
+          setRelatedPropertyTypes(['flat'])
+          break
+        case 'commercial':
+          setRelatedPropertyTypes(['land'])
+          break
+        case 'land':
+          setRelatedPropertyTypes(['commercial'])
+          break
+        default:
+          break
+      }
+    }
+  }, [location_present, property_type])
+
   if (!location_present) return null
 
   return (
@@ -34,6 +69,11 @@ function RelatedSearch() {
         {relatedBedrooms.map((bedrooms) => (
           <li className='border-t py-2 first-of-type:border-t-0' key={nanoid()}>
             <RelatedBedroomsLink bedrooms={bedrooms} property_type={property_type} searchParams={searchParams} />
+          </li>
+        ))}
+        {relatedPropertyTypes.map((propertyType) => (
+          <li className='border-t py-2 first-of-type:border-t-0' key={nanoid()}>
+            <RelatedPropertyTypeLink property_type={propertyType} searchParams={searchParams} />
           </li>
         ))}
       </ul>

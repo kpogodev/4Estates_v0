@@ -6,7 +6,7 @@ import { MdAlternateEmail, MdPassword } from 'react-icons/md'
 import { loginUser, reset, selectIsAuth, selectIsError, selectIsLoading, selectMessage } from 'redux/auth/authSlice'
 import useForm from 'hooks/useForm'
 import InputField from 'components/inputs/InputField'
-import Spinner from 'components/shared/Spinner'
+import Spinner from 'components/common/Spinner'
 
 function LoginForm() {
   const navigate = useNavigate()

@@ -29,6 +29,26 @@ export const updateProfile = createAsyncThunk('profiles/update', async (payload,
   }
 })
 
+// Add Observed Rent
+export const addObservedRent = createAsyncThunk('profiles/add_observed_rent', async (payload, thunkAPI) => {
+  try {
+    return await profilesService.addObservedRent(payload)
+  } catch (error) {
+    const message = error?.response?.data?.message ?? error.toString()
+    return thunkAPI.rejectWithValue(message)
+  }
+})
+
+// Remove Observed Rent
+export const removeObservedRent = createAsyncThunk('profiles/remove_observed_rent', async (payload, thunkAPI) => {
+  try {
+    return await profilesService.removeObservedRent(payload)
+  } catch (error) {
+    const message = error?.response?.data?.message ?? error.toString()
+    return thunkAPI.rejectWithValue(message)
+  }
+})
+
 export const profilesSlice = createSlice({
   name: 'profiles',
   initialState,
@@ -77,6 +97,28 @@ export const profilesSlice = createSlice({
         state.isError = true
         state.message = action.payload
       })
+      .addCase(addObservedRent.pending, (state) => {
+        state.isLoading = true
+      })
+      .addCase(addObservedRent.fulfilled, (state, action) => {
+        state.profile = action.payload.data
+        state.isLoading = false
+      })
+      .addCase(addObservedRent.rejected, (state, action) => {
+        state.isLoading = false
+        state.message = action.payload
+      })
+      .addCase(removeObservedRent.pending, (state) => {
+        state.isLoading = true
+      })
+      .addCase(removeObservedRent.fulfilled, (state, action) => {
+        state.profile = action.payload.data
+        state.isLoading = false
+      })
+      .addCase(removeObservedRent.rejected, (state, action) => {
+        state.isLoading = false
+        state.message = action.payload
+      })
   },
 })
 
@@ -85,6 +127,8 @@ export const selectProfileIsLoading = (state) => state.profiles.isLoading
 export const selectProfileIsSuccess = (state) => state.profiles.isSuccess
 export const selectProfileIsError = (state) => state.profiles.isError
 export const selectProfileMessage = (state) => state.profiles.message
+export const selectProfileObservedRents = (state) => state.profiles.profile.observed.rents
+export const selectProfileObservedSales = (state) => state.profiles.profile.observed.sales
 
 export const { reset, resetError, resetSuccess } = profilesSlice.actions
 export default profilesSlice.reducer

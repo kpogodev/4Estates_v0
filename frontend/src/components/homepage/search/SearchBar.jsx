@@ -3,7 +3,7 @@ import { toast } from 'react-toastify'
 import { useNavigate, createSearchParams } from 'react-router-dom'
 import usePlacesAutocomplete, { getGeocode, getLatLng } from 'use-places-autocomplete'
 import { Combobox, ComboboxInput, ComboboxPopover, ComboboxList, ComboboxOption, ComboboxOptionText } from '@reach/combobox'
-import SkeletonItem from 'components/shared/SkeletonItem'
+import SkeletonItem from 'components/common/SkeletonItem'
 import '@reach/combobox/styles.css'
 import { nanoid } from '@reduxjs/toolkit'
 

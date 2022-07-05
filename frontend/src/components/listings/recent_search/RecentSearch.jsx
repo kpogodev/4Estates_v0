@@ -17,8 +17,8 @@ const RecentSearch = () => {
           if (prevState.includes(searchString)) {
             return [...prevState.sort((a, b) => (a === searchString ? -1 : 1))]
           }
-          if (prevState.length < 10) return [searchString, ...prevState]
-          else return [searchString, ...prevState.slice(0, 9)]
+          if (prevState.length < 5) return [searchString, ...prevState]
+          else return [searchString, ...prevState.slice(0, 4)]
         })
       }
     }

@@ -1,5 +1,5 @@
 import { useId } from 'react'
-import RichTextEditor from 'components/shared/RichTextEditor'
+import RichTextEditor from 'components/common/RichTextEditor'
 import { motion } from 'framer-motion'
 import { formContentChange } from 'utils/animationVariants'
 import document_icon from 'assets/document-icon.svg'

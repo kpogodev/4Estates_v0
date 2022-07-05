@@ -2,8 +2,8 @@ import moment from 'moment'
 import { toLocalCurrency } from 'utils/toLocalCurrency'
 import { useState, useCallback } from 'react'
 import { GrDocumentTxt } from 'react-icons/gr'
-import Modal from 'components/shared/Modal'
-import DisplayRichText from 'components/shared/DisplayRichText'
+import Modal from 'components/common/Modal'
+import DisplayRichText from 'components/common/DisplayRichText'
 
 function PropertyPublishedSale({ sale }) {
   const [modalOpen, setModalOpen] = useState(false)

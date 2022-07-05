@@ -2,11 +2,14 @@ import { useSearchParams } from 'react-router-dom'
 import usePlacesAutocomplete, { getGeocode, getLatLng } from 'use-places-autocomplete'
 import { Combobox, ComboboxInput, ComboboxPopover, ComboboxList, ComboboxOption, ComboboxOptionText } from '@reach/combobox'
 import { IoCloseCircleSharp } from 'react-icons/io5'
-import SkeletonItem from 'components/shared/SkeletonItem'
+import { useDispatch } from 'react-redux'
+import { resetRents } from 'redux/rents/rentsSlice'
+import SkeletonItem from 'components/common/SkeletonItem'
 import '@reach/combobox/styles.css'
 
 function LocationInput() {
   const [searchParams, setSearchParams] = useSearchParams()
+  const dispatch = useDispatch()
 
   // Places Auto Complete Hook
   const { ready, value, suggestions, setValue, clearSuggestions } = usePlacesAutocomplete({
@@ -34,10 +37,9 @@ function LocationInput() {
   }
 
   const resetLocation = () => {
-    let current = Object.fromEntries(searchParams.entries())
-    delete current.location && delete current.lat && delete current.lng && delete current.radius
-    setSearchParams(current)
+    setSearchParams('')
     setValue('', false)
+    dispatch(resetRents())
   }
 
   // If connecting to Google API failed

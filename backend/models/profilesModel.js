@@ -50,8 +50,6 @@ export const profilesSchema = mongoose.Schema(
         },
       ],
     },
-    sales: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Sale' }],
-    rents: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Rent' }],
   },
   { timestamps: true }
 )

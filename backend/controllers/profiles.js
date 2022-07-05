@@ -57,7 +57,7 @@ export const updateProfile = asyncHandler(async (req, res, next) => {
 
   const updatedProfile = await ProfileModel.findByIdAndUpdate(req.params.id, req.body, {
     new: true,
-    runValidators: true,
+    runValidators: false,
     timestamps: true,
   })
 
@@ -79,4 +79,42 @@ export const deleteProfile = asyncHandler(async (req, res, next) => {
 
   profile.remove()
   res.status(200).json({ success: true, data: {} })
+})
+
+// @desc      Add Observed Rental
+// @route     PATCH /api/v1/profiles/observedrentals/add
+// @access    Private
+export const addObservedRental = asyncHandler(async (req, res, next) => {
+  const profile = await ProfileModel.findOne({ user: req.user.id })
+
+  if (!profile) return next(new ErrorResponse(`Profile not found.`, 404))
+
+  //Verify if user making request matches user linked to a profile
+  if (profile.user.toString() !== req.user.id) {
+    return next(new ErrorResponse(`User with id ${req.user.id} is not authorized to add this rental to observed rentals`, 401))
+  }
+
+  profile.observed.rents.unshift(req.body.id)
+  await profile.save()
+
+  res.status(200).json({ success: true, data: profile })
+})
+
+// @desc      Remove Observed Rental
+// @route     PATCH /api/v1/profiles/observedrentals/remove
+// @access    Private
+export const removeObservedRental = asyncHandler(async (req, res, next) => {
+  let profile = await ProfileModel.findOne({ user: req.user.id })
+
+  if (!profile) return next(new ErrorResponse(`Profile not found.`, 404))
+
+  //Verify if user making request matches user linked to a profile
+  if (profile.user.toString() !== req.user.id) {
+    return next(new ErrorResponse(`User with id ${req.user.id} is not authorized to add this rental to observed rentals`, 401))
+  }
+
+  profile.observed.rents = profile.observed.rents.filter((rent) => rent.toString() !== req.body.id)
+  await profile.save()
+
+  res.status(200).json({ success: true, data: profile })
 })

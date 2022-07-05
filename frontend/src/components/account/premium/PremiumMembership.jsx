@@ -1,5 +1,5 @@
 import { useSelector } from 'react-redux'
-import Subscribe from '../../shared/Subscribe'
+import Subscribe from '../../common/Subscribe'
 import PremiumStatus from './PremiumStatus'
 import { selectUser } from 'redux/auth/authSlice'
 

@@ -6,7 +6,7 @@ import RadiusInput from './RadiusInput'
 import PropertyTypeInput from './PropertyTypeInput'
 import BedroomInput from './BedroomInputs'
 import PriceInputs from './PriceInputs'
-import Accordion from 'components/shared/Accordion'
+import Accordion from 'components/common/Accordion'
 
 function SearchBox() {
   const [accordionOpened, setAccordionOpened] = useState(false)

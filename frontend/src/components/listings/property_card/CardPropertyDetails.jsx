@@ -18,19 +18,35 @@ function CardPropertyDetails({ property, addedOn, addedBy }) {
                 .join(' ')}
         </span>
         <div className='w-[1px] h-5 bg-gray-400'></div>
-        <span className='flex items-center gap-2'>
-          <svg className='w-4 h-4 fill-current'>
-            <use href='#svg-bed'></use>
-          </svg>
-          {property.details.bedrooms}
-        </span>
-        <div className='w-[1px] h-5 bg-gray-400'></div>
-        <span className='flex items-center gap-2'>
-          <svg className='w-4 h-4 fill-current'>
-            <use href='#svg-shower'></use>
-          </svg>
-          {property.details.bathrooms}
-        </span>
+        {property.type !== 'commercial' && property.type !== 'land' ? (
+          <>
+            <span className='flex items-center gap-2'>
+              <svg className='w-4 h-4 fill-current'>
+                <use href='#svg-bed'></use>
+              </svg>
+              {property.details.bedrooms}
+            </span>
+            <div className='w-[1px] h-5 bg-gray-400'></div>
+            <span className='flex items-center gap-2'>
+              <svg className='w-4 h-4 fill-current'>
+                <use href='#svg-shower'></use>
+              </svg>
+              {property.details.bathrooms}
+            </span>
+          </>
+        ) : (
+          <span className='flex items-center gap-2'>
+            <svg className='w-4 h-4 fill-current'>
+              <use href='#svg-area'></use>
+            </svg>
+            <span>
+              {property.details.size}{' '}
+              <span>
+                m<sup>2</sup>
+              </span>
+            </span>
+          </span>
+        )}
       </div>
       <p className='hidden md:line-clamp-3 md:w-full mt-3'>{property.details.description}</p>
       <p className='text-sm text-gray-500 font-medium mt-3'>

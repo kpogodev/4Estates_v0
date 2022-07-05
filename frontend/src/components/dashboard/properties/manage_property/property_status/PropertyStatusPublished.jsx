@@ -22,7 +22,7 @@ import {
 import { setPropertyIsPublished } from 'redux/properties/propertiesSlice'
 import PropertyPublishedRent from './PropertyPublishedRent'
 import PropertyPublishedSale from './PropertyPublishedSale'
-import Modal from 'components/shared/Modal'
+import Modal from 'components/common/Modal'
 import { MdDeleteForever } from 'react-icons/md'
 
 function PropertyStatusPublished() {

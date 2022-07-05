@@ -8,7 +8,7 @@ import CardContact from './CardContact'
 
 function PropertyCard({ data, type }) {
   const cardKey = useId()
-
+  
   return (
     <motion.div
       className='relative card md:card-side bg-white shadow-lg rounded-lg lg:rounded-md max-w-5xl focus-within:shadow-custom-color focus-within:outline-none transition-shadow'

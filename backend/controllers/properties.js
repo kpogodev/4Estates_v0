@@ -19,6 +19,8 @@ export const getProperty = asyncHandler(async (req, res, next) => {
 
   if (!property) return next(new ErrorResponse('Property not found', 404))
 
+  console.log('from controller', property.location.coordinates)
+
   res.status(200).json({ success: true, data: property })
 })
 
@@ -107,4 +109,3 @@ export const deletePropertyImage = asyncHandler(async (req, res, next) => {
 
   res.json({ success: true, data: property })
 })
-

@@ -1,6 +1,6 @@
 import HeroSwiper from 'components/homepage/slider/HeroSwiper'
 import SearchBox from 'components/homepage/search/SearchBox'
-import Hero from 'components/shared/Hero'
+import Hero from 'components/common/Hero'
 import { motion } from 'framer-motion'
 import { pageTransition } from 'utils/animationVariants'
 

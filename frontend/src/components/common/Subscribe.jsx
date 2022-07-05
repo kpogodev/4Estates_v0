@@ -8,7 +8,7 @@ import { addPremium } from 'redux/auth/authSlice'
 import { motion } from 'framer-motion'
 import { pageTransition } from 'utils/animationVariants'
 import InputRadio from 'components/inputs/InputRadio'
-import Spinner from 'components/shared/Spinner'
+import Spinner from 'components/common/Spinner'
 
 function Subscribe({ unit_price, discounts, allow_skip }) {
   const { sdkReady } = usePayPal()

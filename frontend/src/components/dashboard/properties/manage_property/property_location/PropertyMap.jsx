@@ -3,7 +3,7 @@ import { GoogleMap, Marker } from '@react-google-maps/api'
 import { useDispatch, useSelector } from 'react-redux'
 import { updateProperty, selectProperty } from 'redux/properties/propertiesSlice'
 import { BiInfoCircle } from 'react-icons/bi'
-import SkeletonItem from 'components/shared/SkeletonItem'
+import SkeletonItem from 'components/common/SkeletonItem'
 import { motion } from 'framer-motion'
 import { simpleFadeInOut } from 'utils/animationVariants'
 

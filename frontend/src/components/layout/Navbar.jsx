@@ -3,8 +3,8 @@ import { FaBars } from 'react-icons/fa'
 import { useSelector, useDispatch } from 'react-redux'
 import { logoutUser, selectIsAuth, selectUser, selectIsLoading } from 'redux/auth/authSlice'
 import { reset as resetProfile } from 'redux/profiles/profilesSlice'
-import Spinner from 'components/shared/Spinner'
-import Avatar from 'components/shared/Avatar'
+import Spinner from 'components/common/Spinner'
+import Avatar from 'components/common/Avatar'
 import diamond_icon from 'assets/diamond-icon.svg'
 
 function Navbar() {

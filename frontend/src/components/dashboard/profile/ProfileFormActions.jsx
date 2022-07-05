@@ -1,5 +1,5 @@
-import EditableActions from 'components/shared/EditableActions'
-import NoneEditableActions from 'components/shared/NoneEditableActions'
+import EditableActions from 'components/common/EditableActions'
+import NoneEditableActions from 'components/common/NoneEditableActions'
 
 function ProfileFormActions({ editable, toggleEdit, onCancel }) {
   return (

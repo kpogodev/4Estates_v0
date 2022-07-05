@@ -20,9 +20,23 @@ const updateProfile = async ({ newFormData, profileId }) => {
   return data
 }
 
+// Add Observed Rent
+const addObservedRent = async (id) => {
+  const { data } = await axios.patch(`${API_URL}/observedrentals/add`, { id }, config)
+  return data
+}
+
+// Remove Observed Rent
+const removeObservedRent = async (id) => {
+  const { data } = await axios.patch(`${API_URL}/observedrentals/remove`, { id }, config)
+  return data
+}
+
 const profilesServices = {
   getMyProfile,
   updateProfile,
+  addObservedRent,
+  removeObservedRent,
 }
 
 export default profilesServices

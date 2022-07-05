@@ -34,11 +34,8 @@ function RentsList() {
     >
       <AnimatePresence initial={false}>
         <>
-          {rents.length > 0 &&
-            rents.map((rent, index) =>
-              index + 1 !== rents.length ? <PropertyCard key={rent._id} data={rent} type='rent' /> : <PropertyCard key={rent._id} data={rent} type='rent' />
-            )}
-          {(loading || rents.length <= 0) && <PropertyCardPlaceholder key={nanoid()} />}
+          {rents.length > 0 && rents.map((rent) => <PropertyCard key={rent._id} data={rent} type='rent' />)}
+          {!loading && rents.length <= 0 && <PropertyCardPlaceholder key={nanoid()} />}
         </>
       </AnimatePresence>
     </motion.div>

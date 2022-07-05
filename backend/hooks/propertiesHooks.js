@@ -8,6 +8,7 @@ export const useSetLocation = () => {
 
     this.location = {
       type: 'Point',
+      //Reversed coordinates to match MongoDB
       coordinates: [loc[0].latitude, loc[0].longitude].reverse(),
       formatted_address: loc[0].formattedAddress,
       street: loc[0].streetName,
@@ -28,6 +29,7 @@ export const useSetLocation = () => {
       this.set({
         location: {
           type: 'Point',
+          //Reversed coordinates to match MongoDB
           coordinates: [loc[0].latitude, loc[0].longitude].reverse(),
           formatted_address: loc[0].formattedAddress,
           street: loc[0].streetName,
@@ -44,15 +46,22 @@ export const useSetLocation = () => {
   })
 
   //Reverse geocode location details
-  propertiesSchema.post('find', async function (doc) {
+  propertiesSchema.post('find', async function (doc, next) {
     if (doc.length > 0) {
       doc.forEach((property) => {
         property.location.coordinates.reverse()
       })
     }
+    next()
   })
 
-  propertiesSchema.post('findOne', async function (doc) {
+  propertiesSchema.post('findOne', async function (doc, next) {
+    if (doc) doc.location.coordinates = doc.location.coordinates.reverse()
+    next()
+  })
+
+  propertiesSchema.post('findOneAndUpdate', async function (doc, next) {
     if (doc) doc.location.coordinates.reverse()
+    next()
   })
 }

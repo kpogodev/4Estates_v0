@@ -1,12 +1,9 @@
-import { useSelector } from 'react-redux'
-import { selectRentsCount } from 'redux/rents/rentsSlice'
 import { motion, AnimatePresence } from 'framer-motion'
 import { nanoid } from '@reduxjs/toolkit'
 
-function Results() {
-  const rents_count = useSelector(selectRentsCount)
+function Results({ rents_count }) {
   return (
-    <p className='font-medium text-lg md:text-xl mt-auto text-center lg:text-left'>
+    <p className='px-3 py-2'>
       Results:{' '}
       <AnimatePresence initial={false} exitBeforeEnter>
         <motion.span
@@ -24,3 +21,4 @@ function Results() {
 }
 
 export default Results
+

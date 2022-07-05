@@ -15,7 +15,7 @@ import { toast } from 'react-toastify'
 import diamond_icon from 'assets/diamond-icon.svg'
 import StatusBadge from './StatusBadge'
 import RenewalInfo from './RenewalInfo'
-import Modal from 'components/shared/Modal'
+import Modal from 'components/common/Modal'
 
 function PremiumStatus() {
   const [modalOpen, setModalOpen] = useState(false)

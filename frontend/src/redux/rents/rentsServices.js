@@ -8,14 +8,20 @@ const config = {
 }
 
 // Get rents
-const getRents = async (queryString = null) => {
-  const { data } = await axios.get(`${API_URL}?${queryString}`)
+const getRents = async (searchString = null, { signal }) => {
+  const controller = new AbortController()
+  signal.addEventListener('abort', () => controller.abort())
+
+  const { data } = await axios.get(`${API_URL}?${searchString}`, { signal: controller.signal })
   return data
 }
 
 // Get rental
-const getRental = async (id) => {
-  const { data } = await axios.get(`${API_URL}/${id}`)
+const getRental = async (id, { signal }) => {
+  const controller = new AbortController()
+  signal.addEventListener('abort', () => controller.abort())
+
+  const { data } = await axios.get(`${API_URL}/${id}`, {signal: controller.signal})
   return data
 }
 

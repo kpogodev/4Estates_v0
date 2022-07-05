@@ -1,5 +1,5 @@
 import { FaTwitter, FaFacebookF, FaLinkedin } from 'react-icons/fa';
-import Logo from 'components/shared/Logo'
+import Logo from 'components/common/Logo'
 
 function Footer() {
   const date = new Date();

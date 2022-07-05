@@ -4,7 +4,7 @@ import { Combobox, ComboboxInput, ComboboxPopover, ComboboxList, ComboboxOption,
 import '@reach/combobox/styles.css'
 import usePlacesAutocomplete from 'use-places-autocomplete'
 import { updateProperty, selectProperty } from 'redux/properties/propertiesSlice'
-import SkeletonItem from 'components/shared/SkeletonItem'
+import SkeletonItem from 'components/common/SkeletonItem'
 
 function AddressSearch({ editable }, ref) {
   const property = useSelector(selectProperty)

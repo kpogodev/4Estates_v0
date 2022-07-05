@@ -12,6 +12,7 @@ function PriceInputs() {
   const [maxPrice, setMaxPrice] = useState(0)
 
   const [searchParams, setSearchParams] = useSearchParams()
+  const location_present = searchParams.get('lng') && searchParams.get('lat') && searchParams.get('radius') ? true : false
 
   const minOptions = useMemo(() => {
     return maxPrice > 0 ? range.filter((num) => num < maxPrice) : range
@@ -52,15 +53,23 @@ function PriceInputs() {
   )
 
   useEffect(() => {
-    searchParams.get('price[gte]') && setMinPrice(+searchParams.get('price[gte]'))
-    searchParams.get('price[lte]') && setMaxPrice(+searchParams.get('price[lte]'))
-  }, [searchParams])
+    if (location_present) {
+      searchParams.get('price[gte]') && setMinPrice(+searchParams.get('price[gte]'))
+      searchParams.get('price[lte]') && setMaxPrice(+searchParams.get('price[lte]'))
+    }
+  }, [searchParams, location_present, setMinPrice, setMaxPrice])
 
   return (
     <div className='flex gap-2'>
       <div className='form-control'>
         <label className='label py-0 text-sm'>Min Price:</label>
-        <select name='min_price' className='select select-sm select-bordered text-black' value={minPrice} onChange={handleMinPriceChange}>
+        <select
+          name='min_price'
+          className='select select-sm select-bordered text-black'
+          value={minPrice}
+          onChange={handleMinPriceChange}
+          disabled={!location_present}
+        >
           <option value={0}>No min</option>
           {minOptions.map((option) => (
             <option key={nanoid()} value={option}>
@@ -71,7 +80,13 @@ function PriceInputs() {
       </div>
       <div className='form-control'>
         <label className='label py-0 text-sm'>Max Price:</label>
-        <select name='max_price' className='select select-sm select-bordered text-black' value={maxPrice} onChange={handleMaxPriceChange}>
+        <select
+          name='max_price'
+          className='select select-sm select-bordered text-black'
+          value={maxPrice}
+          onChange={handleMaxPriceChange}
+          disabled={!location_present}
+        >
           <option value={0}>No max</option>
           {maxOptions.map((option) => (
             <option key={nanoid()} value={option}>

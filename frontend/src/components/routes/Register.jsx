@@ -5,7 +5,7 @@ import { toast } from 'react-toastify'
 import { resetSuccess, resetError, selectUser, selectIsAuth, selectIsError, selectIsSuccess, selectMessage } from 'redux/auth/authSlice'
 import { pageTransition } from 'utils/animationVariants'
 import RegisterFrom from 'components/auth/RegisterFrom'
-import Subscribe from 'components/shared/Subscribe'
+import Subscribe from 'components/common/Subscribe'
 
 function Register() {
   const user = useSelector(selectUser)

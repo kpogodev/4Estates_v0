@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { MdUpload, MdEdit } from 'react-icons/md'
 import { useDispatch } from 'react-redux'
 import { uploadAvatar } from 'redux/auth/authSlice'
-import Spinner from 'components/shared/Spinner'
+import Spinner from 'components/common/Spinner'
 
 function UserAvatar({ user: { name, avatar }, loading }) {
   const [file, setFile] = useState(null)

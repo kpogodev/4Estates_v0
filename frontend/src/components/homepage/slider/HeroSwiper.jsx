@@ -16,13 +16,7 @@ function HeroSwiper() {
   const rents = useSelector(selectAllRents)
   const rentsIsSuccess = useSelector(selectRentsIsSuccess)
 
-  useEffect(() => {
-    dispatch(getRents({ select: 'price,property,createdAt' }))
-
-    return () => {
-      dispatch(resetRents())
-    }
-  }, [dispatch])
+  useEffect(() => {}, [dispatch])
 
   useEffect(() => {
     rentsIsSuccess && dispatch(resetSuccess())

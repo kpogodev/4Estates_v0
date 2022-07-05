@@ -15,7 +15,7 @@ const initialState = {
 // Get rents
 export const getRents = createAsyncThunk('rents/get_rents', async (payload, thunkAPI) => {
   try {
-    return await rentsService.getRents(payload)
+    return await rentsService.getRents(payload, thunkAPI)
   } catch (error) {
     const message = error?.response?.data?.message ?? error.toString()
     return thunkAPI.rejectWithValue(message)
@@ -25,7 +25,7 @@ export const getRents = createAsyncThunk('rents/get_rents', async (payload, thun
 // Get rental
 export const getRental = createAsyncThunk('rents/get_rental', async (payload, thunkAPI) => {
   try {
-    return await rentsService.getRental(payload)
+    return await rentsService.getRental(payload, thunkAPI)
   } catch (error) {
     const message = error?.response?.data?.message ?? error.toString()
     return thunkAPI.rejectWithValue(message)

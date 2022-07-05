@@ -162,7 +162,7 @@ export const propertiesSlice = createSlice({
       })
       .addCase(addProperty.fulfilled, (state, action) => {
         state.property = action.payload.data
-        state.myProperties = [...state.myProperties, action.payload.data]
+        state.my_properties = [...state.my_properties, action.payload.data]
         state.isSuccess = action.payload.success
         state.isLoading = false
         state.message = `Your property on ${action.payload.data.location.street} has been added`
@@ -178,7 +178,7 @@ export const propertiesSlice = createSlice({
       })
       .addCase(updateProperty.fulfilled, (state, action) => {
         state.property = action.payload.data
-        state.myProperties = state.myProperties.map((property) => (property._id === action.payload.data._id ? action.payload.data : property))
+        state.my_properties = [...state.my_properties.filter((property) => property.id !== action.payload.data.id), action.payload.data]
         state.isSuccess = action.payload.success
         state.isLoading = false
         state.message = `Property details have been updated`
@@ -195,7 +195,7 @@ export const propertiesSlice = createSlice({
       .addCase(deleteProperty.fulfilled, (state, action) => {
         state.property = null
         state.isSuccess = action.payload.success
-        state.myProperties = state.myProperties.filter((property) => property.id !== action.payload.data.id)
+        state.my_properties = state.my_properties.filter((property) => property.id !== action.payload.data.id)
         state.isLoading = false
         state.message = `Your property has been deleted`
       })

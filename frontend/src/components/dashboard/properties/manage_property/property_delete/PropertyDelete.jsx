@@ -2,7 +2,7 @@ import { useState, useCallback } from 'react'
 import { useParams } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { MdWarning, MdDeleteForever } from 'react-icons/md'
-import Modal from 'components/shared/Modal'
+import Modal from 'components/common/Modal'
 import { deleteProperty } from 'redux/properties/propertiesSlice'
 
 function PropertyDelete() {

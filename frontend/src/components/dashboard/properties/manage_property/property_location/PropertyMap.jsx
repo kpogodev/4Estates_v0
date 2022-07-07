@@ -42,7 +42,7 @@ function PropertyMap({ editable }, ref) {
             data: {
               location: {
                 ...property.location,
-                coordinates: [updatedMarker.coordinates[0], updatedMarker.coordinates[1]],
+                coordinates: [updatedMarker.coordinates[1], updatedMarker.coordinates[0]],
               },
             },
             id: property._id,

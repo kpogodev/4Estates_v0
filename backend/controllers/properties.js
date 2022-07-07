@@ -1,7 +1,6 @@
 import ErrorResponse from '../utils/errorResponse.js'
 import asyncHandler from 'express-async-handler'
 import PropertyModel from '../models/propertiesModel.js'
-import RentalModel from '../models/rentalsModel.js'
 import { imageMultiUpload, imagesDelete, imageDelete } from '../hooks/uploaderHooks.js'
 
 // @desc      Get all properties
@@ -18,8 +17,6 @@ export const getProperty = asyncHandler(async (req, res, next) => {
   const property = await PropertyModel.findById(req.params.id)
 
   if (!property) return next(new ErrorResponse('Property not found', 404))
-
-  console.log('from controller', property.location.coordinates)
 
   res.status(200).json({ success: true, data: property })
 })
@@ -50,7 +47,7 @@ export const updateProperty = asyncHandler(async (req, res, next) => {
 
   property = await PropertyModel.findOneAndUpdate({ _id: req.params.id }, req.body, {
     new: true,
-    runValidators: true,
+    runValidators: false,
     timestamps: true,
   })
 
@@ -81,7 +78,6 @@ export const deleteProperty = asyncHandler(async (req, res, next) => {
 // @access    Private
 export const uploadPropertyImages = asyncHandler(async (req, res, next) => {
   const { data, id } = req.body
-
   const property = await PropertyModel.findById(id)
   if (!property) return new ErrorResponse(`Property with id: ${id} not found`, 404)
 

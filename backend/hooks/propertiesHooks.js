@@ -9,7 +9,7 @@ export const useSetLocation = () => {
     this.location = {
       type: 'Point',
       //Reversed coordinates to match MongoDB
-      coordinates: [loc[0].latitude, loc[0].longitude].reverse(),
+      coordinates: [loc[0].longitude, loc[0].latitude],
       formatted_address: loc[0].formattedAddress,
       street: loc[0].streetName,
       city: loc[0].city,
@@ -18,19 +18,19 @@ export const useSetLocation = () => {
       county: loc[0].administrativeLevels.level2long || loc[0].administrativeLevels.level1long,
       country: loc[0].country,
     }
+
     next()
   })
 
-  //Generate location details pre update if address has changed
+  //Generate location details pre update if address has changed or set new location
   propertiesSchema.pre('findOneAndUpdate', async function (next) {
     if (this._update.address) {
       const loc = await geocoder.geocode(this._update.address)
-
       this.set({
         location: {
           type: 'Point',
           //Reversed coordinates to match MongoDB
-          coordinates: [loc[0].latitude, loc[0].longitude].reverse(),
+          coordinates: [loc[0].longitude, loc[0].latitude],
           formatted_address: loc[0].formattedAddress,
           street: loc[0].streetName,
           city: loc[0].city,
@@ -40,9 +40,8 @@ export const useSetLocation = () => {
           country: loc[0].country,
         },
       })
+      return next()
     }
-
-    next()
   })
 
   //Reverse geocode location details
@@ -56,7 +55,7 @@ export const useSetLocation = () => {
   })
 
   propertiesSchema.post('findOne', async function (doc, next) {
-    if (doc) doc.location.coordinates = doc.location.coordinates.reverse()
+    if (doc) doc.location.coordinates.reverse()
     next()
   })
 

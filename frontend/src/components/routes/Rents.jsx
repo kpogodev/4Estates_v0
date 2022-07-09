@@ -2,7 +2,7 @@ import { useEffect, useId } from 'react'
 import { motion } from 'framer-motion'
 import { useDispatch } from 'react-redux'
 import { useSearchParams } from 'react-router-dom'
-import { getRents } from 'redux/rents/rentsSlice'
+import { getRents, resetRents } from 'redux/rents/rentsSlice'
 import { getMyProfile } from 'redux/profiles/profilesSlice'
 import { pageTransition } from 'utils/animationVariants'
 import RentsList from 'components/listings/lists/RentsList'
@@ -35,6 +35,8 @@ function Rents() {
       if (profilePromise) {
         profilePromise.abort()
       }
+
+      dispatch(resetRents())
     }
   }, [dispatch, location_present, searchParams])
 

@@ -26,7 +26,7 @@ function PublishPropertyForm() {
   if (!property) return <Loading />
 
   return (
-    <div className='max-w-4xl flex flex-col gap-10 mx-auto'>
+    <div className='w-full max-w-4xl flex flex-col gap-10 mx-auto'>
       <div className='w-full flex items-center justify-between flex-wrap gap-x-20'>
         <h2 className='block text-left font-bold text-2xl xl:text-4xl xl:py-4'>
           Publish Property<span className='!block text-lg text-gray-500 font-medium'>{property.location.formatted_address}</span>

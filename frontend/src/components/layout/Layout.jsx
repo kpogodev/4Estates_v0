@@ -3,7 +3,7 @@ import { AnimatePresence } from 'framer-motion'
 import { ToastContainer } from 'react-toastify'
 import Navbar from './Navbar'
 import Footer from './Footer'
-import SVGSprite from 'assets/SVGSprite'
+import SVGSprite from 'components/common/SVGSprite'
 import 'react-toastify/dist/ReactToastify.css'
 
 function Layout() {

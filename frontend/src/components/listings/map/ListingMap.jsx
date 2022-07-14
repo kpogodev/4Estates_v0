@@ -87,7 +87,7 @@ function ListingMap() {
   }
 
   return (
-    <div className='col-span-3 aspect-w-4 aspect-h-3 md:aspect-w-6 md:aspect-h-2'>
+    <div className='col-span-3 aspect-w-4 aspect-h-3 md:aspect-w-6 md:aspect-h-4 lg:aspect-h-3 xl:aspect-h-2'>
       <GoogleMap
         className='shadow-lg'
         mapContainerStyle={{

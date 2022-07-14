@@ -63,7 +63,7 @@ function RelatedSearch() {
   if (!location_present) return null
 
   return (
-    <nav className='col-span-1 flex flex-col gap-4 p-3 xl:p-5 shadow-custom rounded-lg bg-white'>
+    <nav className='w-full flex flex-col gap-4 p-3 xl:p-5 shadow-custom rounded-lg bg-white'>
       <h3 className='text-2xl font-bold'>Related Searches</h3>
       <ul className='flex flex-col'>
         {relatedBedrooms.map((bedrooms) => (

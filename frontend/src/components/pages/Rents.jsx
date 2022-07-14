@@ -3,7 +3,6 @@ import { motion } from 'framer-motion'
 import { useDispatch } from 'react-redux'
 import { useSearchParams } from 'react-router-dom'
 import { getRents, resetRents } from 'redux/rents/rentsSlice'
-import { getMyProfile } from 'redux/profiles/profilesSlice'
 import { pageTransition } from 'utils/animationVariants'
 import RentsList from 'components/listings/lists/RentsList'
 import ListingMap from 'components/listings/map/ListingMap'
@@ -21,19 +20,13 @@ function Rents() {
 
   useEffect(() => {
     let rentsPromise
-    let profilePromise
     if (location_present) {
       rentsPromise = dispatch(getRents(searchParams.toString()))
-      profilePromise = dispatch(getMyProfile())
     }
 
     return () => {
       if (rentsPromise) {
         rentsPromise.abort()
-      }
-
-      if (profilePromise) {
-        profilePromise.abort()
       }
 
       dispatch(resetRents())
@@ -46,9 +39,9 @@ function Rents() {
       <ListingMap />
       <InfoBar location_present={location_present} />
       <div className='container flex flex-col mx-auto py-5 md:py-12 px-3'>
-        <div className='flex flex-col items-start lg:grid lg:grid-cols-3 gap-x-5 lg:px-3'>
+        <div className='flex flex-col items-start lg:grid lg:grid-cols-3 gap-x-5 lg:px-3 gap-y-6'>
           <RentsList />
-          <div className='flex flex-col col-span-1 gap-7'>
+          <div className='w-full grid sm:grid-cols-2 col-span-1 gap-6 lg:grid-cols-1'>
             <RecentSearch />
             <RelatedSearch />
           </div>

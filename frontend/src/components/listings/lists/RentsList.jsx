@@ -27,7 +27,7 @@ function RentsList() {
   return (
     <motion.div
       key={listKey}
-      className='w-full col-span-2 flex flex-col items-stretch gap-7 min-h-[400px]'
+      className='w-full col-span-2 flex flex-col items-stretch gap-7'
       initial='hidden'
       animate='show'
       variants={animVariant}
